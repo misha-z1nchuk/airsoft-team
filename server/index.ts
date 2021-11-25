@@ -1,10 +1,12 @@
 require('dotenv').config()
 import express, { Application, Request, Response } from "express";
 const router = require('./routes/index')
-import {sequelize} from "./db";
+import db from './models/user.model'
+import {sequelize} from "./config/db";
 
 const PORT = process.env.PORT || 5000
 const app: Application = express();
+
 
 
 app.use(express.json());

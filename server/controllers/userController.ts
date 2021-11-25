@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import User from "../models/user.model";
-import {registrationValidation} from "../middleware/registrationValidation";
-const validationReg = new registrationValidation();
+import User from '../models/user.model'
 
 
 export interface UserI{
@@ -16,9 +14,10 @@ export interface UserI{
 const registration = async (req: Request, res: Response, next: NextFunction) => {
     let person;
     try{
-        person = await User.create(req.body);
+        person = await new User(req.body);
         await person.save()
     }catch (e){
+        console.log(e)
         return res.status(400).json({
             message: "Error Registration! You must specify all the rows"
         });
