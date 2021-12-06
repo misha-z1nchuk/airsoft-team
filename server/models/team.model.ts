@@ -9,13 +9,8 @@ import {
     Table
 } from "sequelize-typescript";
 import User from "./user.model";
-import {Col} from "sequelize/types/lib/utils";
+import {TeamI} from "../global/types";
 
-export interface TeamI{
-    id?: number | null
-    team_name: string
-    players: User[]
-}
 
 @Table(
     {
@@ -37,6 +32,4 @@ export default class Team extends Model implements TeamI{
 
     @HasMany(() => User)
     players!: User[]
-
-
 }

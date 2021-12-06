@@ -10,14 +10,8 @@ import {
     Default, BelongsTo, ForeignKey
 } from "sequelize-typescript";
 import Team from "./team.model";
+import {UserI} from "../global/types";
 
-export interface UserI{
-    id?: number | null
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-}
 
 @Table(
     {
@@ -54,17 +48,22 @@ export default class User extends Model implements UserI{
     password!: string;
 
     @AllowNull(false)
-    @Default("USER")
     @Column
     role!: string;
 
     @ForeignKey(() => Team)
     @Column
-    teamId!: number
+    teamId!: number;
 
 
     @BelongsTo(() => Team)
-    team!: Team
+    team!: Team;
+
+    @Default(false)
+    @Column
+    isActivated!: boolean;
 
 
+    @Column
+    activationLink!: string;
 }

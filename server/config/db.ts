@@ -1,3 +1,5 @@
+import Token from "../models/token-model";
+
 require('dotenv').config({path: "../.env"})
 import {Sequelize} from "sequelize-typescript"
 import User from "../models/user.model";
@@ -26,4 +28,4 @@ export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
     models: []
 });
 
-sequelize.addModels([User, Team])
+sequelize.addModels([User, Team, Token])
