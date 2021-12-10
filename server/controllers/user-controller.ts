@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/user.model'
-import { body, validationResult } from 'express-validator';
+import {validationResult} from "express-validator";
+import {UserService} from "../services/user-service";
 const userService = require('../services/user-service')
+const ApiError = require('../exeptions/api-error')
 
 declare var process : {
     env: {
@@ -12,6 +13,11 @@ declare var process : {
 class UserController{
     async registration(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
+            const errors = validationResult(req);
+            if(!errors.isEmpty()){
+                return next(ApiError.BadRequest("Validation error", errors.array()))
+            }
+
             const {first_name, last_name, email, password, role} = req.body;
             const userData = await userService.registration(first_name, last_name, email, password, role)
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly: true})
@@ -21,18 +27,25 @@ class UserController{
         }
     }
 
-    async login(req: Request, res: Response, next: NextFunction): Promise<void>{
+    async login(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
-
+            const {email, password} = req.body;
+            const userData = await userService.login(email, password);
+            res.cookie('refreshToken', userData.refreshToken, {maxAge:30*24*60*1000, httpOnly: true})
+            return res.json(userData);
         }catch (e){
-
+            next(e)
         }
     }
 
-    async logout(req: Request, res: Response, next: NextFunction): Promise<void>{
+    async logout(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
-
+            const {refreshToken} = req.cookies;
+            const token = await userService.logout(refreshToken);
+            res.clearCookie('refreshToken');
+            return res.json(token);
         }catch (e){
+            next(e)
 
         }
     }
@@ -41,6 +54,7 @@ class UserController{
         try{
 
         }catch (e){
+            next(e)
 
         }
     }
@@ -59,23 +73,3 @@ class UserController{
 }
 
 module.exports = new UserController();
-
-
-// const registration = async (req: Request, res: Response, next: NextFunction) => {
-//     const errors = validationResult(req)
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array() });
-//     }
-//     const {first_name, last_name, email, password, role} = req.body;
-//
-//     let result = await UserService.register(first_name, last_name, email, password, role)
-//     if (result instanceof ApiError){
-//         return next(result)
-//     }
-//
-//     return res.status(200).json({
-//         message: result
-//     });
-// };
-//
-

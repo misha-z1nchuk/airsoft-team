@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 import Token from '../models/token.model'
+
 require('dotenv').config()
 
 
@@ -22,6 +23,10 @@ class TokenService{
 
         const token = await Token.create({userId : userId, refreshToken})
         return token;
+    }
+
+    async removeToken(refreshToken: any) {
+        return await Token.destroy({where: {refreshToken}});
     }
 }
 
