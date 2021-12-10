@@ -3,7 +3,11 @@ import User from '../models/user.model'
 import { body, validationResult } from 'express-validator';
 const userService = require('../services/user-service')
 
-
+declare var process : {
+    env: {
+        CLIENT_URL:string
+    }
+}
 
 class UserController{
     async registration(req: Request, res: Response, next: NextFunction): Promise<any>{
@@ -13,7 +17,7 @@ class UserController{
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly: true})
             return res.json(userData)
         }catch (e){
-            return e
+            next(e)
         }
     }
 
@@ -38,6 +42,18 @@ class UserController{
 
         }catch (e){
 
+        }
+    }
+
+
+
+    async activate(req: Request, res: Response, next: any) {
+        try {
+            const activationLink= req.params.link;
+            await userService.activate(activationLink)
+            return res.redirect(process.env.CLIENT_URL)
+        } catch (e){
+            console.log(e)
         }
     }
 }

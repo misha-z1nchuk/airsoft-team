@@ -1,4 +1,5 @@
-import {AutoIncrement, Column, Default, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {AutoIncrement, BelongsTo, Column, Default, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
+import User from "./user.model";
 
 @Table(
     {
@@ -12,6 +13,16 @@ export default class Token extends Model{
     @PrimaryKey
     @Column
     id?: number
+
+
+
+    @ForeignKey(() => User)
+    @Column
+    userId!: number;
+
+
+    @BelongsTo(() => User)
+    user!: User;
 
 
     @Default(false)

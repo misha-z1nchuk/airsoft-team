@@ -15,6 +15,6 @@ router.post('/registration',
         body('password').isLength({min: 6, max: 24})
     ],
     userController.registration)
-
+router.get('/activate/:link', userController.activate)
 
 module.exports = router

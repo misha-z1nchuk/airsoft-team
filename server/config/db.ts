@@ -1,4 +1,4 @@
-import Token from "../models/token-model";
+import Token from "../models/token.model";
 
 require('dotenv').config({path: "../.env"})
 import {Sequelize} from "sequelize-typescript"

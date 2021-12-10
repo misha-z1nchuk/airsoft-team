@@ -1,5 +1,4 @@
 import User from "../models/user.model";
-import {equal} from "assert";
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 const mailService = require('./mail-service')
@@ -17,17 +16,29 @@ export class UserService{
         const hashedPassword = await bcrypt.hash(password, salt)
         const activationLink = uuid.v4()
 
+
         const user = await User.create({first_name, last_name, email,password: hashedPassword, role, activationLink})
-        await mailService.sendActivationMail(email, activationLink)
+        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`)
 
         const userDto = new UserDto(user);
-        const tokens = tokenService.generateToken(userDto);
+
+        const tokens = tokenService.generateToken({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         return{
             ...tokens,
             user: userDto
         }
+    }
+
+
+    async activate(activationLink: string){
+        let user = await User.findOne({where: {activationLink}})
+        if (!user){
+            throw new Error("Incorrect link of activation")
+        }
+        user.isActivated = true;
+        await user.save();
     }
 }
 
