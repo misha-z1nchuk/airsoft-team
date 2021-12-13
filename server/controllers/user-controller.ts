@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import {validationResult} from "express-validator";
-import {UserService} from "../services/user-service";
 const userService = require('../services/user-service')
 const ApiError = require('../exeptions/api-error')
 
@@ -11,7 +10,7 @@ declare var process : {
 }
 
 class UserController{
-    async registration(req: Request, res: Response, next: NextFunction): Promise<any>{
+    async registration(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
         try{
             const errors = validationResult(req);
             if(!errors.isEmpty()){
@@ -27,7 +26,7 @@ class UserController{
         }
     }
 
-    async login(req: Request, res: Response, next: NextFunction): Promise<any>{
+    async login(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
         try{
             const {email, password} = req.body;
             const userData = await userService.login(email, password);
@@ -38,7 +37,7 @@ class UserController{
         }
     }
 
-    async logout(req: Request, res: Response, next: NextFunction): Promise<any>{
+    async logout(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
         try{
             const {refreshToken} = req.cookies;
             const token = await userService.logout(refreshToken);
@@ -50,24 +49,33 @@ class UserController{
         }
     }
 
-    async refresh(req: Request, res: Response, next: NextFunction): Promise<void>{
+    async refresh(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
         try{
-
+            const {refreshToken} = req.cookies;
+            const userData = await userService.refresh(refreshToken);
+            res.cookie('refreshToken', userData.refreshToken, {maxAge:30*24*60*1000, httpOnly: true})
+            return res.json(userData);
         }catch (e){
             next(e)
-
         }
     }
 
-
-
-    async activate(req: Request, res: Response, next: any) {
+    async activate(req: Request, res: Response, next: NextFunction):Promise<Response|void> {
         try {
             const activationLink= req.params.link;
             await userService.activate(activationLink)
             return res.redirect(process.env.CLIENT_URL)
         } catch (e){
-            console.log(e)
+            next(e);
+        }
+    }
+
+    async getUsers(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
+        try {
+            const users = await userService.getAllUsers();
+            return res.json(users);
+        }catch (e){
+            next(e);
         }
     }
 }

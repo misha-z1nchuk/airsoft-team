@@ -1,4 +1,5 @@
 import User from "../models/user.model";
+import {ResponseRegLogI} from "../global/responses/reg-log-response";
 
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
@@ -7,8 +8,9 @@ const tokenService = require('./token-service')
 const UserDto = require('../dtos/user-dto')
 const ApiError = require('../exeptions/api-error')
 
+
 export class UserService{
-    async registration(first_name: string, last_name: string, email: string, password: string, role: string){
+    async registration(first_name: string, last_name: string, email: string, password: string, role: string): Promise<ResponseRegLogI> {
         let candidate = await User.findOne({where: {email}});
         if (candidate){
             throw ApiError.BadRequest(`User with such email ${email} exists`);
@@ -34,7 +36,7 @@ export class UserService{
     }
 
 
-    async activate(activationLink: string){
+    async activate(activationLink: string) : Promise<void>{
         let user = await User.findOne({where: {activationLink}})
         if (!user){
             throw ApiError.BadRequest("Incorrect link of activation")
@@ -43,7 +45,8 @@ export class UserService{
         await user.save();
     }
 
-    async login(email: any, password: any) {
+
+    async login(email: any, password: any): Promise<ResponseRegLogI> {
         let user: any = await User.findOne({where: {email}});
         if (!user){
             throw ApiError.BadRequest(`User with such email ${email} not found`);
@@ -63,8 +66,33 @@ export class UserService{
         }
     }
 
-    async logout(refreshToken: any) {
+
+    async logout(refreshToken: any){
         return await tokenService.removeToken(refreshToken);
+    }
+
+
+    async refresh(refreshToken: any): Promise<ResponseRegLogI> {
+        if(!refreshToken){
+            throw ApiError.UnauthorizedError();
+        }
+        const userData = tokenService.validateRefreshToken(refreshToken);
+        const tokenFromDb  = await tokenService.findToken(refreshToken);
+        if (!userData || !tokenFromDb){
+            throw ApiError.UnauthorizedError();
+        }
+
+        const user = await User.findByPk(userData.id);
+        const userDto = new UserDto(user);
+
+        const tokens = tokenService.generateToken({...userDto});
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return{...tokens, user: userDto}
+    }
+
+    async getAllUsers(): Promise<User[]>{
+        return await User.findAll();
     }
 }
 
