@@ -1,5 +1,6 @@
 import User from "../models/user.model";
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
+import * as querystring from "querystring";
 
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
@@ -19,9 +20,8 @@ export class UserService{
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt)
         const activationLink = uuid.v4()
-
-
         const user = await User.create({first_name, last_name, email,password: hashedPassword, role, activationLink})
+
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`)
 
         const userDto = new UserDto(user);
@@ -94,6 +94,10 @@ export class UserService{
     async getAllUsers(): Promise<User[]>{
         return await User.findAll();
     }
+
+
+
+
 }
 
 module.exports = new UserService();

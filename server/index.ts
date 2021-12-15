@@ -1,11 +1,11 @@
 require('dotenv').config()
 import express, { Application, Request, Response } from "express";
 const router = require('./routes/index')
-import db from './models/user.model'
 import {sequelize} from "./config/db";
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const errorMiddleware = require('./middleware/error-middleware')
+const passport = require('./config/passport')
 
 const PORT = process.env.PORT || 5000
 const app: Application = express();
@@ -19,7 +19,9 @@ app.use(cors({
     origin: process.env.CLIENT_URL
 }));
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
 app.use('/api', router)
+app.use(passport.initialize());
 app.use(errorMiddleware)
 
 

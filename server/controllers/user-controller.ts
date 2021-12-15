@@ -1,11 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
 import {validationResult} from "express-validator";
+const jwt = require('jsonwebtoken')
 const userService = require('../services/user-service')
 const ApiError = require('../exeptions/api-error')
 
 declare var process : {
     env: {
-        CLIENT_URL:string
+        COOKIE_NAME: string;
+        JWT_ACCESS_SECRET: string;
+        REDIRECT_URL: string;
+        API_URL: string;
+        GOOGLE_REDIRECT_URL: string;
+        GOOGLE_CLIENT_ID: string;
+        CLIENT_URL:string;
+        GOOGLE_CLIENT_SECRET: string;
     }
 }
 
@@ -36,6 +44,10 @@ class UserController{
             next(e)
         }
     }
+
+
+
+
 
     async logout(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
         try{
@@ -78,6 +90,8 @@ class UserController{
             next(e);
         }
     }
+
+
 }
 
 module.exports = new UserController();
