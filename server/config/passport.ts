@@ -37,7 +37,7 @@ passport.use(new GoogleStrategy({
             if (!candidate){
                 user = await userService.registration(familyName, givenName, email, randPassword, "Player");
             }
-            req.headers.authorization
+
             return done(null , user)
         }catch (e){
 

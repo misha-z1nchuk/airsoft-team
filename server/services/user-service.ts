@@ -1,6 +1,8 @@
 import User from "../models/user.model";
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
 import * as querystring from "querystring";
+import Token from "../models/token.model";
+import {Response} from "express";
 
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
@@ -94,9 +96,6 @@ export class UserService{
     async getAllUsers(): Promise<User[]>{
         return await User.findAll();
     }
-
-
-
 
 }
 

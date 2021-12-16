@@ -1,6 +1,7 @@
 import React, {FC, useContext, useState} from 'react';
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
+import {Link} from "react-router-dom";
 
 const LoginForm: FC = () => {
     const [first_name, setFirstName] = useState('Misha');
@@ -27,8 +28,10 @@ const LoginForm: FC = () => {
 
             <button onClick={() => store.login(email, password)}>login</button>
             <button onClick={() => store.registration(first_name,last_name, email, password, role)}>registration</button>
+            <a target="_blank"  href="http://localhost:5000/api/user/auth/google"><button onClick={() => store.googleAuth()}>Google</button></a>
         </div>
     );
 };
+
 
 export default observer(LoginForm);

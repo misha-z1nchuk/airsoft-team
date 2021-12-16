@@ -3,6 +3,7 @@ const router = Router();
 import {UserService} from "../services/user-service";
 const userController = require('../controllers/user-controller')
 import {body} from "express-validator";
+import Token from "../models/token.model";
 const authMiddleware = require('../middleware/auth-middleware')
 const passport = require('../config/passport')
 let UserRoles = ['ADMIN', 'MANAGER', 'PLAYER']
@@ -27,6 +28,7 @@ router.post('/logout', userController.logout);
 router.get('/refresh', userController.refresh);
 router.get('/activate/:link', userController.activate)
 router.get('/get-users', authMiddleware, userController.getUsers)
+
 router.get('/auth/google',
     passport.authenticate('google', { scope: [
             'https://www.googleapis.com/auth/userinfo.profile',
@@ -37,10 +39,21 @@ router.get('/auth/google',
 
 router.get('/auth/google/callback',
      passport.authenticate('google',  {
-            failureRedirect: '/auth/google/failure'
-        }), (req, res)=> {
-        console.log(req.headers)
-    });
+            failureRedirect: '/auth/google/failure',
+            session: false
+        }), async (req, res)=> {
+        // @ts-ignore
+        const user_id = req.user.dataValues.id
+        let tokenModel = await Token.findOne({where: {userId: user_id}})
+        if (!tokenModel){
+            return
+        }
+        const refreshToken = tokenModel.refreshToken
+
+        res.cookie('refreshToken', refreshToken, {maxAge: 30*24*60*60*1000, httpOnly: true})
+        res.redirect("http://localhost:3000")
+
+});
 
 
 module.exports = router

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import {validationResult} from "express-validator";
+import Token from "../models/token.model";
 const jwt = require('jsonwebtoken')
 const userService = require('../services/user-service')
 const ApiError = require('../exeptions/api-error')
@@ -64,6 +65,7 @@ class UserController{
     async refresh(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
         try{
             const {refreshToken} = req.cookies;
+            console.log("fdsfs")
             const userData = await userService.refresh(refreshToken);
             res.cookie('refreshToken', userData.refreshToken, {maxAge:30*24*60*1000, httpOnly: true})
             return res.json(userData);
@@ -90,7 +92,6 @@ class UserController{
             next(e);
         }
     }
-
 
 }
 
