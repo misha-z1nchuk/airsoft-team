@@ -67,7 +67,7 @@ export default class Store{
     async checkAuth(){
         this.isLoading = true;
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/user/refresh`, {withCredentials: true})
+            const response = await axios.get<AuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
@@ -81,7 +81,12 @@ export default class Store{
     async googleAuth(){
         this.isLoading = true;
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/user/refresh`, {withCredentials: true})
+            const response = await axios.get<AuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
+            if (response){
+                localStorage.setItem('token', response.data.accessToken);
+                this.setAuth(true);
+                this.setUser(response.data.user);
+            }
         }catch (e){
             console.log(e)
         }

@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import {NextFunction} from "express";
 
 const ApiError = require('../exeptions/api-error');
 const tokenService = require('../services/token-service')
@@ -8,7 +8,7 @@ declare namespace Express {
         user: {};
     }
 }
-module.exports = function (req :any, res: Response, next: any){
+module.exports = function (req :any, res: Response, next: NextFunction){
     try {
         const authorizationHeader = req.headers.authorization;
         if (!authorizationHeader){

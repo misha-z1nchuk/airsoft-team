@@ -8,7 +8,7 @@ const LoginForm: FC = () => {
     const [last_name, setLastName] = useState('Ziref');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('PLAYER');
+    const [role, setRole] = useState('1');
     const {store} = useContext(Context)
 
     return (
@@ -28,7 +28,7 @@ const LoginForm: FC = () => {
 
             <button onClick={() => store.login(email, password)}>login</button>
             <button onClick={() => store.registration(first_name,last_name, email, password, role)}>registration</button>
-            <a target="_blank"  href="http://localhost:5000/api/user/auth/google"><button onClick={() => store.googleAuth()}>Google</button></a>
+            <a target="_blank"  href="http://localhost:5000/api/auth/google"><button onClick={() => store.googleAuth()}>Google</button></a>
         </div>
     );
 };

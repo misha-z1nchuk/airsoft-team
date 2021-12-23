@@ -16,6 +16,20 @@ class TokenService{
         }
     }
 
+    generateForgotPasswordToken(payload: string, secret: string){
+        return jwt.sign(payload, secret, {expiresIn: '15m'})
+    }
+
+
+    validateSomeToken(token: string, secret: string): Object|null{
+        try {
+            return jwt.verify(token, secret)
+        }catch (e){
+            return null;
+        }
+    }
+
+
     validateAccessToken(token: any): Object|null{
         try {
             return jwt.verify(token, process.env.JWT_ACCESS_SECRET)

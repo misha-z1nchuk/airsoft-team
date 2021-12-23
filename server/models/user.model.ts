@@ -11,6 +11,7 @@ import {
 } from "sequelize-typescript";
 import Team from "./team.model";
 import {UserI} from "../global/types";
+import Role from "./role.model";
 
 
 @Table(
@@ -47,9 +48,11 @@ export default class User extends Model implements UserI{
     @Column
     password!: string;
 
+    @ForeignKey(() => Role)
     @AllowNull(false)
     @Column
-    role!: string;
+    role!: number;
+
 
     @ForeignKey(() => Team)
     @Column
