@@ -5,7 +5,6 @@ import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
 import {API_URL} from "../http";
 import Redirect  from "react-router-dom";
-// @ts-ignore
 import { useNavigate } from 'react-router-dom';
 
 export default class Store{
@@ -79,17 +78,12 @@ export default class Store{
     }
 
     async googleAuth(){
-        this.isLoading = true;
-        try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
-            if (response){
-                localStorage.setItem('token', response.data.accessToken);
-                this.setAuth(true);
-                this.setUser(response.data.user);
-            }
-        }catch (e){
-            console.log(e)
-        }
+        window.open('http://localhost:5000/api/auth/google', 'google','width=800,height=600,status=0,toolbar=0');
+
+        await setTimeout(() => {
+        }, 7000)
+        await this.checkAuth()
+        
     }
 
 

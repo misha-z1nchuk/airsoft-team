@@ -28,7 +28,7 @@ const LoginForm: FC = () => {
 
             <button onClick={() => store.login(email, password)}>login</button>
             <button onClick={() => store.registration(first_name,last_name, email, password, role)}>registration</button>
-            <a target="_blank"  href="http://localhost:5000/api/auth/google"><button onClick={() => store.googleAuth()}>Google</button></a>
+            <button onClick={() => store.googleAuth()}>Google</button>
         </div>
     );
 };

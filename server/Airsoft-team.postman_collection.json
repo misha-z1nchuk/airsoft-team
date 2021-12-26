@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "7483f4d1-3b24-43f3-afe4-63940309ed95",
+		"name": "Airsoft-team",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdG9vcGVyZUBnbWFpbC5jb20iLCJpZCI6NCwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE2MzkzODkyOTEsImV4cCI6MTYzOTM5MTA5MX0.wPOZM6vTvf54hRLsdhNllUqC-1ijtT6OTXRQ46cYQdM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n    \"email\" : \"mfdsfdsf@ffffggfgmail.com\",\n    \"password\": \"fdsfdsf24321\"\n  \n\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Log out"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/auth/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdG9vcGVyZUBnbWFpbC5jb20iLCJpZCI6NCwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE2MzkzODkyOTEsImV4cCI6MTYzOTM5MTA5MX0.wPOZM6vTvf54hRLsdhNllUqC-1ijtT6OTXRQ46cYQdM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"misha\",\n    \"last_name\": \"zinchuk\",\n    \"email\" : \"zenyatвfffop@fmafil.com\",\n    \"password\": \"fdsfdsf24321\",\n    \"role\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"someemail@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Requests",
+			"item": [
+				{
+					"name": "Decline request with some id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdNCyZmZmb3BAZm1hZmlsLmNvbSIsImlkIjoxMiwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE2NDA1NTYxMjMsImV4cCI6MTY0MDU1NzkyM30.J7nHcH6FxqBMnhS6P-adlLYjZbt9a3Zs09jVxVUsw4k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"team_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/request/accept/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"request",
+								"accept",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept request with some id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/request/accept/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"request",
+								"accept",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send request to join some team ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"team_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/request/join-team",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"request",
+								"join-team"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import {validationResult} from "express-validator";
 import Token from "../models/token.model";
-import User from "../models/user.model";
-const jwt = require('jsonwebtoken')
 const authService = require('../services/auth-service')
 const ApiError = require('../exeptions/api-error')
 
@@ -60,19 +58,19 @@ class AuthController {
         }
     }
 
-    async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<any> {
+    async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
         try {
             const {email} = req.body;
-            let result = await authService.forgotPassword(email)
+            await authService.forgotPassword(email)
 
             return res.json("Link sent to the email")
         } catch (e) {
-
+            next(e)
         }
     }
 
 
-    async resetPassword(req: Request, res: Response, next: NextFunction): Promise<any> {
+    async resetPassword(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
         try{
             const {id, token} = req.params;
             const {new_password} = req.body;

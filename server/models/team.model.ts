@@ -10,6 +10,7 @@ import {
 } from "sequelize-typescript";
 import User from "./user.model";
 import {TeamI} from "../global/types";
+import Request from "./request.model";
 
 
 @Table(
@@ -32,4 +33,8 @@ export default class Team extends Model implements TeamI{
 
     @HasMany(() => User)
     players!: User[]
+
+
+    @HasMany(() => Request)
+    requests!: Request[]
 }

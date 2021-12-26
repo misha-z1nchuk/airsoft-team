@@ -7,11 +7,12 @@ import {
     AllowNull,
     NotEmpty,
     Unique,
-    Default, BelongsTo, ForeignKey
+    Default, BelongsTo, ForeignKey, HasMany
 } from "sequelize-typescript";
 import Team from "./team.model";
 import {UserI} from "../global/types";
 import Role from "./role.model";
+import Request from "./request.model";
 
 
 @Table(
@@ -69,4 +70,7 @@ export default class User extends Model implements UserI{
 
     @Column
     activationLink!: string;
+
+    @HasMany(() => Request)
+    requests!: Request[]
 }

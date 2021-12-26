@@ -1,9 +1,11 @@
 import {Router} from "express";
 const router = Router();
-const userController = require('../controllers/user-controller')
+const teamController = require('../controllers/team-controller')
 const authMiddleware = require('../middleware/auth-middleware')
+import {body} from "express-validator";
 
 
-router.get('/get-users', authMiddleware, userController.getUsers)
+//TODO: Auth middleware for player
+
 
 module.exports = router
