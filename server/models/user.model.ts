@@ -71,6 +71,9 @@ export default class User extends Model implements UserI{
     @Column
     activationLink!: string;
 
+    @Column
+    photo!: string;
+
     @HasMany(() => Request)
     requests!: Request[]
 }

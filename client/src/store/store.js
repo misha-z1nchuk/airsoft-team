@@ -1,33 +1,29 @@
-import {IUser} from "../models/IUser";
 import {makeAutoObservable} from "mobx";
 import AuthService from "../service/AuthService";
 import axios from "axios";
-import {AuthResponse} from "../models/response/AuthResponse";
 import {API_URL} from "../http";
-import Redirect  from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
 
 export default class Store{
-    user = {} as IUser;
+    user = {};
     isAuth = false;
     isLoading = false;
     constructor() {
         makeAutoObservable(this)
     }
 
-    setAuth(bool: boolean){
+    setAuth(bool){
         this.isAuth = bool
     }
 
-    setUser(user: IUser){
+    setUser(user){
         this.user = user;
     }
 
-    setLoading(bool: boolean){
+    setLoading(bool){
         this.isLoading = bool;
     }
 
-    async login(email: string, password: string){
+    async login(email, password){
         try {
             const response = await AuthService.login(email, password);
             console.log(response)
@@ -39,7 +35,7 @@ export default class Store{
         }
     }
 
-    async registration(first_name: string, last_name: string, email: string, password: string, role: string){
+    async registration(first_name, last_name, email, password, role){
         try {
             const response = await AuthService.registration(first_name, last_name, email, password, role);
             localStorage.setItem('token', response.data.accessToken);
@@ -56,7 +52,7 @@ export default class Store{
             const response = await AuthService.logout();
             localStorage.removeItem('token');
             this.setAuth(false);
-            this.setUser({} as IUser);
+            this.setUser({});
         }catch (e){
             console.log(e)
         }
@@ -66,7 +62,7 @@ export default class Store{
     async checkAuth(){
         this.isLoading = true;
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/auth/refresh`, {withCredentials: true})
+            const response = await axios.get(`${API_URL}/auth/refresh`, {withCredentials: true})
             localStorage.setItem('token', response.data.accessToken);
             this.setAuth(true);
             this.setUser(response.data.user);
@@ -80,10 +76,6 @@ export default class Store{
     async googleAuth(){
         window.open('http://localhost:5000/api/auth/google', 'google','width=800,height=600,status=0,toolbar=0');
 
-        await setTimeout(() => {
-        }, 7000)
-        await this.checkAuth()
-        
     }
 
 

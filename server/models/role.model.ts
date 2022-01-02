@@ -9,6 +9,7 @@ import {
     Table
 } from "sequelize-typescript";
 import User from "./user.model";
+import Notification from "./notification.model";
 
 
 @Table(
@@ -28,5 +29,8 @@ export default class Role extends Model {
     @NotEmpty
     @Column
     name!: string
+
+    @HasMany(() => Notification)
+    notification!: Notification[]
 
 }

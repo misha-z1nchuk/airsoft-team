@@ -1,5 +1,16 @@
-import {AutoIncrement, BelongsTo, Column, Default, ForeignKey, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {
+    AutoIncrement,
+    BelongsTo,
+    Column, DataType,
+    Default,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table
+} from "sequelize-typescript";
 import User from "./user.model";
+import {SequelizeHooks} from "sequelize/types/lib/hooks";
+import {Sequelize} from "sequelize";
 
 @Table(
     {
@@ -30,6 +41,8 @@ export default class Token extends Model{
     isActivated!: boolean
 
 
-    @Column
-    refreshToken!: string
+    @Column({
+        type: DataType.STRING(500)
+    })
+    refreshToken!: string;
 }

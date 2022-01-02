@@ -24,7 +24,7 @@ passport.use(new GoogleStrategy({
         try {
             const {familyName, givenName} = profile.name;
             const email = profile.emails[0].value;
-
+            console.log(profile)
             let randPassword = generator.generate({
                 length: 10,
                 numbers: true

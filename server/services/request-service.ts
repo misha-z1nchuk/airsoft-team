@@ -5,6 +5,7 @@ import Team from "../models/team.model";
 const jwt = require('jsonwebtoken')
 const ApiError = require('../exeptions/api-error')
 const teamService = require('../services/team-service')
+const notificationService = require('../services/notification-service')
 
 export class RequestService {
 
@@ -22,6 +23,7 @@ export class RequestService {
         }
 
         await Request.create({author_id: user_id, action: 'JOIN', team_id})
+        await notificationService.createNotification(`User with id ${user_id} wanna to join team with id ${team_id}`, 2);
     }
 
     async quitTeam(authorizationHeader: string, team_id: number): Promise<void>{

@@ -3,7 +3,7 @@ import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
 
-const LoginForm: FC = () => {
+const LoginForm = () => {
     const [first_name, setFirstName] = useState('Misha');
     const [last_name, setLastName] = useState('Ziref');
     const [email, setEmail] = useState('');

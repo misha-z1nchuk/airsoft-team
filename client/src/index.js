@@ -3,23 +3,18 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Store from "./store/store";
 import {BrowserRouter as Router} from "react-router-dom";
-interface State{
-    store: Store
-}
+
 
 const store = new Store()
 
-export const Context = createContext<State>({
-    store,
-})
+export const Context = createContext(null);
+
 ReactDOM.render(
     <Context.Provider value={{
-        store
+        user: new Store()
     }}>
-        <Router>
         <App/>
-        </Router>
     </Context.Provider>,
-   document.getElementById('root')
+    document.getElementById('root')
 );
 

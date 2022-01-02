@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth-middleware')
 import {body} from "express-validator";
 
 
-//TODO: Auth middleware for player
+//TODO: Login middleware for player
 
 
 module.exports = router
