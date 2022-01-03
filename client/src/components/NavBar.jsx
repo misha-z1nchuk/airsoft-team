@@ -14,10 +14,17 @@ const NavBar = observer(() => {
             <Container>
                 <NavLink to={SERVICE_ROUTE}>Airsoft</NavLink>
                 { user.isAuth ?
-                    <Nav className="ms-auto">
-                        <Button variant={"outline-light"} onClick={() => user.logout()}>Log out</Button>
+                    <Nav className="ml-auto" style={{color: 'white'}}>
+                            <Button variant={"outline-light"} onClick={() => user.logout()}>Log out</Button>
+                            <Button variant={"outline-light"}
+                                    onClick={() => navigate('/settings')}
+                                    className="ml-2"
+                            >
+                                Settings
+                            </Button>
                     </Nav>
                     :
+
                     <Nav className="ms-auto">
                         <Button variant={"outline-light"} onClick={() => navigate('/login')}>Authorization</Button>
                     </Nav>

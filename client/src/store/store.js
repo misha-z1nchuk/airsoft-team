@@ -2,6 +2,8 @@ import {makeAutoObservable} from "mobx";
 import AuthService from "../service/AuthService";
 import axios from "axios";
 import {API_URL} from "../http";
+import UserService from "../service/UserService";
+
 
 export default class Store{
     user = {};
@@ -75,7 +77,14 @@ export default class Store{
 
     async googleAuth(){
         window.open('http://localhost:5000/api/auth/google', 'google','width=800,height=600,status=0,toolbar=0');
+    }
 
+    async changePhoto(photo){
+        try {
+            const response = await UserService.changePhoto(photo);
+        }catch (e){
+            console.log(e)
+        }
     }
 
 
