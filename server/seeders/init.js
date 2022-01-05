@@ -12,6 +12,14 @@ module.exports = {
                 name: 'ADMIN'
             }
         ]);
+        await queryInterface.bulkInsert('team', [
+            {
+                team_name: 'A'
+            },
+            {
+                team_name: 'B'
+            }
+        ]);
     },
 
     down: async (queryInterface) => {

@@ -19,7 +19,7 @@ export class AuthService{
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt)
         const activationLink = uuid.v4()
-        const user = await User.create({first_name, last_name, email,password: hashedPassword, role_id: role, activationLink})
+        const user = await User.create({first_name, last_name, email,password: hashedPassword, roleId: role, activationLink})
 
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`)
 

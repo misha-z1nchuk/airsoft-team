@@ -7,7 +7,7 @@ export interface UserI extends Model{
     last_name: string,
     email: string,
     password: string,
-    role: number,
+    roleId: number,
     teamId: number,
     isActivated: boolean,
     activationLink: string,
@@ -24,7 +24,7 @@ export interface TokenI extends Model{
 
 export interface RequestI extends Model{
     id?: number | null
-    author_id: number,
+    authorId: number,
     action: string,
     team_id: number
 }

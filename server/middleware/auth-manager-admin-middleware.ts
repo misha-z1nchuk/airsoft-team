@@ -35,7 +35,7 @@ module.exports = async function (req :any, res: Response, next: NextFunction){
             return next(ApiError.BadRequest("User not found"));
         }
 
-        if(candidate.role !== 3 && candidate.role !== 2){
+        if(candidate.roleId !== 3 && candidate.roleId !== 2){
             return next(ApiError.BadRequest("Forbidden"));
         }
 

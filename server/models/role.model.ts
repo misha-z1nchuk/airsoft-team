@@ -25,7 +25,7 @@ const Role = sequelize.define("role", {
 );
 
 Role.hasMany(Notification)
-Notification.belongsTo(Role, {as: 'recipientRole'})
+Notification.belongsTo(Role)
 
 
 

@@ -50,8 +50,8 @@ const User = sequelize.define("user", {
 User.hasOne(Token)
 Token.belongsTo(User)
 
-User.hasMany(Request)
-Request.belongsTo(User, {as: 'author'})
+User.hasMany(Request )
+Request.belongsTo(User)
 
 Role.hasMany(User)
 User.belongsTo(Role)

@@ -11,16 +11,9 @@ const Request = sequelize.define("request", {
             primaryKey: true,
             autoIncrement: true
         },
-
-        author_id:{
-            type: DataTypes.INTEGER
-        },
         action: {
             type: DataTypes.STRING
         },
-        teamId: {
-            type: DataTypes.INTEGER
-        }
     },{
         freezeTableName: true,
         timestamps: false,

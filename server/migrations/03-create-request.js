@@ -10,7 +10,7 @@ module.exports = {
                 autoIncrement: true,
                 onDelete: 'cascade'
             },
-            authorId:{
+            userId:{
                 type: INTEGER,
                 references: {
                     model: 'user',

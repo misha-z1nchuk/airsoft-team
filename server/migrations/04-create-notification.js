@@ -13,7 +13,7 @@ module.exports = {
             text: {
                 type: STRING
             },
-            recipientRoleId: {
+            roleId: {
                 type: INTEGER,
                 references: {
                     model: 'role',

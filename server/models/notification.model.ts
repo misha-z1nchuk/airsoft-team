@@ -13,10 +13,6 @@ const Notification = sequelize.define("notification", {
         text: {
             type: DataTypes.STRING
         },
-        recipientRoleId: {
-            type: DataTypes.INTEGER
-        },
-
     },{
         freezeTableName: true,
         timestamps: false,

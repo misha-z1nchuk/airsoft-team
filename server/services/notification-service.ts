@@ -9,7 +9,7 @@ import {NotificationI, UserI} from "../global/types";
 
 class NotificationService{
     async createNotification(text: string, recipient_role: number){
-        await Notification.create({text, recipient_role});
+        await Notification.create({text, roleId: recipient_role});
         emitter.emit('newNotification');
     }
 
@@ -20,7 +20,7 @@ class NotificationService{
         if (!candidate){
             throw ApiError.UnauthorizedError()
         }
-        const role: number = candidate.role;
+        const role: number = candidate.roleId;
         return await Notification.findAll({where : {recipient_role: role}});
     }
 

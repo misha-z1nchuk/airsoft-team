@@ -16,7 +16,7 @@ router.post('/registration',
     [
         body('first_name').isLength({max: 24}).isString(),
         body('last_name').isLength({max: 24}).isString(),
-        body('role_id').custom(async role => {
+        body('roleId').custom(async role => {
             let candidate = await Role.findOne({where: {id: role}})
             if (!candidate){
                 return Promise.reject('Wrong role');

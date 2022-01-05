@@ -14,9 +14,9 @@ export class RequestController {
             }
 
             const authorizationHeader = req.headers.authorization;
-            const {team_id} = req.body;
+            const {teamId} = req.body;
 
-            await requestService.joinTeam(authorizationHeader, team_id)
+            await requestService.joinTeam(authorizationHeader, teamId)
             emitter.emit('NewNotification')
             return res.json("User joined team")
         }catch (e){

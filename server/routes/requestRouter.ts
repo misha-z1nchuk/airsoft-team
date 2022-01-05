@@ -9,7 +9,7 @@ import {body} from "express-validator";
 router.get('/', authMiddleware, requestController.getRequestByAuthor)
 router.post('/join-team',
     [
-        body('team_id').isNumeric()
+        body('teamId').isNumeric()
     ],
     authPlayerMiddleware, requestController.joinTeam)
 router.post('/accept/:id', authMiddleware, requestController.accept)

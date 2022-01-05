@@ -14,7 +14,7 @@ export class RequestService {
         const accessToken = authorizationHeader.split(' ')[1];
         const user_id: number = jwt.decode(accessToken).id
 
-        const request = await Request.findOne({where: {author_id: user_id}})
+        const request = await Request.findOne({where: {userId: user_id}})
         if (request){
             throw ApiError.BadRequest("User has already created request")
         }
@@ -23,7 +23,7 @@ export class RequestService {
             throw ApiError.BadRequest("Chosen team does not exists")
         }
 
-        await Request.create({author_id: user_id, action: 'JOIN', team_id})
+        await Request.create({userId: user_id, action: 'JOIN', teamId:  team_id})
         await notificationService.createNotification(`User with id ${user_id} wanna to join team with id ${team_id}`, 2);
     }
 
@@ -49,7 +49,7 @@ export class RequestService {
 
         const action = userRequest.action;
         if (action == "JOIN") {
-            const user_id: number = userRequest.author_id;
+            const user_id: number = userRequest.authorId;
             await teamService.joinTeam(user_id, userRequest.team_id);
             await userRequest.destroy();
 
