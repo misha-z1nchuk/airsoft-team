@@ -29,10 +29,6 @@ const User = sequelize.define("user", {
             type: DataTypes.STRING,
             allowNull: false
         },
-        role_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         isActivated: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
@@ -52,14 +48,13 @@ const User = sequelize.define("user", {
 
 
 User.hasOne(Token)
-Token.belongsTo(User, {foreignKey: 'userId'})
-
+Token.belongsTo(User)
 
 User.hasMany(Request)
-Request.belongsTo(User, {foreignKey: 'author_id'})
+Request.belongsTo(User, {as: 'author'})
 
 Role.hasMany(User)
-User.belongsTo(Role, {foreignKey: 'role_id'})
+User.belongsTo(Role)
 
 
 module.exports = User;

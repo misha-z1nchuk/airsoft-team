@@ -13,7 +13,7 @@ const Notification = sequelize.define("notification", {
         text: {
             type: DataTypes.STRING
         },
-        recipient_role: {
+        recipientRoleId: {
             type: DataTypes.INTEGER
         },
 

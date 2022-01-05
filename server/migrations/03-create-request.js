@@ -10,14 +10,22 @@ module.exports = {
                 autoIncrement: true,
                 onDelete: 'cascade'
             },
-            author_id:{
-                type: INTEGER
+            authorId:{
+                type: INTEGER,
+                references: {
+                    model: 'user',
+                    key: 'id'
+                }
             },
             action: {
                 type: STRING
             },
-            team_id: {
-                type: INTEGER
+            teamId: {
+                type: INTEGER,
+                references: {
+                    model: 'team',
+                    key: 'id'
+                }
             }
 
         });

@@ -1,5 +1,6 @@
 import {UserI} from "../global/types";
 import {and} from "sequelize";
+import Request from "./request.model";
 const User= require('./user.model')
 const {DataTypes} = require('sequelize');
 const sequelize = require('../config/db')
@@ -23,7 +24,11 @@ const Team = sequelize.define("team", {
 );
 
 Team.hasMany(User)
-User.belongsTo(Team, {foreignKey: 'team_id'})
+User.belongsTo(Team)
+
+Team.hasMany(Request)
+Request.belongsTo(Team)
+
 
 export default Team
 module.exports = Team;

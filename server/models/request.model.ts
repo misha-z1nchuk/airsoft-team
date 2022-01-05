@@ -18,7 +18,7 @@ const Request = sequelize.define("request", {
         action: {
             type: DataTypes.STRING
         },
-        team_id: {
+        teamId: {
             type: DataTypes.INTEGER
         }
     },{
@@ -26,6 +26,7 @@ const Request = sequelize.define("request", {
         timestamps: false,
     }
 );
+
 
 export default Request
 module.exports = Request;

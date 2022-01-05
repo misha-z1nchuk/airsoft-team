@@ -11,7 +11,11 @@ module.exports = {
                 onDelete: 'cascade'
             },
             userId: {
-                type: INTEGER
+                type: INTEGER,
+                references:{
+                    model: 'user',
+                    key: 'id',
+                }
             },
             isActivated: {
                 type: BOOLEAN,

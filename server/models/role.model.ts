@@ -25,7 +25,7 @@ const Role = sequelize.define("role", {
 );
 
 Role.hasMany(Notification)
-Notification.belongsTo(Role, {foreignKey: 'recipient_role'})
+Notification.belongsTo(Role, {as: 'recipientRole'})
 
 
 

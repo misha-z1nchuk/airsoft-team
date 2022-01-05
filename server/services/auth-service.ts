@@ -11,7 +11,7 @@ const ApiError = require('../exeptions/api-error')
 
 export class AuthService{
     async registration(first_name: string, last_name: string, email: string, password: string, role: string): Promise<ResponseRegLogI> {
-        let candidate = await User.findOne({where: {email}});
+        let candidate = await User.findOne({where: {email: email}});
         if (candidate){
             throw ApiError.BadRequest(`User with such email ${email} exists`);
         }
@@ -19,7 +19,7 @@ export class AuthService{
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt)
         const activationLink = uuid.v4()
-        const user = await User.create({first_name, last_name, email,password: hashedPassword,  role_id: role, activationLink})
+        const user = await User.create({first_name, last_name, email,password: hashedPassword, role_id: role, activationLink})
 
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`)
 

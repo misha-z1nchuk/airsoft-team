@@ -13,8 +13,12 @@ module.exports = {
             text: {
                 type: STRING
             },
-            recipient_role: {
-                type: INTEGER
+            recipientRoleId: {
+                type: INTEGER,
+                references: {
+                    model: 'role',
+                    key: 'id'
+                }
             },
         });
     },

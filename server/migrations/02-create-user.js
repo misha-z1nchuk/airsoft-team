@@ -27,9 +27,19 @@ module.exports = {
                 type: STRING,
                 allowNull: false
             },
-            role_id: {
+            roleId: {
                 type: INTEGER,
-                allowNull: false
+                references:{
+                    model: 'role',
+                    key: 'id',
+                }
+            },
+            teamId: {
+                type: INTEGER,
+                references: {
+                    model: 'team',
+                    key: 'id'
+                }
             },
             isActivated: {
                 type: BOOLEAN,
