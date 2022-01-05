@@ -21,7 +21,7 @@ class NotificationService{
             throw ApiError.UnauthorizedError()
         }
         const role: number = candidate.roleId;
-        return await Notification.findAll({where : {recipient_role: role}});
+        return await Notification.findAll({where : {roleId: role}});
     }
 
     async deleteNotification(id: number) {

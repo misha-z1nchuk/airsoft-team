@@ -41,18 +41,16 @@ export class RequestService {
     }
 
 
-    async accept(id: number): Promise<void> {
-        const userRequest: RequestI | null = await Request.findOne({where: {id: id}})
+    async accept(id: string): Promise<void> {
+        const userRequest: RequestI | null = await Request.findOne({where: {id}})
         if (!userRequest) {
             throw ApiError.BadRequest("Such request does not exists")
         }
-
         const action = userRequest.action;
         if (action == "JOIN") {
-            const user_id: number = userRequest.authorId;
-            await teamService.joinTeam(user_id, userRequest.team_id);
+            const user_id: number = userRequest.userId;
+            await teamService.joinTeam(user_id, userRequest.teamId);
             await userRequest.destroy();
-
         } else if (action == "QUIT") {
             //TODO:
         }

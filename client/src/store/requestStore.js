@@ -21,7 +21,7 @@ export default class RequestStore{
 
     async joinTeam(team_id){
         try{
-            const response = await UserService.joinTeam({team_id: team_id})
+            const response = await UserService.joinTeam({teamId: team_id})
         }catch (e){
             console.log(e)
         }

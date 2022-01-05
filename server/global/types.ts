@@ -24,9 +24,9 @@ export interface TokenI extends Model{
 
 export interface RequestI extends Model{
     id?: number | null
-    authorId: number,
+    userId: number,
     action: string,
-    team_id: number
+    teamId: number
 }
 export interface TeamI extends Model{
     id?: number | null
