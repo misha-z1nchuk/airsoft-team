@@ -2,4 +2,3 @@ server/node_modules
 server/.env
 .idea
 client/node_modules
-client.7z
