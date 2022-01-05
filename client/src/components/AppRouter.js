@@ -6,6 +6,7 @@ import {authRoutes, publicRoutes} from "../routes";
 import Auth from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import {Context} from "../index";
+import PlayerMenu from "../pages/PlayerMenu";
 
 const AppRouter = () => {
     const {user} = useContext(Context)
@@ -14,6 +15,13 @@ const AppRouter = () => {
         <div>
             <main>
                 <Routes>
+                    { (user.user.role === 1) ?
+                        <Route key={'player-menu'} path={"player-menu"} element={<PlayerMenu />}/>
+                        :
+                        <></>
+                    }
+
+                    }
                     {publicRoutes.map(({path, Component}) =>
                         <Route key={path} path={path} element={<Component />}/>
                     )}

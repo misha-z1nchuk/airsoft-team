@@ -2,7 +2,7 @@ import {Router} from "express";
 const   router = Router();
 const authController = require('../controllers/auth-controller')
 import {body} from "express-validator";
-import Token from "../models/token.model";
+const Token = require("../models/token.model");
 import Role from "../models/role.model";
 const passport = require('../config/passport')
 
@@ -16,8 +16,8 @@ router.post('/registration',
     [
         body('first_name').isLength({max: 24}).isString(),
         body('last_name').isLength({max: 24}).isString(),
-        body('role').custom(async roleId => {
-            let candidate = await Role.findOne({where: {id: roleId}})
+        body('role_id').custom(async role => {
+            let candidate = await Role.findOne({where: {id: role}})
             if (!candidate){
                 return Promise.reject('Wrong role');
             }

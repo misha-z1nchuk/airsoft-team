@@ -5,7 +5,7 @@ import {API_URL} from "../http";
 import UserService from "../service/UserService";
 
 
-export default class Store{
+export default class UserStore {
     user = {};
     isAuth = false;
     isLoading = false;
@@ -33,7 +33,7 @@ export default class Store{
             this.setAuth(true);
             this.setUser(response.data.user);
         }catch (e){
-            console.log(e)
+            console.log(e.response?.data?.message)
         }
     }
 
@@ -44,7 +44,7 @@ export default class Store{
             this.setAuth(true);
             this.setUser(response.data.user);
         }catch (e){
-            console.log(e)
+            console.log(e.response?.data?.message)
         }
     }
 
@@ -56,7 +56,7 @@ export default class Store{
             this.setAuth(false);
             this.setUser({});
         }catch (e){
-            console.log(e)
+            console.log(e.response?.data?.message)
         }
     }
 
@@ -69,7 +69,7 @@ export default class Store{
             this.setAuth(true);
             this.setUser(response.data.user);
         }catch (e){
-            console.log(e)
+            console.log(e.response?.data?.message)
         }finally {
             this.isLoading = false;
         }
@@ -83,10 +83,9 @@ export default class Store{
         try {
             const response = await UserService.changePhoto(photo);
         }catch (e){
-            console.log(e)
+            console.log(e.response?.data?.message)
         }
     }
-
 
 
 

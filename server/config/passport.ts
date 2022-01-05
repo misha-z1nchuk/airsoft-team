@@ -1,4 +1,6 @@
-import User from "../models/user.model";
+import {UserI} from "../global/types";
+
+const User = require("../models/user.model");
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -30,7 +32,7 @@ passport.use(new GoogleStrategy({
                 numbers: true
             });
 
-            let candidate: User|null = await User.findOne({where: {email}})
+            let candidate: UserI|null = await User.findOne({where: {email}})
             if (!candidate){
                 let user: ResponseRegLogI = await authService.registration(familyName, givenName, email, randPassword, "1");
                 return done(null , user.user.id)

@@ -3,7 +3,14 @@ import path from "path";
 require('dotenv').config()
 import express, { Application, Request, Response } from "express";
 const router = require('./routes/index')
-import {sequelize} from "./config/db";
+const sequelize = require('./config/db')
+const userModel = require('./models/user.model')
+const tokenModel =require('./models/token.model')
+const teamModel =require('./models/team.model')
+const requestModel =require('./models/request.model')
+const roleModel =require('./models/role.model')
+const notificationModel =require('./models/notification.model')
+
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const errorMiddleware = require('./middleware/error-middleware')
@@ -36,8 +43,8 @@ app.get('/connect', (req: Request, res:Response) => {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
     })
-    emitter.on('newMessage', () => {
-        res.write(`data: \n`)
+    emitter.on('NewNotification', (message: any) => {
+        res.write(`data: ${JSON.stringify(message)} \n\n`)
     })
 })
 

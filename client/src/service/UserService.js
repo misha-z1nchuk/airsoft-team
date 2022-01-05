@@ -10,5 +10,10 @@ export default class UserService{
         return $api.post(API_URL + "/user/change-img", photo)
     }
 
+    static joinTeam(team_id){
+        return $api.post(API_URL+"/request/join-team", team_id);
+    }
+
+
 }
 

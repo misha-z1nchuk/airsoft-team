@@ -1,12 +1,15 @@
-import User from "../models/user.model";
 const jwt = require('jsonwebtoken')
+const User = require('../models/user.model')
 const ApiError = require('../exeptions/api-error')
-
+import Request from '../models/request.model'
 export class UserService{
 
-    async getAllUsers(): Promise<User[]>{
+    async getAllUsers(): Promise<typeof User[]>{
         return await User.findAll();
     }
+
+
+
 
     async changeImg(token : string, fileName : string){
         const accessToken = token.split(' ')[1];

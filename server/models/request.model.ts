@@ -1,47 +1,31 @@
-import {
-    AllowNull,
-    AutoIncrement, BelongsTo,
-    Column, ForeignKey,
-    HasMany, Is, IsIn,
-    Model,
-    NotEmpty,
-    PrimaryKey,
-    Table, Unique
-} from "sequelize-typescript";
-import User from "./user.model";
-import Team from "./team.model";
+import {UserI} from "../global/types";
+import {and} from "sequelize";
 
+const {DataTypes} = require('sequelize');
+const sequelize = require('../config/db')
 
-@Table(
-    {
-        tableName: "request",
-        timestamps: false
+const Request = sequelize.define("request", {
+
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+
+        author_id:{
+            type: DataTypes.INTEGER
+        },
+        action: {
+            type: DataTypes.STRING
+        },
+        team_id: {
+            type: DataTypes.INTEGER
+        }
+    },{
+        freezeTableName: true,
+        timestamps: false,
     }
-)
-export default class Request extends Model {
+);
 
-    @AutoIncrement
-    @PrimaryKey
-    @Column
-    id?: number
-
-    @Unique(true)
-    @ForeignKey(() => User)
-    @Column
-    author_id!: number;
-
-
-    @BelongsTo(() => User)
-    user!: User;
-
-    //TODO: VALIDATION (only allowed actions)
-    @Column
-    action!: string;
-
-    @ForeignKey(() => Team)
-    @Column
-    team_id!: number;
-
-
-
-}
+export default Request
+module.exports = Request;

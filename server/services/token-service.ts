@@ -1,7 +1,8 @@
 import {ResponseTokens} from "../global/responses/reg-log-response";
+import {TokenI} from "../global/types";
 
 const jwt = require('jsonwebtoken')
-import Token from '../models/token.model'
+const Token = require('../models/token.model')
 
 require('dotenv').config()
 
@@ -46,7 +47,7 @@ class TokenService{
         }
     }
 
-    async saveToken(userId: number, refreshToken: string): Promise<Token>{
+    async saveToken(userId: number, refreshToken: string): Promise<TokenI>{
         const tokenData = await Token.findOne({where: {userId}})
         if(tokenData){
             tokenData.refreshToken = refreshToken
@@ -61,7 +62,7 @@ class TokenService{
         return await Token.destroy({where: {refreshToken}});
     }
 
-    async findToken(refreshToken: any): Promise<Token|null> {
+    async findToken(refreshToken: any): Promise<TokenI|null> {
         return await Token.findOne({where: {refreshToken}});
     }
 }

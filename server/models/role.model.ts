@@ -1,36 +1,33 @@
-import {
-    AllowNull,
-    AutoIncrement,
-    Column,
-    HasMany,
-    Model,
-    NotEmpty,
-    PrimaryKey,
-    Table
-} from "sequelize-typescript";
-import User from "./user.model";
+import {UserI} from "../global/types";
+import {and} from "sequelize";
+import {Not} from "sequelize-typescript";
 import Notification from "./notification.model";
+const User = require('./user.model')
+const {DataTypes} = require('sequelize');
+const sequelize = require('../config/db')
 
+const Role = sequelize.define("role", {
 
-@Table(
-    {
-        tableName: "role",
-        timestamps: false
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+
+        name: {
+            type: DataTypes.STRING
+        }
+
+    },{
+        freezeTableName: true,
+        timestamps: false,
     }
-)
-export default class Role extends Model {
+);
 
-    @AutoIncrement
-    @PrimaryKey
-    @Column
-    id?: number
+Role.hasMany(Notification)
+Notification.belongsTo(Role, {foreignKey: 'recipient_role'})
 
-    @AllowNull(false)
-    @NotEmpty
-    @Column
-    name!: string
 
-    @HasMany(() => Notification)
-    notification!: Notification[]
 
-}
+export default Role
+module.exports = Role;

@@ -6,6 +6,7 @@ const authMiddleware = require('../middleware/auth-middleware')
 import {body} from "express-validator";
 
 
+router.get('/', authMiddleware, requestController.getRequestByAuthor)
 router.post('/join-team',
     [
         body('team_id').isNumeric()
@@ -13,5 +14,7 @@ router.post('/join-team',
     authPlayerMiddleware, requestController.joinTeam)
 router.post('/accept/:id', authMiddleware, requestController.accept)
 router.post('/decline/:id' /*, Managermiddlevare //TODO: */, requestController.decline)
+
+
 
 module.exports = router

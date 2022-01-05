@@ -1,5 +1,6 @@
-import User from "../models/user.model";
-import Request from "../models/request.model";
+import {RequestI} from "../global/types";
+
+const Request = require("../models/request.model");
 import Team from "../models/team.model";
 
 const jwt = require('jsonwebtoken')
@@ -41,7 +42,7 @@ export class RequestService {
 
 
     async accept(id: number): Promise<void> {
-        const userRequest: Request | null = await Request.findOne({where: {id: id}})
+        const userRequest: RequestI | null = await Request.findOne({where: {id: id}})
         if (!userRequest) {
             throw ApiError.BadRequest("Such request does not exists")
         }
@@ -58,11 +59,19 @@ export class RequestService {
     }
 
     async decline(id: number): Promise<void> {
-        const userRequest: Request | null = await Request.findOne({where: {id: id}})
+        const userRequest: RequestI | null = await Request.findOne({where: {id: id}})
         if (!userRequest) {
             throw ApiError.BadRequest("Such request does not exists")
         }
         await userRequest.destroy();
+    }
+
+
+    async getRequestByAuthor(authorizationHeader: string): Promise<Request|null>{
+        const accessToken = authorizationHeader.split(' ')[1];
+        const user_id: number = jwt.decode(accessToken).id
+
+        return await Request.findOne({where: {author_id : user_id}})
     }
 }
 

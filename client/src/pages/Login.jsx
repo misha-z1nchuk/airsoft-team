@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Container, Form} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -15,6 +15,12 @@ const Login = observer(() => {
     const isLogin = location.pathname === LOGIN_ROUTE
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+
+    useEffect(() => {
+        if (user.isAuth)
+            navigate('/')
+    })
 
     const click = async () => {
         try {

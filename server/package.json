@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./index.ts"
+    "dev": "nodemon ./index.ts",
+    "build": "tsc -p .",
+    "migrate": "npm run build  && sequelize-cli db:migrate:undo:all && sequelize-cli db:migrate"
   },
   "author": "",
   "license": "ISC",

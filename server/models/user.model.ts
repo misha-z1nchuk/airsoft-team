@@ -1,79 +1,65 @@
-import {
-    Model,
-    Table,
-    AutoIncrement,
-    PrimaryKey,
-    Column,
-    AllowNull,
-    NotEmpty,
-    Unique,
-    Default, BelongsTo, ForeignKey, HasMany
-} from "sequelize-typescript";
-import Team from "./team.model";
 import {UserI} from "../global/types";
-import Role from "./role.model";
-import Request from "./request.model";
+import {and} from "sequelize";
+const Role = require("./role.model");
+const Token = require('./token.model')
+const Request = require('./request.model')
+const {DataTypes} = require('sequelize');
+const sequelize = require('../config/db')
 
+const User = sequelize.define("user", {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        first_name:{
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        last_name:{
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        role_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        isActivated: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        activationLink: {
+            type: DataTypes.STRING
+        },
+        photo:{
+            type: DataTypes.STRING
+        }
 
-@Table(
-    {
-        tableName: "user",
-        timestamps: false
+    },{
+        freezeTableName: true,
+        timestamps: false,
     }
-)
-export default class User extends Model implements UserI{
-
-    @AutoIncrement
-    @PrimaryKey
-    @Column
-    id?: number
-
-    @AllowNull(false)
-    @NotEmpty
-    @Column
-    first_name!: string
-
-    @AllowNull(false)
-    @NotEmpty
-    @Column
-    last_name!: string;
-
-    @AllowNull(false)
-    @NotEmpty
-    @Unique(true)
-    @Column
-    email!: string;
-
-    @AllowNull(false)
-    @NotEmpty
-    @Column
-    password!: string;
-
-    @ForeignKey(() => Role)
-    @AllowNull(false)
-    @Column
-    role!: number;
+);
 
 
-    @ForeignKey(() => Team)
-    @Column
-    teamId!: number;
+User.hasOne(Token)
+Token.belongsTo(User, {foreignKey: 'userId'})
 
 
-    @BelongsTo(() => Team)
-    team!: Team;
+User.hasMany(Request)
+Request.belongsTo(User, {foreignKey: 'author_id'})
 
-    @Default(false)
-    @Column
-    isActivated!: boolean;
+Role.hasMany(User)
+User.belongsTo(Role, {foreignKey: 'role_id'})
 
 
-    @Column
-    activationLink!: string;
-
-    @Column
-    photo!: string;
-
-    @HasMany(() => Request)
-    requests!: Request[]
-}
+module.exports = User;

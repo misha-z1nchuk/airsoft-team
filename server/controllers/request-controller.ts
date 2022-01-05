@@ -1,6 +1,7 @@
 import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
 import {log} from "util";
+import {emitter} from "../index";
 const ApiError = require('../exeptions/api-error')
 const requestService = require('../services/request-service')
 
@@ -16,6 +17,7 @@ export class RequestController {
             const {team_id} = req.body;
 
             await requestService.joinTeam(authorizationHeader, team_id)
+            emitter.emit('NewNotification')
             return res.json("User joined team")
         }catch (e){
             next(e)
@@ -40,6 +42,16 @@ export class RequestController {
 
         }catch (e){
             next(e)
+        }
+    }
+
+    async getRequestByAuthor(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
+        try {
+            const authorizationHeader = req.headers.authorization;
+            const response = await requestService.getRequestByAuthor(authorizationHeader);
+            return res.json(response);
+        }catch (e){
+
         }
     }
 

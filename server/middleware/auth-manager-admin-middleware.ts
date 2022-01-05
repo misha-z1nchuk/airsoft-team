@@ -1,6 +1,7 @@
 import {NextFunction} from "express";
-import User from "../models/user.model";
+const User = require("../models/user.model");
 import {annotateModelWithIndex} from "sequelize-typescript";
+import {UserI} from "../global/types";
 
 const ApiError = require('../exeptions/api-error');
 const tokenService = require('../services/token-service')
@@ -29,7 +30,7 @@ module.exports = async function (req :any, res: Response, next: NextFunction){
         }
 
         const user_id: number = jwt.decode(accessToken).id
-        const candidate: User | null = await User.findOne({where: {id: user_id}});
+        const candidate: UserI | null = await User.findOne({where: {id: user_id}});
         if (!candidate){
             return next(ApiError.BadRequest("User not found"));
         }

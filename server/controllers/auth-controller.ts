@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import {validationResult} from "express-validator";
-import Token from "../models/token.model";
+const Token = require("../models/token.model");
 const authService = require('../services/auth-service')
 const ApiError = require('../exeptions/api-error')
 

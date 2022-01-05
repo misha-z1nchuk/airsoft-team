@@ -1,40 +1,29 @@
-import {
-    AllowNull,
-    AutoIncrement,
-    Column,
-    HasMany,
-    Model,
-    NotEmpty,
-    PrimaryKey,
-    Table
-} from "sequelize-typescript";
-import User from "./user.model";
-import {TeamI} from "../global/types";
-import Request from "./request.model";
+import {UserI} from "../global/types";
+import {and} from "sequelize";
+const User= require('./user.model')
+const {DataTypes} = require('sequelize');
+const sequelize = require('../config/db')
 
+const Team = sequelize.define("team", {
 
-@Table(
-    {
-        tableName: "team",
-        timestamps: false
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        team_name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
+
+    },{
+        freezeTableName: true,
+        timestamps: false,
     }
-)
-export default class Team extends Model implements TeamI{
+);
 
-    @AutoIncrement
-    @PrimaryKey
-    @Column
-    id?: number
+Team.hasMany(User)
+User.belongsTo(Team, {foreignKey: 'team_id'})
 
-    @AllowNull(false)
-    @NotEmpty
-    @Column
-    team_name!: string
-
-    @HasMany(() => User)
-    players!: User[]
-
-
-    @HasMany(() => Request)
-    requests!: Request[]
-}
+export default Team
+module.exports = Team;

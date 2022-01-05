@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Container, Dropdown, DropdownButton, Form} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -11,20 +11,24 @@ import {Context} from "../index";
 const Login = observer(() => {
     const {user} = useContext(Context)
     const navigate = useNavigate();
-
-
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [role,setRole]=useState(1);
 
+    useEffect(() => {
+        if (user.isAuth)
+            navigate('/')
+    })
+
+
     const click = async () => {
         try {
             let data = await user.registration(firstName, lastName, email, password, role);
             navigate('/')
         } catch (e) {
-            alert(e.response.data.message)
+            alert(e.response?.data?.message)
         }
     }
 

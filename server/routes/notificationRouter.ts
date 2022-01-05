@@ -8,5 +8,5 @@ import {emitter} from "../index";
 
 
 router.get('/', authManagerAdminMiddleware, notificationController.getNotifications)
-router.post('/delete/:id', authManagerAdminMiddleware, notificationController.deleteNotification )
+router.delete('/:id', authManagerAdminMiddleware, notificationController.deleteNotification )
 module.exports = router

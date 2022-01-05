@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from "express";
 
 import path from "path";
 import {log} from "util";
+import {UserI} from "../global/types";
 const uuid = require('uuid')
 const userService = require('../services/user-service')
 
@@ -26,6 +27,9 @@ class UserController{
             next(e);
         }
     }
+
+
+
 
     async getUsers(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
         try {

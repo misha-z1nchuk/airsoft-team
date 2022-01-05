@@ -1,48 +1,31 @@
-import {
-    AutoIncrement,
-    BelongsTo,
-    Column, DataType,
-    Default,
-    ForeignKey,
-    Model,
-    PrimaryKey,
-    Table
-} from "sequelize-typescript";
-import User from "./user.model";
-import {SequelizeHooks} from "sequelize/types/lib/hooks";
-import {Sequelize} from "sequelize";
+import {UserI} from "../global/types";
+import {and} from "sequelize";
 
-@Table(
-    {
-        tableName: "token",
-        timestamps: false
+const {DataTypes} = require('sequelize');
+const sequelize = require('../config/db')
+
+const Token = sequelize.define("token", {
+
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    userId: {
+        type: DataTypes.INTEGER
+    },
+    isActivated: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    refreshToken: {
+        type: DataTypes.STRING(500)
     }
-)
-
-export default class Token extends Model{
-    @AutoIncrement
-    @PrimaryKey
-    @Column
-    id?: number
+    },{
+        freezeTableName: true,
+        timestamps: false,
+    }
+);
 
 
-
-    @ForeignKey(() => User)
-    @Column
-    userId!: number;
-
-
-    @BelongsTo(() => User)
-    user!: User;
-
-
-    @Default(false)
-    @Column
-    isActivated!: boolean
-
-
-    @Column({
-        type: DataType.STRING(500)
-    })
-    refreshToken!: string;
-}
+module.exports = Token;
