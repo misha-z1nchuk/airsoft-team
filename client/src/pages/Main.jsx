@@ -11,13 +11,14 @@ let roles = {
 
 const Main = () => {
     const {user} = useContext(Context)
+    console.log(user.user)
     return (
         <div>
             Main
             { user.isAuth ?
                 <div className="align-items-center">
                     <h2> Profile info: {user.user.email}</h2>
-                    <h2>Role : {roles[user.user.role]}</h2>
+                    <h2>Role : {roles[user.user.roleId]}</h2>
                     <h2>Profile photo: </h2>
                     {user.user.photo ?
                         <img className="" src={"http://localhost:5000/"+user.user.photo} />

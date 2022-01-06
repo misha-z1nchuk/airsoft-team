@@ -23,14 +23,14 @@ const NavBar = observer(() => {
                                 Settings
                             </Button>
                         {
-                            user.user.role === 1 ?
+                            user.user.roleId === 1 ?
                                 <Button variant={"outline-light"}
                                         onClick={() => navigate('/player-menu')}
                                         className="ml-2"
                                 >
                                     PlayerMenu
                                 </Button>
-                                : <div></div>
+                                : <div/>
                         }
                     </Nav>
 

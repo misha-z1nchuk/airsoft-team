@@ -1,6 +1,5 @@
 import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
-import {log} from "util";
 import {emitter} from "../index";
 const ApiError = require('../exeptions/api-error')
 const requestService = require('../services/request-service')

@@ -15,7 +15,7 @@ const AppRouter = () => {
         <div>
             <main>
                 <Routes>
-                    { (user.user.role === 1) ?
+                    { (user.user.roleId === 1) ?
                         <Route key={'player-menu'} path={"player-menu"} element={<PlayerMenu />}/>
                         :
                         <></>

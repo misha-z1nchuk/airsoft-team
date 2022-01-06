@@ -19,7 +19,7 @@ const PlayerMenu = () => {
     return (
         <div>
             player menu
-            <h2>User team is: {user.user.team == null ? "You are not in the team" : user.user.team}</h2>
+            <h2>User team is: {user.user.teamId == null ? "You are not in the team" : user.user.teamId}</h2>
             <h2>{req == null ? "Your request is here" : "You dont have req"}</h2>
             <Container className="d-flex flex-column">
                 <Button

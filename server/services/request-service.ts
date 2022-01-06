@@ -7,7 +7,6 @@ import {io} from "../index";
 const jwt = require('jsonwebtoken')
 const ApiError = require('../exeptions/api-error')
 const teamService = require('../services/team-service')
-const notificationService = require('../services/notification-service')
 
 export class RequestService {
 
@@ -23,15 +22,9 @@ export class RequestService {
         if (!teamExist){
             throw ApiError.BadRequest("Chosen team does not exists")
         }
-        let room = "abc123";
-        io.sockets.in(room).emit('message', 'what is going on, party people?');
 
-// this message will NOT go to the client defined above
-        io.sockets.in('foobar').emit('message', 'anyone in this room yet?');
-
-
+        io.sockets.in("2").emit('message', `user with ${user_id} wanna JOIN team with id ${team_id}`);
         await Request.create({userId: user_id, action: 'JOIN', teamId:  team_id})
-        await notificationService.createNotification(`User with id ${user_id} wanna to join team with id ${team_id}`, 2);
     }
 
     async quitTeam(authorizationHeader: string, team_id: number): Promise<void>{

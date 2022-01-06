@@ -5,7 +5,9 @@ import ReactNotification from 'react-notifications-component'
 import AppRouter from "./components/AppRouter";
 import {BrowserRouter} from "react-router-dom";
 import NavBar from "./components/NavBar";
-import EventListening from "./components/EventListening";
+import Notifications from "./components/Notifications";
+import {API_URL} from "./http";
+import { io } from "socket.io-client";
 
 
 
@@ -24,6 +26,8 @@ function App() {
     }
 
 
+
+
     return (
         <BrowserRouter>
             <NavBar/>
@@ -32,10 +36,9 @@ function App() {
             {/*<h1>{store.isAuth ? `User authorized ${store.user.email}` : `Authorize pls`}</h1>*/}
             {/*<h1>{store.user.isActivated ? 'Account activated' : "Activate your account pls"}</h1>*/}
             {/*<button onClick={() => store.logout()}>Log out</button>*/}
-            <EventListening/>
+            <Notifications/>
             <ReactNotification/>
 
         </BrowserRouter>
     )}
-
 export default observer(App);
