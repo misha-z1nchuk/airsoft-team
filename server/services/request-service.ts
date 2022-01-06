@@ -53,10 +53,7 @@ export class RequestService {
         const action = userRequest.action;
         if (action == "JOIN") {
             const user_id: number = userRequest.userId;
-            const candidate = User.findOne({where : {id: user_id}})
-            if (candidate.roleId !== Roles.MANAGER){
-                throw ApiError.BadRequest("This request can accept only Manager")
-            }
+            await checkAdmin(authorizationHeader, Roles.MANAGER)
             await teamService.joinTeam(user_id, userRequest.teamId);
             await userRequest.destroy();
         } else if (action == "QUIT") {

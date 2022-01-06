@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth-middleware')
 import {body} from "express-validator";
 
 
-//TODO: Login middleware for player
+router.get('/:id', authMiddleware, teamController.getTeamUsers)
 
 
 module.exports = router
