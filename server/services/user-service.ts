@@ -1,7 +1,11 @@
+import {UserI} from "../global/types";
+
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 const ApiError = require('../exeptions/api-error')
-import Request from '../models/request.model'
+const uuid = require('uuid')
+const mailService = require('../services/mail-service')
+
 export class UserService{
 
     async getAllUsers(): Promise<typeof User[]>{
@@ -25,6 +29,28 @@ export class UserService{
         return fileName;
     }
 
+
+    async changeEmail(email: string, authorizationHeader: string) {
+        const accessToken = authorizationHeader.split(' ')[1];
+        const user_id: number = jwt.decode(accessToken).id
+
+        const userDuplicate: UserI| null = await User.findOne({where : {email: email}});
+        if (userDuplicate){
+            throw ApiError.BadRequest("User with such email already exists")
+        }
+
+        const candidate: UserI| null = await User.findOne({where : {id: user_id}});
+        if (!candidate){
+            throw ApiError.BadRequest("User not found")
+        }
+
+        candidate.email = email;
+        const activationLink = uuid.v4();
+        candidate.activationLink = activationLink;
+        candidate.isActivated = false;
+        await candidate.save();
+        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`)
+    }
 }
 
 module.exports = new UserService();

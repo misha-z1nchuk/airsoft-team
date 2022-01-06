@@ -1,11 +1,10 @@
 import {NextFunction, Request, Response} from "express";
 
 import path from "path";
-import {log} from "util";
-import {UserI} from "../global/types";
+import {validationResult} from "express-validator";
 const uuid = require('uuid')
 const userService = require('../services/user-service')
-
+const ApiError = require('../exeptions/api-error')
 
 interface MulterRequest extends Request {
     files: any;
@@ -27,6 +26,24 @@ class UserController{
             next(e);
         }
     }
+
+    async changeEmail(req: MulterRequest, res: Response, next: NextFunction): Promise<Response|void>{
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest("Validation error", errors.array()))
+            }
+
+            const authorizationHeader = req.headers.authorization;
+            const {new_email} = req.body;
+            await userService.changeEmail(new_email, authorizationHeader);
+            return res.status(200).send();
+        }catch (e){
+            next(e)
+        }
+
+    }
+
 
 
 
