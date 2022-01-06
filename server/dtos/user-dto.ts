@@ -6,14 +6,14 @@ module.exports = class UserDto{
     id: number;
     isActivated: boolean;
     photo: string;
-    role_id: number;
-    team: number
+    roleId: number;
+    teamId: number
     constructor(model: any) {
         this.email = model.email;
         this.id = model.id;
         this.isActivated = model.isActivated;
         this.photo = model.photo;
-        this.role_id = model.role_id;
-        this.team = model.team_id;
+        this.roleId = model.roleId;
+        this.teamId = model.teamId;
     }
 }

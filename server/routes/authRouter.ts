@@ -38,6 +38,7 @@ router.post('/logout', authController.logout);
 router.get('/refresh', authController.refresh);
 router.get('/activate/:link', authController.activate)
 router.post('/forgot-password', authController.forgotPassword)
+//TODO: убрать id
 router.post('/reset-password/:id/:token', authController.resetPassword)
 
 router.get('/google',

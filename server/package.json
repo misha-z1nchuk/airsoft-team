@@ -33,7 +33,9 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.11.0",
     "sequelize-typescript": "^2.1.1",
-    "uuid": "^8.3.2"
+    "socket.io": "^4.4.0",
+    "uuid": "^8.3.2",
+    "ws": "^8.4.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
