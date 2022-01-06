@@ -1,3 +1,5 @@
+import Request from "../models/request.model";
+
 const User = require("../models/user.model");
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
 
@@ -10,11 +12,12 @@ const ApiError = require('../exeptions/api-error')
 
 
 export class AuthService{
-    async registration(first_name: string, last_name: string, email: string, password: string, role: string): Promise<ResponseRegLogI> {
+    async registration(first_name: string, last_name: string, email: string, password: string, role: string): Promise<ResponseRegLogI|string> {
         let candidate = await User.findOne({where: {email: email}});
         if (candidate){
             throw ApiError.BadRequest(`User with such email ${email} exists`);
         }
+
 
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt)
@@ -28,6 +31,10 @@ export class AuthService{
         const tokens = tokenService.generateToken({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
+        if (role == '2'){
+            await Request.create({userId: user.id, action: "REGISTRATION MANAGER"})
+            return "Admin will review your registration"
+        }
         return{
             ...tokens,
             user: userDto
@@ -49,6 +56,12 @@ export class AuthService{
         let user: any = await User.findOne({where: {email}});
         if (!user){
             throw ApiError.BadRequest(`User with such email ${email} not found`);
+        }
+        if (user.roleId == "2"){
+            let request = await Request.findOne({where: {userId: user.id}})
+            if (request){
+                throw ApiError.BadRequest(`Your registration is not confirmed yet`);
+            }
         }
 
         const issPassEquals = await bcrypt.compare(password, user.password)

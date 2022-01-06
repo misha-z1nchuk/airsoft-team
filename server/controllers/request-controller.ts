@@ -26,7 +26,8 @@ export class RequestController {
     async accept(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
         try {
             const {id} = req.params;
-            await requestService.accept(id);
+            const authorizationHeader = req.headers.authorization
+            await requestService.accept(id, authorizationHeader);
             return res.status(200).send();
         }catch (e){
             next(e)
@@ -36,7 +37,8 @@ export class RequestController {
     async decline(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
         try {
             const {id} = req.params;
-            await requestService.decline(id);
+            const authorizationHeader = req.headers.authorization;
+            await requestService.decline(id, authorizationHeader);
             return res.status(200).send();
 
         }catch (e){

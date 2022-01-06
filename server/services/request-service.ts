@@ -1,8 +1,12 @@
-import {RequestI} from "../global/types";
+import {RequestI, TokenI, UserI} from "../global/types";
 
 const Request = require("../models/request.model");
+const User = require('../models/user.model')
 import Team from "../models/team.model";
+const Token = require('../models/token.model')
 import {io} from "../index";
+import {Roles} from "../global/roles";
+import {checkAdmin} from "../utils/checkAdmin";
 
 const jwt = require('jsonwebtoken')
 const ApiError = require('../exeptions/api-error')
@@ -41,7 +45,7 @@ export class RequestService {
     }
 
 
-    async accept(id: string): Promise<void> {
+    async accept(id: string, authorizationHeader: string): Promise<void> {
         const userRequest: RequestI | null = await Request.findOne({where: {id}})
         if (!userRequest) {
             throw ApiError.BadRequest("Such request does not exists")
@@ -49,17 +53,33 @@ export class RequestService {
         const action = userRequest.action;
         if (action == "JOIN") {
             const user_id: number = userRequest.userId;
+            const candidate = User.findOne({where : {id: user_id}})
+            if (candidate.roleId !== Roles.MANAGER){
+                throw ApiError.BadRequest("This request can accept only Manager")
+            }
             await teamService.joinTeam(user_id, userRequest.teamId);
             await userRequest.destroy();
         } else if (action == "QUIT") {
             //TODO:
+        } else if (action == "REGISTRATION MANAGER"){
+            await checkAdmin(authorizationHeader, Roles.ADMIN);
+            await userRequest.destroy();
         }
     }
 
-    async decline(id: number): Promise<void> {
+    async decline(id: number, authorizationHeader: string): Promise<void> {
         const userRequest: RequestI | null = await Request.findOne({where: {id: id}})
         if (!userRequest) {
             throw ApiError.BadRequest("Such request does not exists")
+        }
+        if (userRequest.action == "REGISTRATION MANAGER"){
+            await checkAdmin(authorizationHeader, Roles.ADMIN);
+
+            const candidate : UserI|null = await User.findOne({where : {id: userRequest.userId}});
+            const token: TokenI|null = await Token.findOne({where : {userId: userRequest.userId}})
+            await userRequest.destroy();
+            await token?.destroy();
+            await candidate?.destroy();
         }
         await userRequest.destroy();
     }
