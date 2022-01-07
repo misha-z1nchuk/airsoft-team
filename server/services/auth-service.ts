@@ -2,6 +2,9 @@ import Request from "../models/request.model";
 
 const User = require("../models/user.model");
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
+import Role from "../models/role.model";
+import {checkBanned} from "../utils/checkBanned";
+const {Roles} = require("../global/enums");
 
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
@@ -57,12 +60,13 @@ export class AuthService{
         if (!user){
             throw ApiError.BadRequest(`User with such email ${email} not found`);
         }
-        if (user.roleId == "2"){
+        if (user.roleId == Roles.MANAGER){
             let request = await Request.findOne({where: {userId: user.id}})
             if (request){
                 throw ApiError.BadRequest(`Your registration is not confirmed yet`);
             }
         }
+        await checkBanned(user.id);
 
         const issPassEquals = await bcrypt.compare(password, user.password)
         if (!issPassEquals){

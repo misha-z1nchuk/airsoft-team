@@ -27,5 +27,5 @@ const Token = sequelize.define("token", {
     }
 );
 
-
+export default Token;
 module.exports = Token;

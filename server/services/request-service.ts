@@ -5,8 +5,9 @@ const User = require('../models/user.model')
 import Team from "../models/team.model";
 const Token = require('../models/token.model')
 import {io} from "../index";
-import {Roles} from "../global/roles";
 import {checkAdmin} from "../utils/checkAdmin";
+const {Roles} = require("../global/enums");
+
 
 const jwt = require('jsonwebtoken')
 const ApiError = require('../exeptions/api-error')

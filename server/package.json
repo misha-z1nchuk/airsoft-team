@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "nodemon ./index.ts",
     "build": "tsc -p .",
-    "migrate": "npm run build  && sequelize-cli db:migrate:undo:all && sequelize-cli db:migrate"
+    "migrate": "sequelize-cli db:migrate",
+    "redo-migtate": "npx sequelize-cli db:migrate:undo",
+    "seed": "npx sequelize-cli db:seed:all",
+    "redo-seed": "npx sequelize-cli db:seed:undo"
   },
   "author": "",
   "license": "ISC",

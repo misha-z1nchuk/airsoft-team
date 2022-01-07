@@ -56,5 +56,5 @@ Request.belongsTo(User)
 Role.hasMany(User)
 User.belongsTo(Role)
 
-
+export default User;
 module.exports = User;

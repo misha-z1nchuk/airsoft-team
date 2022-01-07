@@ -1,5 +1,4 @@
 import {UserI} from "../global/types";
-import {Roles} from "../global/roles";
 const ApiError = require('../exeptions/api-error')
 
 const jwt = require('jsonwebtoken')
