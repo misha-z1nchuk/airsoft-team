@@ -1,4 +1,6 @@
 'use strict';
+
+
 const { INTEGER, STRING, BOOLEAN } = require('sequelize');
 
 module.exports = {
@@ -20,6 +22,10 @@ module.exports = {
             reason: {
                 type: STRING,
                 required: true
+            },
+            status: {
+                type: STRING,
+                defaultValue: "BANNED"
             }
 
         });

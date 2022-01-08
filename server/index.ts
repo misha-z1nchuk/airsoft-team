@@ -2,14 +2,11 @@ import path from "path";
 require('dotenv').config()
 import express, { Application} from "express";
 import {Socket} from "socket.io";
+import mongoose from "mongoose";
+import {loggerMiddleware} from "./middleware/logger-middleware";
 const http = require("http");
 const router = require('./routes/index')
-const sequelize = require('./config/db')
-const userModel = require('./models/user.model')
-const tokenModel =require('./models/token.model')
-const teamModel =require('./models/team.model')
-const requestModel =require('./models/request.model')
-const roleModel =require('./models/role.model')
+
 
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
@@ -31,6 +28,7 @@ app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL
 }));
+app.use(loggerMiddleware)
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(fileUpload({}))
@@ -42,31 +40,14 @@ app.use(errorMiddleware)
 
 
 
-// app.get('/connect', (req: Request, res:Response) => {
-//     res.writeHead(200, {
-//         'Connection': 'keep-alive',
-//         'Content-Type': 'text/event-stream',
-//         'Cache-Control': 'no-cache',
-//     })
-//     emitter.on('NewNotification', (message: any) => {
-//         res.write(`data: ${JSON.stringify(message)} \n\n`)
-//     })
-// })
 const server = http.Server(app);
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
     console.log(`App runing at ${PORT} port`)
-    sequelize.authenticate().then(async() => {
-        console.log("database connected")
-
-        try {
-            await sequelize.sync()
-        } catch (error) {
-            console.log(error)
-        }
-
-    }).catch( (e: any) => {
-        console.log(e.message)
-    })
+    try {
+        await mongoose.connect('mongodb+srv://zenya:zenya@cluster0.raz8v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+    }catch (e){
+        console.log(e)
+    }
 })
 
 export const io = socketIo(server, {

@@ -7,11 +7,11 @@
     "dev": "nodemon ./index.ts",
     "build": "tsc -p .",
     "migrate": "sequelize-cli db:migrate",
-    "redo-migtate": "npx sequelize-cli db:migrate:undo",
+    "redo-migrate": "npx sequelize-cli db:migrate:undo",
     "seed": "npx sequelize-cli db:seed:all",
     "redo-seed": "npx sequelize-cli db:seed:undo"
   },
-  "author": "",
+  "author": "misha-z1nchuk",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
@@ -26,6 +26,8 @@
     "generate-password": "^1.7.0",
     "google-auth-library": "^7.10.4",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.3.0",
+    "mongoose": "^6.1.5",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
     "passport": "^0.5.0",

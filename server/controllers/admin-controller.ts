@@ -1,4 +1,6 @@
 import {NextFunction, Request, Response} from "express";
+
+
 const adminService = require('../services/admin-service')
 
 class AdminController{
@@ -7,7 +9,6 @@ class AdminController{
         await adminService.banUser(userId, reason);
         res.status(200).send();
     }
-
-
-
 }
+
+module.exports = new AdminController();
