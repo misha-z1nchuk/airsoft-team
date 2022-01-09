@@ -16,6 +16,7 @@ router.post('/join-team',
     authPlayerMiddleware, requestController.joinTeam)
 
 router.post('/quit-team', authPlayerMiddleware, requestController.quitFromTeam)
+router.post('/change-team', authPlayerMiddleware, requestController.changeTeam)
 router.post('/accept/:id', authManagerAdminMiddleware, requestController.accept)
 router.post('/decline/:id', authPlayerManagerMiddleware, requestController.decline)
 

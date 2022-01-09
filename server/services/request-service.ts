@@ -50,11 +50,7 @@ export class RequestService {
     }
 
 
-    async switchTeam(authorizationHeader: string, team_id: number): Promise<void>{
-        const accessToken = authorizationHeader.split(' ')[1];
-        const user_id: number = jwt.decode(accessToken).id
-        await Request.create({author_id: user_id, action: 'SWITCH', team_id})
-    }
+
 
 
     async accept(id: string, authorizationHeader: string): Promise<void> {
@@ -64,15 +60,21 @@ export class RequestService {
         }
         const action = userRequest.action;
         if (action == "JOIN") {
+            await checkRole(authorizationHeader, Roles.MANAGER);
             const user_id: number = userRequest.userId;
             await teamService.joinTeam(user_id, userRequest.teamId);
             await userRequest.destroy();
         } else if (action == "QUIT") {
+            await checkRole(authorizationHeader, Roles.MANAGER);
             const user_id: number = userRequest.userId;
             await teamService.quitTeam(user_id)
             await userRequest.destroy();
         } else if (action == "REGISTRATION MANAGER"){
             await checkRole(authorizationHeader, Roles.ADMIN);
+            await userRequest.destroy();
+        }else if (action == "SWITCH"){
+            await checkRole(authorizationHeader, Roles.MANAGER);
+            await teamService.changeTeam(userRequest.userId, userRequest.teamId);
             await userRequest.destroy();
         }
     }
@@ -95,12 +97,33 @@ export class RequestService {
     }
 
 
+    async changeTeam(authorizationHeader: string, new_team: number) {
+        const accessToken = authorizationHeader.split(' ')[1];
+        const user_id: number = jwt.decode(accessToken).id
+        const user: UserI | null  = await User.findOne({where: {id: user_id}});
+        if(!user){
+            throw ApiError.BadRequest("Such user does not exists");
+        }
+        if (!user.teamId){
+            throw ApiError.BadRequest("User are not in the team");
+        }
+        const request = await Request.findOne({where: {userId: user_id}})
+        if (request){
+            throw ApiError.BadRequest("User has already created request")
+        }
+
+        await Request.create({userId: user_id, action: 'SWITCH', teamId: new_team})
+
+    }
+
     async getRequestByAuthor(authorizationHeader: string): Promise<Request|null>{
         const accessToken = authorizationHeader.split(' ')[1];
         const user_id: number = jwt.decode(accessToken).id
 
         return await Request.findOne({where: {author_id : user_id}})
     }
+
+
 }
 
 module.exports = new RequestService();

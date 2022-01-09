@@ -32,7 +32,17 @@ export class RequestController {
         }catch (e){
             next(e)
         }
+    }
 
+    async changeTeam(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
+        try {
+            const {new_team} = req.body;
+            const authorizationHeader = req.headers.authorization;
+            await requestService.changeTeam(authorizationHeader, new_team)
+            return res.json("Request to change team is sent")
+        }catch (e){
+            next(e)
+        }
     }
 
     async accept(req: Request, res: Response, next: NextFunction): Promise<Response | void> {

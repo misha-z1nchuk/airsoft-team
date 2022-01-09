@@ -56,6 +56,18 @@ export class TeamService {
         await user.save();
         await Comment.create({userId, action: Actions.KICK, reason: reason});
     }
+
+    async changeTeam(userId: number, teamId: number) {
+        const user : UserI | null =await User.findOne({where: {id: userId}});
+        if(!user){
+            throw ApiError.BadRequest("User not found");
+        }
+        if(!user.teamId){
+            throw ApiError.BadRequest("User are not in the team");
+        }
+        user.teamId = teamId;
+        await user.save();
+    }
 }
 
 module.exports = new TeamService();
