@@ -50,6 +50,10 @@ module.exports = {
             },
             photo:{
                 type: STRING
+            },
+            isBanned: {
+                type: BOOLEAN,
+                defaultValue: false
             }
         });
     },

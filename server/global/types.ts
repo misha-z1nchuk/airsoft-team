@@ -1,3 +1,5 @@
+import {Mode} from "fs";
+const {Actions} = require('./enums')
 const User = require("../models/user.model");
 import { Model } from "sequelize";
 
@@ -11,7 +13,8 @@ export interface UserI extends Model{
     teamId: number,
     isActivated: boolean,
     activationLink: string,
-    photo: string
+    photo: string,
+    isBanned : boolean
 }
 
 
@@ -21,6 +24,7 @@ export interface TokenI extends Model{
     isActivated: boolean,
     refreshToken: string
 }
+
 
 export interface RequestI extends Model{
     id?: number | null
@@ -41,5 +45,11 @@ export interface NotificationI extends Model{
     recipient_role: number
 }
 
+export interface CommentI extends Model{
+    id?: number | null;
+    userId: number;
+    action: Actions;
+    reason: string;
+}
 
 

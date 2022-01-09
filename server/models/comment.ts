@@ -1,25 +1,24 @@
-import Request from "./request.model";
-const {Status} = require("../global/enums");
+import User from "./user.model";
 
 
 const {DataTypes} = require('sequelize');
 const sequelize = require('../config/db')
 
-const BanList = sequelize.define("ban_list", {
+const Comment = sequelize.define("comment", {
 
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
+        action: {
+          type: DataTypes.STRING
+        },
         reason: {
             type: DataTypes.STRING,
             required: true
-        },
-        status: {
-            type: DataTypes.STRING,
-            defaultValue: Status.BANED
-        }
+            },
+
 
     },{
         freezeTableName: true,
@@ -27,5 +26,8 @@ const BanList = sequelize.define("ban_list", {
     }
 );
 
-export default BanList;
-module.exports = BanList;
+User.hasMany(Comment);
+Comment.belongsTo(User);
+
+export default Comment;
+module.exports = Comment;

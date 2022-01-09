@@ -9,7 +9,14 @@ enum Roles{
     ADMIN = "3"
 }
 
+enum Actions {
+    BAN = "BAN",
+    UNBAN = "UNBAN",
+    KICK = "KICK"
+}
+
 module.exports = {
     Status,
-    Roles
+    Roles,
+    Actions,
 }

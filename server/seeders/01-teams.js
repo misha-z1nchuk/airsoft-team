@@ -13,6 +13,7 @@ module.exports = {
 
 
     down: async (queryInterface) => {
+        await queryInterface.sequelize.query('DELETE FROM "request"');
         await queryInterface.sequelize.query('DELETE FROM "team"');
     }
 };

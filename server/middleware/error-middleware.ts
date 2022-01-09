@@ -4,6 +4,7 @@ const ApiError = require("../exeptions/api-error")
 
 module.exports = function (err: any, req: Request, res: Response, next: NextFunction){
     if (err instanceof ApiError){
+        console.log(err)
         const errorInstance = error_logs.create({
             path: req.path,
             params: { ...req.body },
@@ -13,12 +14,14 @@ module.exports = function (err: any, req: Request, res: Response, next: NextFunc
 
         return res.status(err.status).json({message: err.message, errors: err.errors})
     }
-    return res.status(500).json({message: "Unexpected error"})
+    console.log(err)
     const errorInstance = error_logs.create({
         path: req.path,
         params: { ...req.body },
         errorDescription: "Unexpected error",
         status : err.status,
     });
+    return res.status(500).json({message: "Unexpected error"})
+
 
 }

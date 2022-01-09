@@ -5,7 +5,7 @@ const { INTEGER, STRING, BOOLEAN } = require('sequelize');
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('ban_list', {
+        await queryInterface.createTable('comment', {
             id: {
                 type: INTEGER,
                 primaryKey: true,
@@ -19,19 +19,18 @@ module.exports = {
                     key: 'id',
                 }
             },
+            action: {
+                type: STRING
+            },
             reason: {
                 type: STRING,
                 required: true
             },
-            status: {
-                type: STRING,
-                defaultValue: "BANNED"
-            }
 
         });
     },
 
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('ban_list');
+        await queryInterface.dropTable('comment');
     }
 };

@@ -38,8 +38,11 @@ const User = sequelize.define("user", {
         },
         photo:{
             type: DataTypes.STRING
+        },
+        isBanned: {
+            type: DataTypes.STRING,
+            defaultValue: false
         }
-
     },{
         freezeTableName: true,
         timestamps: false,

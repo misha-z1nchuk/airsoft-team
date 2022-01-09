@@ -1,8 +1,8 @@
 import {NextFunction} from "express";
 const User = require("../models/user.model");
 import {UserI} from "../global/types";
-import Role from "../models/role.model";
 
+const {Roles} = require('../global/enums')
 const ApiError = require('../exeptions/api-error');
 const tokenService = require('../services/token-service')
 const jwt = require('jsonwebtoken')
@@ -34,7 +34,6 @@ module.exports = async function (req :any, res: Response, next: NextFunction){
         if (!candidate){
             return next(ApiError.BadRequest("User not found"));
         }
-
         if(candidate.roleId.toString() !== Roles.ADMIN){
             return next(ApiError.BadRequest("This function is only for Admin"));
         }
