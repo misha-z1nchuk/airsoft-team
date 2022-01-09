@@ -5,6 +5,8 @@ const User = require('../models/user.model')
 const ApiError = require('../exeptions/api-error')
 const uuid = require('uuid')
 const mailService = require('../services/mail-service')
+const UserDto = require('../dtos/user-dto')
+
 
 export class UserService{
 
@@ -50,6 +52,14 @@ export class UserService{
         candidate.isActivated = false;
         await candidate.save();
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`)
+    }
+
+    async getUser(id: number) {
+        const candidate: UserI| null = await User.findOne({where : {id: id}});
+        if (!candidate){
+            throw ApiError.BadRequest("User not found")
+        }
+        return new UserDto(candidate);
     }
 }
 

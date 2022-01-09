@@ -1,12 +1,7 @@
 import {UserI} from "../global/types";
-
 const User = require('../models/user.model')
-
-import Request from "../models/request.model";
-import Team from "../models/team.model";
 import Comment from "../models/comment";
 
-const jwt = require('jsonwebtoken')
 const ApiError = require('../exeptions/api-error')
 const UserDto = require('../dtos/user-dto')
 const {Actions} = require('../global/enums')
