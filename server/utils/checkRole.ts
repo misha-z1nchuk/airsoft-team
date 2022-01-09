@@ -3,7 +3,7 @@ const ApiError = require('../exeptions/api-error')
 
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
-export async function checkAdmin(authorizationHeader: string, role: string){
+export async function checkRole(authorizationHeader: string, role: string){
     const accessToken = authorizationHeader.split(' ')[1];
     const user_id: number = jwt.decode(accessToken).id
 

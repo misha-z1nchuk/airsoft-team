@@ -5,7 +5,7 @@ const User = require('../models/user.model')
 import Team from "../models/team.model";
 const Token = require('../models/token.model')
 import {io} from "../index";
-import {checkAdmin} from "../utils/checkAdmin";
+import {checkRole} from "../utils/checkRole";
 const {Roles} = require("../global/enums");
 
 
@@ -28,14 +28,25 @@ export class RequestService {
             throw ApiError.BadRequest("Chosen team does not exists")
         }
 
-        io.sockets.in("2").emit('message', `user with ${user_id} wanna JOIN team with id ${team_id}`);
+        io.sockets.in(Roles.MANAGER).emit('message', `user with ${user_id} wanna JOIN team with id ${team_id}`);
         await Request.create({userId: user_id, action: 'JOIN', teamId:  team_id})
     }
 
-    async quitTeam(authorizationHeader: string, team_id: number): Promise<void>{
+    async quitTeam(authorizationHeader: string): Promise<void>{
         const accessToken = authorizationHeader.split(' ')[1];
         const user_id: number = jwt.decode(accessToken).id
-        await Request.create({author_id: user_id, action: 'QUIT', team_id})
+        const user: UserI | null  = await User.findOne({where: {id: user_id}});
+        if(!user){
+            throw ApiError.BadRequest("Such user does not exists");
+        }
+        if (!user.teamId){
+            throw ApiError.BadRequest("User are not in the team");
+        }
+        const request = await Request.findOne({where: {userId: user_id}})
+        if (request){
+            throw ApiError.BadRequest("User has already created request")
+        }
+        await Request.create({userId: user_id, action: 'QUIT'});
     }
 
 
@@ -54,13 +65,14 @@ export class RequestService {
         const action = userRequest.action;
         if (action == "JOIN") {
             const user_id: number = userRequest.userId;
-            await checkAdmin(authorizationHeader, Roles.MANAGER)
             await teamService.joinTeam(user_id, userRequest.teamId);
             await userRequest.destroy();
         } else if (action == "QUIT") {
-            //TODO:
+            const user_id: number = userRequest.userId;
+            await teamService.quitTeam(user_id)
+            await userRequest.destroy();
         } else if (action == "REGISTRATION MANAGER"){
-            await checkAdmin(authorizationHeader, Roles.ADMIN);
+            await checkRole(authorizationHeader, Roles.ADMIN);
             await userRequest.destroy();
         }
     }
@@ -71,7 +83,7 @@ export class RequestService {
             throw ApiError.BadRequest("Such request does not exists")
         }
         if (userRequest.action == "REGISTRATION MANAGER"){
-            await checkAdmin(authorizationHeader, Roles.ADMIN);
+            await checkRole(authorizationHeader, Roles.ADMIN);
 
             const candidate : UserI|null = await User.findOne({where : {id: userRequest.userId}});
             const token: TokenI|null = await Token.findOne({where : {userId: userRequest.userId}})

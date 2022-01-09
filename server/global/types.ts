@@ -10,7 +10,7 @@ export interface UserI extends Model{
     email: string,
     password: string,
     roleId: number,
-    teamId: number,
+    teamId: number | null,
     isActivated: boolean,
     activationLink: string,
     photo: string,

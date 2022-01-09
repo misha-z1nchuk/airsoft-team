@@ -44,7 +44,7 @@ const server = http.Server(app);
 server.listen(PORT, async () => {
     console.log(`App runing at ${PORT} port`)
     try {
-        await mongoose.connect('mongodb+srv://zenya:zenya@cluster0.raz8v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+        await mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.raz8v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
     }catch (e){
         console.log(e)
     }

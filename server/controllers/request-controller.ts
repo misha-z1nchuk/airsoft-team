@@ -1,6 +1,7 @@
 import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
 import {emitter} from "../index";
+import {annotateModelWithIndex} from "sequelize-typescript";
 const ApiError = require('../exeptions/api-error')
 const requestService = require('../services/request-service')
 
@@ -17,10 +18,21 @@ export class RequestController {
 
             await requestService.joinTeam(authorizationHeader, teamId)
             emitter.emit('NewNotification')
-            return res.json("User joined team")
+            return res.json("Request to join team is sent")
         }catch (e){
             next(e)
         }
+    }
+
+    async quitFromTeam(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
+        try {
+            const authorizationHeader = req.headers.authorization;
+            await requestService.quitTeam(authorizationHeader)
+            return res.json("Request to quit team is sent")
+        }catch (e){
+            next(e)
+        }
+
     }
 
     async accept(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
