@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./index.ts",
-    "build": "tsc -p .",
     "migrate": "sequelize-cli db:migrate",
     "redo-migrate": "npx sequelize-cli db:migrate:undo",
     "seed": "npx sequelize-cli db:seed:all",
