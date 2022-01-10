@@ -5,6 +5,8 @@ import Comment from "../models/comment";
 const ApiError = require('../exeptions/api-error')
 const UserDto = require('../dtos/user-dto')
 const {Actions} = require('../global/enums')
+const {Teams} = require('../global/enums')
+const extendUserDto = require('../dtos/user-dto-info')
 
 export class TeamService {
     async joinTeam(user_id: number, team_id: number){
@@ -62,6 +64,24 @@ export class TeamService {
         }
         user.teamId = teamId;
         await user.save();
+    }
+
+    async getAllUsersFromTeams() {
+        let users_teamA = await User.findAll({where: {teamId: Teams.A}});
+        let users_teamB = await User.findAll({where: {teamId: Teams.B}});
+
+        let teamA : UserI[] = [];
+        let teamB : UserI[] = [];
+
+        users_teamA.map((user: UserI) => {
+            let userToAdd = new extendUserDto(user);
+            teamA.push(userToAdd);
+        })
+        users_teamB.map((user: UserI) => {
+            let userToAdd = new extendUserDto(user);
+            teamB.push(userToAdd);
+        })
+        return {teamA, teamB}
     }
 }
 

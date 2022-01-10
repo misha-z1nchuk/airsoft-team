@@ -26,6 +26,15 @@ class TeamController{
             next(e)
         }
     }
+
+    async getAllUsersFromTeams(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+        try {
+            let users = await teamService.getAllUsersFromTeams();
+            res.json(users);
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = new TeamController();

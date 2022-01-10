@@ -15,8 +15,14 @@ enum Actions {
     KICK = "KICK"
 }
 
+enum Teams{
+    A = 1,
+    B = 2,
+}
+
 module.exports = {
     Status,
     Roles,
     Actions,
+    Teams
 }

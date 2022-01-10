@@ -7,6 +7,7 @@ import {body} from "express-validator";
 
 
 router.get('/:id', authMiddleware, teamController.getTeamUsers)
+router.get('/', authMiddleware, teamController.getAllUsersFromTeams)
 router.post('/kick', authManagerAdminMiddleware, teamController.kickUser)
 
 module.exports = router
