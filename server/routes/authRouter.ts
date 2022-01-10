@@ -42,8 +42,9 @@ router.post('/forgot-password',[
 ], authController.forgotPassword)
 
 
-//TODO: убрать id
-router.post('/reset-password/:token', authController.resetPassword)
+router.post('/reset-password/:token', [
+    body('new_password').isLength({min: 6, max: 24})
+],authController.resetPassword)
 
 router.get('/google',
     passport.authenticate('google', { scope: [

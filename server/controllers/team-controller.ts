@@ -19,6 +19,11 @@ class TeamController{
 
     async kickUser(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest("Validation error", errors.array()))
+            }
+
             const {userId, reason} = req.body;
             await teamService.kickUser(userId, reason);
             res.status(200).send();
