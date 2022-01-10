@@ -62,4 +62,4 @@ io.sockets.on('connection', function(socket: Socket) {
 });
 
 
-
+module.exports = server
