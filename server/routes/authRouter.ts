@@ -37,9 +37,13 @@ router.post('/login',
 router.post('/logout', authController.logout);
 router.get('/refresh', authController.refresh);
 router.get('/activate/:link', authController.activate)
-router.post('/forgot-password', authController.forgotPassword)
+router.post('/forgot-password',[
+    body('email').isEmail()
+], authController.forgotPassword)
+
+
 //TODO: убрать id
-router.post('/reset-password/:id/:token', authController.resetPassword)
+router.post('/reset-password/:token', authController.resetPassword)
 
 router.get('/google',
     passport.authenticate('google', { scope: [

@@ -60,6 +60,11 @@ class AuthController {
 
     async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest("Validation error", errors.array()))
+            }
+
             const {email} = req.body;
             await authService.forgotPassword(email)
 
@@ -72,9 +77,9 @@ class AuthController {
 
     async resetPassword(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
         try{
-            const {id, token} = req.params;
+            const {token} = req.params;
             const {new_password} = req.body;
-            await authService.resetPassword(id, token, new_password);
+            await authService.resetPassword(token, new_password);
 
             return res.status(200).json("Password changed");
         }catch (e){

@@ -1,10 +1,21 @@
 import {Router} from "express";
+import {body} from "express-validator";
 const  router = Router();
 
 const adminController = require('../controllers/admin-controller')
 const authAdminMiddleware = require('../middleware/auth-admin-middleware')
 
-router.post('/block', authAdminMiddleware, adminController.banUser)
-router.post('/unblock', authAdminMiddleware, adminController.unbanUser)
+router.post('/block',
+    [
+    body('userId').isNumeric(),
+    body('reason').isString()
+    ],
+    authAdminMiddleware, adminController.banUser)
+router.post('/unblock',
+    [
+        body('userId').isNumeric(),
+        body('reason').isString()
+    ],
+    authAdminMiddleware, adminController.unbanUser)
 
 module.exports = router

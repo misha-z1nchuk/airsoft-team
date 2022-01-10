@@ -5,6 +5,7 @@ import {ResponseRegLogI} from "../global/responses/reg-log-response";
 import Role from "../models/role.model";
 import {checkBanned} from "../utils/checkBanned";
 const {Roles} = require("../global/enums");
+const jwt = require('jsonwebtoken')
 
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
@@ -96,15 +97,16 @@ export class AuthService{
         const userDto = new UserDto(candidate);
 
         const token = tokenService.generateForgotPasswordToken({...userDto}, secret);
-        const link = `http://localhost:5000/api/auth/reset-password/${candidate.id}/${token}`;
+        const link = `http://localhost:5000/api/auth/reset-password/${token}`;
         await mailService.sendForgotPasswordLink(email, link)
-
 
         return token
     }
 
-    async resetPassword(id: string, token: string, new_password: string) {
-        const candidate = await User.findOne({where: {id}})
+    async resetPassword(token: string, new_password: string) {
+        const user_id: number = jwt.decode(token).id
+
+        const candidate = await User.findOne({where: {id: user_id}})
         if (!candidate){
             throw ApiError.BadRequest(`User not found`);
         }
