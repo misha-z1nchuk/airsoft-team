@@ -13,7 +13,7 @@ router.post('/join-team',
     [
         body('teamId').isNumeric()
     ],
-    ensureRole([Roles.PLAYER]), requestController.joinTeam)
+    [authMiddleware, ensureRole([Roles.PLAYER])], requestController.joinTeam)
 
 router.post('/quit-team', [authMiddleware, ensureRole([Roles.PLAYER])], requestController.quitFromTeam)
 router.post('/change-team', [authMiddleware, ensureRole([Roles.PLAYER])], requestController.changeTeam)

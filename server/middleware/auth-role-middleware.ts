@@ -3,8 +3,6 @@ const User = require("../models/user.model");
 import {UserI} from "../global/types";
 
 const ApiError = require('../exeptions/api-error');
-const tokenService = require('../services/token-service')
-const jwt = require('jsonwebtoken')
 const {Roles} = require('../global/enums')
 
 declare namespace Express {
@@ -16,6 +14,7 @@ declare namespace Express {
 module.exports = function ensureRole(roles: Array<typeof Roles>) {
     return async (req: any, res: Response, next: NextFunction) => {
         try {
+            console.log(req.user)
             const candidate: UserI | null = await User.findOne({where: {id: req.user.id}});
             if (!candidate) {
                 return next(ApiError.BadRequest("User not found"));

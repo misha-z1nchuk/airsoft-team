@@ -23,7 +23,7 @@ module.exports = function (err: any, req: Request, res: Response, next: NextFunc
             status : err.status,
         });
     }
-
+    console.log(err)
     return res.status(500).json({message: "Unexpected error"})
 
 

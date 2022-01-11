@@ -29,7 +29,7 @@ export class RequestService {
         }
 
         io.sockets.in(Roles.MANAGER).emit('message', `user with ${user_id} wanna JOIN team with id ${team_id}`);
-        await Request.create({userId: user_id, action: 'JOIN', teamId:  team_id})
+        return await Request.create({userId: user_id, action: 'JOIN', teamId:  team_id})
     }
 
     async quitTeam(authorizationHeader: string): Promise<void>{
