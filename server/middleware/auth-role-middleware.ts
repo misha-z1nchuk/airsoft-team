@@ -5,6 +5,7 @@ import {UserI} from "../global/types";
 const ApiError = require('../exeptions/api-error');
 const tokenService = require('../services/token-service')
 const jwt = require('jsonwebtoken')
+const {Roles} = require('../global/enums')
 
 declare namespace Express {
     interface Request {
@@ -12,7 +13,7 @@ declare namespace Express {
     }
 }
 
-module.exports = function ensureRole(roles: Array<Roles>) {
+module.exports = function ensureRole(roles: Array<typeof Roles>) {
     return async (req: any, res: Response, next: NextFunction) => {
         try {
             const authorizationHeader = req.headers.authorization;
