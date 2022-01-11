@@ -1,24 +1,22 @@
 import {Router} from "express";
 const router = Router();
 const requestController = require('../controllers/request-controller')
-const authPlayerMiddleware = require('../middleware/auth-player-middleware')
-const authMiddleware = require('../middleware/auth-middleware')
-const authPlayerManagerMiddleware = require('../middleware/auth-player-manager-middleware')
+const ensureRole = require('../middleware/auth-role-middleware')
+const {Roles} = require('../global/enums')
 import {body} from "express-validator";
-const authManagerMiddleware = require('../middleware/auth-manager-middleware')
-const authManagerAdminMiddleware = require('../middleware/auth-manager-admin-middleware')
 
-router.get('/', authMiddleware, requestController.getRequestByAuthor)
+
+router.get('/', ensureRole([Roles.PLAYER]), requestController.getRequestByAuthor)
 router.post('/join-team',
     [
         body('teamId').isNumeric()
     ],
-    authPlayerMiddleware, requestController.joinTeam)
+    ensureRole([Roles.PLAYER]), requestController.joinTeam)
 
-router.post('/quit-team', authPlayerMiddleware, requestController.quitFromTeam)
-router.post('/change-team', authPlayerMiddleware, requestController.changeTeam)
-router.post('/accept/:id', authManagerAdminMiddleware, requestController.accept)
-router.post('/decline/:id', authPlayerManagerMiddleware, requestController.decline)
+router.post('/quit-team', ensureRole([Roles.PLAYER]), requestController.quitFromTeam)
+router.post('/change-team', ensureRole([Roles.PLAYER]), requestController.changeTeam)
+router.post('/accept/:id', ensureRole([Roles.MANAGER, Roles.ADMIN]), requestController.accept)
+router.post('/decline/:id', ensureRole([Roles.PLAYER, Roles.MANAGER]), requestController.decline)
 
 
 

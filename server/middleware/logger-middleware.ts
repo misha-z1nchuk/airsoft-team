@@ -11,10 +11,10 @@ export async function loggerMiddleware(req: Request, res: Response, next: NextFu
                 path: req.path,
                 params: {...req.body},
             });
-            request.save();
         }
         next();
     } catch (e) {
+        console.log(e)
         if (e instanceof ApiError)
             next(e);
         else
