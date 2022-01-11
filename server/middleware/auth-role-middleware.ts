@@ -46,8 +46,6 @@ module.exports = function ensureRole(roles: Array<typeof Roles>) {
                 return next(ApiError.BadRequest("Forbidden"));
             }
 
-
-
             req.user = userData;
             next();
         } catch (e) {
