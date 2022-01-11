@@ -12,6 +12,6 @@ router.get('/', authMiddleware, teamController.getAllUsersFromTeams)
 router.post('/kick', [
     body('userId').isNumeric(),
     body('reason').isString()
-],  ensureRole([Roles.MANAGER, Roles.ADMIN]), teamController.kickUser)
+],  [authMiddleware, ensureRole([Roles.MANAGER, Roles.ADMIN])], teamController.kickUser)
 
 module.exports = router

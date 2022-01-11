@@ -8,7 +8,7 @@ const {Roles} = require('../global/enums')
 
 
 
-router.get('/:id', ensureRole([Roles.ADMIN, Roles.MANAGER]), userController.getUser)
+router.get('/:id', [authMiddleware, ensureRole([Roles.ADMIN, Roles.MANAGER])], userController.getUser)
 router.post('/change-img', authMiddleware, userController.changePhoto)
 router.post('/change-email', [
     body('new_email').isEmail()

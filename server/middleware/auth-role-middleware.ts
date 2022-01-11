@@ -16,23 +16,7 @@ declare namespace Express {
 module.exports = function ensureRole(roles: Array<typeof Roles>) {
     return async (req: any, res: Response, next: NextFunction) => {
         try {
-            const authorizationHeader = req.headers.authorization;
-            if (!authorizationHeader) {
-                return next(ApiError.UnauthorizedError());
-            }
-
-            const accessToken = authorizationHeader.split(' ')[1];
-            if (!accessToken) {
-                return next(ApiError.UnauthorizedError());
-            }
-
-            const userData = tokenService.validateAccessToken(accessToken);
-            if (!userData) {
-                return next(ApiError.UnauthorizedError());
-            }
-
-            const user_id: number = jwt.decode(accessToken).id
-            const candidate: UserI | null = await User.findOne({where: {id: user_id}});
+            const candidate: UserI | null = await User.findOne({where: {id: req.user.id}});
             if (!candidate) {
                 return next(ApiError.BadRequest("User not found"));
             }
@@ -45,8 +29,6 @@ module.exports = function ensureRole(roles: Array<typeof Roles>) {
             if (!isAuthorized){
                 return next(ApiError.BadRequest("Forbidden"));
             }
-
-            req.user = userData;
             next();
         } catch (e) {
             console.log(e)

@@ -426,6 +426,83 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Block user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdG9vcEBnbWFpbC5jb20iLCJpZCI6MTMsImlzQWN0aXZhdGVkIjpmYWxzZSwicGhvdG8iOm51bGwsInJvbGVJZCI6MSwidGVhbUlkIjpudWxsLCJpYXQiOjE2NDE5MDU2NDcsImV4cCI6MTY0MTkwNzQ0N30.jXPxo3s_Q9WXTjDe05c63Yc3HvImQ8hFoilG0A5-OKI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : 1,\n    \"reason\": \"some reason\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/admin/block",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"admin",
+								"block"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer /token/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : 1,\n    \"reason\": \"some reason\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/admin/unblock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"admin",
+								"unblock"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

@@ -2,7 +2,6 @@ import {Router} from "express";
 const   router = Router();
 const authController = require('../controllers/auth-controller')
 import {body} from "express-validator";
-const Token = require("../models/token.model");
 import Role from "../models/role.model";
 const passport = require('../config/passport')
 
