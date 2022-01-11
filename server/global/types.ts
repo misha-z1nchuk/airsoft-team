@@ -1,10 +1,7 @@
-import {Mode} from "fs";
-const {Actions} = require('./enums')
-const User = require("../models/user.model");
 import { Model } from "sequelize";
 
 export interface UserI extends Model{
-    id?: number | null,
+    id?: number | undefined,
     first_name: string,
     last_name: string,
     email: string,
@@ -52,4 +49,13 @@ export interface CommentI extends Model{
     reason: string;
 }
 
+export interface GoogleUserI {
+    id: number,
+    displayName: string,
+    name : {familyName : string, givenName: string},
+    emails : Array<{value: string, verified: boolean}>
+}
 
+export interface DoneFunction {
+    (err:Error|null, id:number | null | undefined | GoogleUserI):void
+}

@@ -1,4 +1,4 @@
-import {UserI} from "../global/types";
+import {DoneFunction, GoogleUserI, UserI} from "../global/types";
 
 const User = require("../models/user.model");
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
@@ -9,11 +9,11 @@ const authService = require('../services/auth-service')
 const tokenService = require('../services/token-service')
 const UserDto = require('../dtos/user-dto')
 
-passport.serializeUser(function(user:any, done:any) {
+passport.serializeUser(function(user:GoogleUserI, done:DoneFunction) {
     done(null, user);
 });
 
-passport.deserializeUser(function(user:any, done:any) {
+passport.deserializeUser(function(user:GoogleUserI, done:DoneFunction) {
     done(null, user);
 });
 
@@ -22,11 +22,10 @@ passport.use(new GoogleStrategy({
         clientSecret:  process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: "http://localhost:5000/api/auth/google/callback",
     },
-    async function(req: Request, accessToken:string, refreshToken:string, profile:any, done:any) {
+    async function(req: Request, accessToken:string, refreshToken:string, profile:GoogleUserI, done:DoneFunction) {
         try {
             const {familyName, givenName} = profile.name;
             const email = profile.emails[0].value;
-            console.log(profile)
             let randPassword = generator.generate({
                 length: 10,
                 numbers: true

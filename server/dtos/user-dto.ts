@@ -1,14 +1,15 @@
-const User = require("../models/user.model");
+import {UserI} from "../global/types";
+
 
 
 module.exports = class UserDto{
     email: string;
-    id: number;
+    id: number | undefined;
     isActivated: boolean;
     photo: string;
     roleId: number;
-    teamId: number
-    constructor(model: any) {
+    teamId: number | null
+    constructor(model: UserI) {
         this.email = model.email;
         this.id = model.id;
         this.isActivated = model.isActivated;

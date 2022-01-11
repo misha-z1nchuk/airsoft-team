@@ -49,10 +49,6 @@ export class RequestService {
         await Request.create({userId: user_id, action: 'QUIT'});
     }
 
-
-
-
-
     async accept(id: string, authorizationHeader: string): Promise<void> {
         const userRequest: RequestI | null = await Request.findOne({where: {id}})
         if (!userRequest) {
@@ -60,12 +56,10 @@ export class RequestService {
         }
         const action = userRequest.action;
         if (action == "JOIN") {
-            await checkRole(authorizationHeader, Roles.MANAGER);
             const user_id: number = userRequest.userId;
             await teamService.joinTeam(user_id, userRequest.teamId);
             await userRequest.destroy();
         } else if (action == "QUIT") {
-            await checkRole(authorizationHeader, Roles.MANAGER);
             const user_id: number = userRequest.userId;
             await teamService.quitTeam(user_id)
             await userRequest.destroy();
@@ -73,7 +67,6 @@ export class RequestService {
             await checkRole(authorizationHeader, Roles.ADMIN);
             await userRequest.destroy();
         }else if (action == "SWITCH"){
-            await checkRole(authorizationHeader, Roles.MANAGER);
             await teamService.changeTeam(userRequest.userId, userRequest.teamId);
             await userRequest.destroy();
         }

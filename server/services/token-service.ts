@@ -31,7 +31,7 @@ class TokenService{
     }
 
 
-    validateAccessToken(token: any): Object|null{
+    validateAccessToken(token: string): Object|null{
         try {
             return jwt.verify(token, process.env.JWT_ACCESS_SECRET)
         }catch (e){
@@ -39,7 +39,7 @@ class TokenService{
         }
     }
 
-    validateRefreshToken(token: any): Object|null{
+    validateRefreshToken(token: string): Object|null{
         try {
             return jwt.verify(token, process.env.JWT_REFRESH_SECRET)
         }catch (e){
@@ -54,15 +54,14 @@ class TokenService{
             return tokenData.save();
         }
 
-        const token = await Token.create({userId : userId, refreshToken})
-        return token;
+        return await Token.create({userId: userId, refreshToken});
     }
 
-    async removeToken(refreshToken: any): Promise<number>{
+    async removeToken(refreshToken: string): Promise<number>{
         return await Token.destroy({where: {refreshToken}});
     }
 
-    async findToken(refreshToken: any): Promise<TokenI|null> {
+    async findToken(refreshToken: string): Promise<TokenI|null> {
         return await Token.findOne({where: {refreshToken}});
     }
 }
