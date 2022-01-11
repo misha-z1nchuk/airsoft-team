@@ -6,7 +6,6 @@ const authMiddleware = require('../middleware/auth-middleware')
 const authAdminManagerMiddleware = require('../middleware/auth-manager-admin-middleware')
 
 router.get('/:id', authAdminManagerMiddleware, userController.getUser)
-router.get('/get-users', authMiddleware, userController.getUsers)
 router.post('/change-img', authMiddleware, userController.changePhoto)
 router.post('/change-email', [
     body('new_email').isEmail()

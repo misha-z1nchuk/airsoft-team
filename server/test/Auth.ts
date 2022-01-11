@@ -59,6 +59,16 @@ describe('Auth', ()=> {
                     done();
                 });
         });
+        it("roleId", (done) => {
+            requester
+                .post("/api/auth/registration")
+                .send({ ...fakeData[2], roleId: undefined })
+                .end((err, res) => {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(400)
+                    done();
+                });
+        });
     });
 
 

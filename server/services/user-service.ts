@@ -10,13 +10,6 @@ const UserDto = require('../dtos/user-dto')
 
 export class UserService{
 
-    async getAllUsers(): Promise<typeof User[]>{
-        return await User.findAll();
-    }
-
-
-
-
     async changeImg(token : string, fileName : string){
         const accessToken = token.split(' ')[1];
         const user_id: number = jwt.decode(accessToken).id
