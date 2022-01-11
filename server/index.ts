@@ -20,6 +20,7 @@ const app: Application = express();
 
 
 export const emitter = new events.EventEmitter();
+export let errorMongo = false;
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, 'static')))
@@ -44,9 +45,10 @@ const server = http.Server(app);
 server.listen(PORT, async () => {
     console.log(`App runing at ${PORT} port`)
     try {
-        await mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@cluster0.raz8v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
+        await mongoose.connect(`mongodb+srv://${2}:${process.env.MONGO_DB_PASSWORD}@cluster0.raz8v.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`)
     }catch (e){
         console.log(e)
+        errorMongo = !errorMongo;
     }
 })
 
