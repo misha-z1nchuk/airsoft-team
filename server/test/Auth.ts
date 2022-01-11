@@ -70,8 +70,60 @@ describe('Auth', ()=> {
                 });
         });
     });
+    it("[Sign-in]: sign in", (done) => {
+        requester
+            .post("/api/auth/login")
+            .send(fakeData[0])
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                expect(res.body.accessToken).to.be.a('string');
+                done();
+            });
+    });
+    it("[Sign-in]: incorrect password", (done) => {
+        requester
+            .post("/api/auth/login")
+            .send({ ...fakeData[0], password: "1" })
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(400);
+                done();
+            });
+    });
 
-
+    it("[Sign-in]: incorrect email", (done) => {
+        requester
+            .post("/api/auth/login")
+            .send({ ...fakeData[0], email: "incorrect@gmail.com"})
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(400);
+                done();
+            });
+    });
+    describe("[Sign-in]: without params", () => {
+        it("Email", (done) => {
+            requester
+                .post("/api/auth/login")
+                .send({ ...fakeData[0], email: undefined })
+                .end((err, res) => {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(400)
+                    done();
+                })
+        });
+        it("Password", (done) => {
+            requester
+                .post("/api/auth/login")
+                .send({ ...fakeData[0], password: undefined })
+                .end((err, res) => {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(400)
+                    done();
+                });
+        });
+    });
 })
 
 
