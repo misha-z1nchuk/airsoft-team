@@ -9,6 +9,28 @@
 			"name": "AUTH",
 			"item": [
 				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Log out"
+					},
+					"response": []
+				},
+				{
 					"name": "Login",
 					"request": {
 						"method": "POST",
@@ -41,28 +63,6 @@
 								"login"
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Logout",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/auth/logout",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"auth",
-								"logout"
-							]
-						},
-						"description": "Log out"
 					},
 					"response": []
 				},
@@ -221,13 +221,19 @@
 					"name": "Send request to join some team ",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InpkZm5nZmVmZmZnQGfQsG1haWwuY29tIiwiaWQiOjQsImlzQWN0aXZhdGVkIjpmYWxzZSwicGhvdG8iOm51bGwsImlhdCI6MTY0MTM5NzkxNywiZXhwIjoxNjQxMzk5NzE3fQ.Kqn1IJdiFeR7mOAEKleZZAFBbNjgOzeQs_-5o9Gu9Jo",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"team_id\": 1\n}",
+							"raw": "{\n    \"teamId\": 1\n}",
 							"options": {
 								"raw": {
-									"language": "javascript"
+									"language": "json"
 								}
 							}
 						},
@@ -242,6 +248,178 @@
 								"api",
 								"request",
 								"join-team"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Quit team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/request/quit-team",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"request",
+								"quit-team"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change team",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "change email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoYW5nZW1haWxAZ9CwbWFpbC5jb20iLCJpZCI6MTQsImlzQWN0aXZhdGVkIjpmYWxzZSwicGhvdG8iOm51bGwsInJvbGVJZCI6MSwidGVhbUlkIjpudWxsLCJpYXQiOjE2NDE1MDc3OTUsImV4cCI6MTY0MTUwOTU5NX0.hfAWjUbq8GV8opfL31eLWUj2p3ARD0uhac-9Q0CaAoc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"new_email\": \"zenyatoop@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/change-email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"change-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all info about user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "change user photo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "get all users info by team",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRzQGfQsG1haWwuY29tIiwiaWQiOjE1LCJpc0FjdGl2YXRlZCI6ZmFsc2UsInBob3RvIjpudWxsLCJyb2xlSWQiOjEsInRlYW1JZCI6bnVsbCwiaWF0IjoxNjQxNTEwMzI3LCJleHAiOjE2NDE1MTIxMjd9.qIy5LxCYI9fjaVdipo8xzw-uynse5dN0mMfR57m2Dl8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/team/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users from all existing teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Kick user from team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer /token/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\" : 3, \n    \"reason\" : \"Bad gaming skills\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/team/kick",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team",
+								"kick"
 							]
 						}
 					},
