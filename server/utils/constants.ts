@@ -17,14 +17,14 @@ export const fakeData = [
     {
         "first_name": "misha",
         "last_name": "fzinchuk",
-        "email" : "ardвfаffsdfffsfgf2@fgmail.com",
+        "email" : "ardвffаffsdfffsfgf2@fgmail.com",
         "password": "sodvmfepath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "dsfddffааfdf@dffdgmail.com",
+        "email" : "dsfddfffааfdf@dffdgmail.com",
         "password": "somepath",
         "roleId": 2
     }
