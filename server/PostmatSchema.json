@@ -43,7 +43,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \n    \"email\" : \"mfdsfdsf@ffffggfgmail.com\",\n    \"password\": \"fdsfdsf24321\"\n  \n\n\n}",
+							"raw": "{\n  \n    \"email\" : \"admin@gmail.com\",\n    \"password\": \"admin123\"\n  \n\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -70,7 +70,13 @@
 					"name": "Refresh",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRkc0Bn0LBtYWlsLmNvbSIsImlkIjoxNiwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJwaG90byI6bnVsbCwicm9sZUlkIjoyLCJ0ZWFtSWQiOm51bGwsImlhdCI6MTY0MTUxMDUzNywiZXhwIjoxNjQxNTEyMzM3fQ.NA4R7Gy0J4EbXgL6sHVZAQ3OC_H1AaH8MPcYUYnO1-Y",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:5000/api/auth/refresh",
 							"protocol": "http",
@@ -91,16 +97,10 @@
 					"name": "Register new user",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdG9vcGVyZUBnbWFpbC5jb20iLCJpZCI6NCwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE2MzkzODkyOTEsImV4cCI6MTYzOTM5MTA5MX0.wPOZM6vTvf54hRLsdhNllUqC-1ijtT6OTXRQ46cYQdM",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"first_name\": \"misha\",\n    \"last_name\": \"zinchuk\",\n    \"email\" : \"zenyatвfffop@fmafil.com\",\n    \"password\": \"fdsfdsf24321\",\n    \"role\": 1\n}",
+							"raw": "{\n    \"first_name\": \"misha\",\n    \"last_name\": \"zinchuk\",\n    \"email\" : \"авfff@gmail.com\",\n    \"password\": \"somepath\",\n    \"roleId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -130,7 +130,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"someemail@gmail.com\"\n}",
+							"raw": "{\n    \"email\": \"zenyatoop@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -165,13 +165,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdNCyZmZmb3BAZm1hZmlsLmNvbSIsImlkIjoxMiwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJpYXQiOjE2NDA1NTYxMjMsImV4cCI6MTY0MDU1NzkyM30.J7nHcH6FxqBMnhS6P-adlLYjZbt9a3Zs09jVxVUsw4k",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ItCw0LJmZmZAZ21haWwuY29tIiwiaWQiOjQ5LCJpc0FjdGl2YXRlZCI6ZmFsc2UsInBob3RvIjpudWxsLCJyb2xlSWQiOjEsInRlYW1JZCI6bnVsbCwiaWF0IjoxNjQxOTc0NzQ3LCJleHAiOjE2NDE5NzY1NDd9.fRKiDIy1mIaeY1rVQ0OoFA-qewJspMhnMCHOnXB921Q",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"team_id\": 1\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -179,7 +179,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/request/accept/7",
+							"raw": "http://localhost:5000/api/request/decline/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -188,8 +188,8 @@
 							"path": [
 								"api",
 								"request",
-								"accept",
-								"7"
+								"decline",
+								"1"
 							]
 						}
 					},
@@ -199,9 +199,24 @@
 					"name": "Accept request with some id",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hbmFnZXJAZ9CwbWFpbC5jb20iLCJpZCI6MywiaXNBY3RpdmF0ZWQiOmZhbHNlLCJwaG90byI6bnVsbCwicm9sZUlkIjoyLCJ0ZWFtSWQiOm51bGwsImlhdCI6MTY0MTc2MDc2NywiZXhwIjoxNjQxNzYyNTY3fQ.dzcIiHq69rgCMhlHtm2CcYVOMN-Jpov8gE3jRoIxKqg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"new_team\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:5000/api/request/accept/7",
+							"raw": "http://localhost:5000/api/request/accept/8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -211,7 +226,7 @@
 								"api",
 								"request",
 								"accept",
-								"7"
+								"8"
 							]
 						}
 					},
@@ -284,8 +299,35 @@
 					"name": "Change team",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer /token/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"new_team\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/request/change-team",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"request",
+								"change-team"
+							]
+						}
 					},
 					"response": []
 				}
@@ -301,7 +343,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoYW5nZW1haWxAZ9CwbWFpbC5jb20iLCJpZCI6MTQsImlzQWN0aXZhdGVkIjpmYWxzZSwicGhvdG8iOm51bGwsInJvbGVJZCI6MSwidGVhbUlkIjpudWxsLCJpYXQiOjE2NDE1MDc3OTUsImV4cCI6MTY0MTUwOTU5NX0.hfAWjUbq8GV8opfL31eLWUj2p3ARD0uhac-9Q0CaAoc",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRzQGfQsG1haWwuY29tIiwiaWQiOjE1LCJpc0FjdGl2YXRlZCI6ZmFsc2UsInBob3RvIjpudWxsLCJyb2xlSWQiOjEsInRlYW1JZCI6bnVsbCwiaWF0IjoxNjQxNTEwMzI3LCJleHAiOjE2NDE1MTIxMjd9.qIy5LxCYI9fjaVdipo8xzw-uynse5dN0mMfR57m2Dl8",
 								"type": "text"
 							}
 						],
@@ -334,17 +376,66 @@
 					"name": "Get all info about user by id",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Beaerr /token/",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/user/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"3"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "change user photo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer /token/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "img",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/user/change-img",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"user",
+								"change-img"
+							]
+						}
 					},
 					"response": []
 				}
@@ -384,8 +475,25 @@
 					"name": "Get all users from all existing teams",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": null
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer /token/",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/team",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"team"
+							]
+						}
 					},
 					"response": []
 				},
@@ -437,7 +545,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdG9vcEBnbWFpbC5jb20iLCJpZCI6MTMsImlzQWN0aXZhdGVkIjpmYWxzZSwicGhvdG8iOm51bGwsInJvbGVJZCI6MSwidGVhbUlkIjpudWxsLCJpYXQiOjE2NDE5MDU2NDcsImV4cCI6MTY0MTkwNzQ0N30.jXPxo3s_Q9WXTjDe05c63Yc3HvImQ8hFoilG0A5-OKI",
+								"value": "Bearer /token/",
 								"type": "text"
 							}
 						],
@@ -473,7 +581,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer /token/",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplbnlhdGZvb2ZwQGdtYWlsLmNvbSIsImlkIjoxOCwiaXNBY3RpdmF0ZWQiOmZhbHNlLCJwaG90byI6bnVsbCwicm9sZUlkIjozLCJ0ZWFtSWQiOm51bGwsImlhdCI6MTY0MTkxMDc0MCwiZXhwIjoxNjQxOTEyNTQwfQ.qQlFnMN-bV_EyBAMYqxbiRWRrTjd0UlEK2mb3OXx4Bc",
 								"type": "text"
 							}
 						],

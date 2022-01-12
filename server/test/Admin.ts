@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp = require('chai-http')
 import {fakeData} from "../utils/constants";
-import {log} from "util";
+
 const server = require("../index")
 
 chai.use(chaiHttp);
@@ -91,7 +91,6 @@ describe("Admin actions", () => {
             })
             .end((err, res) => {
                 expect(err).to.be.null;
-                console.log(res);
                 expect(res).to.have.status(200);
                 done();
             })
