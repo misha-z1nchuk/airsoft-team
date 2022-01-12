@@ -59,3 +59,8 @@ export interface GoogleUserI {
 export interface DoneFunction {
     (err:Error|null, id:number | null | undefined | GoogleUserI):void
 }
+
+export interface RequestResponse{
+    message: string,
+    request: RequestI
+}
