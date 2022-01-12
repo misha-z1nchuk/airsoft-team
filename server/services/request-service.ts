@@ -1,4 +1,4 @@
-import {RequestI, TokenI, UserI} from "../global/types";
+import {RequestI, RequestResponse, TokenI, UserI} from "../global/types";
 
 const Request = require("../models/request.model");
 const User = require('../models/user.model')
@@ -46,7 +46,7 @@ export class RequestService {
         if (request){
             throw ApiError.BadRequest("User has already created request")
         }
-        await Request.create({userId: user_id, action: 'QUIT'});
+        return await Request.create({userId: user_id, action: 'QUIT'});
     }
 
     async accept(id: string, authorizationHeader: string): Promise<void> {
@@ -90,7 +90,7 @@ export class RequestService {
     }
 
 
-    async changeTeam(authorizationHeader: string, new_team: number) {
+    async changeTeam(authorizationHeader: string, new_team: number): Promise<RequestResponse> {
         const accessToken = authorizationHeader.split(' ')[1];
         const user_id: number = jwt.decode(accessToken).id
         const user: UserI | null  = await User.findOne({where: {id: user_id}});
@@ -105,8 +105,8 @@ export class RequestService {
             throw ApiError.BadRequest("User has already created request")
         }
 
-        await Request.create({userId: user_id, action: 'SWITCH', teamId: new_team})
-
+        let createdRequest: RequestI = await Request.create({userId: user_id, action: 'SWITCH', teamId: new_team})
+        return {message: "Request to change team is sent" ,request:  createdRequest}
     }
 
     async getRequestByAuthor(authorizationHeader: string): Promise<Request|null>{

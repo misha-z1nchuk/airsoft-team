@@ -4,6 +4,7 @@ const User = require("../models/user.model");
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
 import Role from "../models/role.model";
 import {checkBanned} from "../utils/checkBanned";
+import {RequestResponse} from "../global/types";
 const {Roles} = require("../global/enums");
 const jwt = require('jsonwebtoken')
 
@@ -16,7 +17,7 @@ const ApiError = require('../exeptions/api-error')
 
 
 export class AuthService{
-    async registration(first_name: string, last_name: string, email: string, password: string, role: string): Promise<ResponseRegLogI|string> {
+    async registration(first_name: string, last_name: string, email: string, password: string, role: string): Promise<ResponseRegLogI|RequestResponse> {
         let candidate = await User.findOne({where: {email: email}});
         if (candidate){
             throw ApiError.BadRequest(`User with such email ${email} exists`);
@@ -36,8 +37,8 @@ export class AuthService{
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         if (role == '2'){
-            await Request.create({userId: user.id, action: "REGISTRATION MANAGER"})
-            return "Admin will review your registration"
+            let request =  await Request.create({userId: user.id, action: "REGISTRATION MANAGER"})
+            return {message: "Admin will review your registration", request}
         }
         return{
             ...tokens,

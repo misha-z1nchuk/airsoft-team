@@ -37,8 +37,8 @@ export class RequestController {
         try {
             const {new_team} = req.body;
             const authorizationHeader = req.headers.authorization;
-            await requestService.changeTeam(authorizationHeader, new_team)
-            return res.json("Request to change team is sent")
+            let result = await requestService.changeTeam(authorizationHeader, new_team)
+            return res.json(result);
         }catch (e){
             next(e)
         }
