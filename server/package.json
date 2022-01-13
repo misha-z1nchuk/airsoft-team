@@ -9,7 +9,7 @@
     "redo-migrate": "npx sequelize-cli db:migrate:undo",
     "seed": "npx sequelize-cli db:seed:all",
     "redo-seed": "npx sequelize-cli db:seed:undo",
-    "test": "mocha --timeout 10000 -r ts-node/register test/Request.ts"
+    "test": "mocha --timeout 10000 -r ts-node/register test/*.ts"
 
   },
   "author": "misha-z1nchuk",

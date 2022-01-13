@@ -3,28 +3,28 @@ export const fakeData = [
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "sdfdffffcа2f33@gmail.com",
+        "email" : "mnncx@gmail.com",
         "password": "somffdepath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "sofdffffаacflf2123@gmail.com",
+        "email" : "testmail@gmail.com",
         "password": "somefdpath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "fzinchuk",
-        "email" : "ardвffаffsdfffsfgf2@fgmail.com",
+        "email" : "bff@fgmail.com",
         "password": "sodvmfepath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "dsfddfffааfdf@dffdgmail.com",
+        "email" : "dsfdnnf@dffdgmail.com",
         "password": "somepath",
         "roleId": 2
     }

@@ -1,6 +1,9 @@
 import {UserI} from "../global/types";
 const User = require('../models/user.model')
 import Comment from "../models/comment";
+import Team from "../models/team.model";
+import {Sequelize} from "sequelize";
+import {Op} from "sequelize";
 
 const ApiError = require('../exeptions/api-error')
 const UserDto = require('../dtos/user-dto')
@@ -19,7 +22,8 @@ export class TeamService {
     }
 
     async getTeamUsers(id: number) {
-        const users: UserI[] | null = await User.findAll({where : {teamId: id}});
+        let userFromCertainTeam = await Team.findAll({include: [{model: User, where :{teamId: id}}]})
+        let users = userFromCertainTeam[0].users
         if (!users?.length){
             throw ApiError.BadRequest("This team doesn`t have players yet")
         }
@@ -67,17 +71,25 @@ export class TeamService {
     }
 
     async getAllUsersFromTeams() {
-        let users_teamA = await User.findAll({where: {teamId: Teams.A}});
-        let users_teamB = await User.findAll({where: {teamId: Teams.B}});
+        let result= await Team.findAll({
+            attributes: ['team_name'],
+            where: {[Op.or]: [{id: 1}, {id: 2}]},
+            include: [{
+              model: User
+            }]
+        })
+
+        let usersA : UserI[] = result[0].users;
+        let usersB : UserI[] = result[1].users;
 
         let teamA : UserI[] = [];
         let teamB : UserI[] = [];
 
-        users_teamA.map((user: UserI) => {
+        usersA.map((user: UserI) => {
             let userToAdd = new extendUserDto(user);
             teamA.push(userToAdd);
         })
-        users_teamB.map((user: UserI) => {
+        usersB.map((user: UserI) => {
             let userToAdd = new extendUserDto(user);
             teamB.push(userToAdd);
         })
