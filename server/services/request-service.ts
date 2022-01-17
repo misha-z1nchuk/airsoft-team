@@ -7,7 +7,7 @@ const Token = require('../models/token.model')
 import {io} from "../index";
 import {checkRole} from "../utils/checkRole";
 const {Roles} = require("../global/enums");
-
+const {RequestActions} = require('../global/enums')
 
 const jwt = require('jsonwebtoken')
 const ApiError = require('../exeptions/api-error')
@@ -56,21 +56,32 @@ export class RequestService {
             throw ApiError.BadRequest("Such request does not exists")
         }
         const action = userRequest.action;
-        if (action == "JOIN") {
-            const user_id: number = userRequest.userId;
-            await teamService.joinTeam(user_id, userRequest.teamId);
-            await userRequest.destroy();
-        } else if (action == "QUIT") {
-            const user_id: number = userRequest.userId;
-            await teamService.quitTeam(user_id)
-            await userRequest.destroy();
-        } else if (action == "REGISTRATION MANAGER"){
-            await checkRole(authorizationHeader, Roles.ADMIN);
-            await userRequest.destroy();
-        }else if (action == "SWITCH"){
-            await teamService.changeTeam(userRequest.userId, userRequest.teamId);
-            await userRequest.destroy();
+        switch (action) {
+            case RequestActions.JOIN:
+            {
+                const user_id: number = userRequest.userId;
+                await teamService.joinTeam(user_id, userRequest.teamId);
+                break;
+            }
+            case RequestActions.QUIT:
+            {
+                const user_id: number = userRequest.userId;
+                await teamService.quitTeam(user_id)
+                break;
+            }
+            case RequestActions.REGISTRATION_MANAGER:
+            {
+                await checkRole(authorizationHeader, Roles.ADMIN);
+                break;
+            }
+            case RequestActions.SWITCH:
+            {
+                await teamService.changeTeam(userRequest.userId, userRequest.teamId);
+                break;
+            }
         }
+        await userRequest.destroy();
+
     }
 
     async decline(id: number, authorizationHeader: string): Promise<void> {
