@@ -2,14 +2,12 @@ import {UserI} from "../global/types";
 const User = require('../models/user.model')
 import Comment from "../models/comment";
 import Team from "../models/team.model";
-import {Sequelize} from "sequelize";
 import {Op} from "sequelize";
+import {destructureUsers} from "../utils/destructureUsers";
 
 const ApiError = require('../exeptions/api-error')
 const UserDto = require('../dtos/user-dto')
 const {Actions} = require('../global/enums')
-const {Teams} = require('../global/enums')
-const extendUserDto = require('../dtos/user-dto-info')
 
 export class TeamService {
     async joinTeam(user_id: number, team_id: number){
@@ -82,17 +80,9 @@ export class TeamService {
         let usersA : UserI[] = result[0].users;
         let usersB : UserI[] = result[1].users;
 
-        let teamA : UserI[] = [];
-        let teamB : UserI[] = [];
+        let teamA : UserI[] = destructureUsers(usersA);
+        let teamB : UserI[] = destructureUsers(usersB);
 
-        usersA.map((user: UserI) => {
-            let userToAdd = new extendUserDto(user);
-            teamA.push(userToAdd);
-        })
-        usersB.map((user: UserI) => {
-            let userToAdd = new extendUserDto(user);
-            teamB.push(userToAdd);
-        })
         return {teamA, teamB}
     }
 }
