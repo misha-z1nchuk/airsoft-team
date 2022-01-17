@@ -14,5 +14,10 @@ router.post('/change-email', [
     body('new_email').isEmail()
     ],
     authMiddleware, userController.changeEmail)
-
+router.post('/block-unblock',
+    [
+        body('userId').isNumeric(),
+        body('reason').isString()
+    ],
+    [authMiddleware, ensureRole([Roles.ADMIN])], userController.banUnbanUser)
 module.exports = router

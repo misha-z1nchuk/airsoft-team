@@ -27,5 +27,12 @@ export const fakeData = [
         "email" : "dsfdnnf@dffdgmail.com",
         "password": "somepath",
         "roleId": 2
+    },
+    {
+        "first_name": "misha",
+        "last_name": "zinchuk",
+        "email" : "dsdsfsdf@dffdgmail.com",
+        "password": "somepath",
+        "roleId": 1
     }
 ];

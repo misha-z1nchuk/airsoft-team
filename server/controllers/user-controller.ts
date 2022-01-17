@@ -2,9 +2,14 @@ import {NextFunction, Request, Response} from "express";
 
 import path from "path";
 import {validationResult} from "express-validator";
+import {UserI} from "../global/types";
+import User from "../models/user.model";
+import Comment from "../models/comment";
 const uuid = require('uuid')
 const userService = require('../services/user-service')
 const ApiError = require('../exeptions/api-error')
+const {Roles} = require('../global/enums')
+const {Actions} = require('../global/enums')
 
 interface MulterRequest extends Request {
     files: any;
@@ -12,6 +17,20 @@ interface MulterRequest extends Request {
 
 class UserController{
 
+    async banUnbanUser(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest("Validation error", errors.array()))
+            }
+
+            const {userId, reason} = req.body;
+            await userService.banUnbanUser(userId, reason);
+            res.status(200).send();
+        }catch (e){
+            next(e)
+        }
+    }
 
 
     async changePhoto(req: MulterRequest, res: Response, next: NextFunction): Promise<Response|void>{

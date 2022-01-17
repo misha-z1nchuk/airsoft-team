@@ -149,5 +149,4 @@ export class AuthService{
 
 }
 
-export default new AuthService();
 module.exports = new AuthService();

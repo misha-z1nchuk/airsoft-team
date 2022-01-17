@@ -1,4 +1,5 @@
 import {UserI} from "../global/types";
+import Comment from "../models/comment";
 
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
@@ -7,6 +8,8 @@ const uuid = require('uuid')
 const mailService = require('../services/mail-service')
 const UserDto = require('../dtos/user-dto')
 
+const {Actions} = require('../global/enums')
+const {Roles} = require('../global/enums')
 
 export class UserService{
 
@@ -54,6 +57,23 @@ export class UserService{
         }
         return new UserDto(candidate);
     }
+
+    async banUnbanUser(userId: number, reason: string) {
+        const candidate: UserI| null = await User.findOne({where: {id: userId}});
+        if(!candidate){
+            throw ApiError.BadRequest("Such user does not exists");
+        }
+        if(candidate.roleId.toString() == Roles.ADMIN){
+            throw ApiError.BadRequest("Admin can not ban admin");
+        }
+
+        candidate.isBanned = !candidate.isBanned;
+        await candidate.save();
+        let action = candidate.isBanned ? Actions.BAN : Actions.UNBAN;
+
+        await Comment.create({userId, action: action, reason: reason});
+    }
+
 }
 
 module.exports = new UserService();
