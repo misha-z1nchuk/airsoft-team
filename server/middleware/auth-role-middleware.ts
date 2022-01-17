@@ -14,7 +14,6 @@ declare namespace Express {
 module.exports = function ensureRole(roles: Array<typeof Roles>) {
     return async (req: any, res: Response, next: NextFunction) => {
         try {
-            console.log(req.user)
             const candidate: UserI | null = await User.findOne({where: {id: req.user.id}});
             if (!candidate) {
                 return next(ApiError.BadRequest("User not found"));

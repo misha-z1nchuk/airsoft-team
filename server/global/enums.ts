@@ -1,7 +1,3 @@
-enum Status{
-    BANED = "BANNED",
-    UNBANED = "UNBANNED",
-}
 
 enum Roles{
     PLAYER = "1",
@@ -20,9 +16,16 @@ enum Teams{
     B = 2,
 }
 
+enum RequestActions {
+    JOIN = "JOIN",
+    QUIT = "QUIT",
+    REGISTRATION_MANAGER = "REGISTRATION MANAGER",
+    SWITCH = "SWITCH"
+}
+
 module.exports = {
-    Status,
     Roles,
     Actions,
-    Teams
+    Teams,
+    RequestActions
 }

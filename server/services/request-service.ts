@@ -15,11 +15,8 @@ const teamService = require('../services/team-service')
 
 export class RequestService {
 
-    async joinTeam(authorizationHeader: string, team_id: number): Promise<void>{
-        const accessToken = authorizationHeader.split(' ')[1];
-        const user_id: number = jwt.decode(accessToken).id
-
-        const request = await Request.findOne({where: {userId: user_id}})
+    async joinTeam(user: UserI, team_id: number): Promise<void>{
+        const request = await Request.findOne({where: {userId: user.id}})
         if (request){
             throw ApiError.BadRequest("User has already created request")
         }
@@ -28,29 +25,24 @@ export class RequestService {
             throw ApiError.BadRequest("Chosen team does not exists")
         }
 
-        io.sockets.in(Roles.MANAGER).emit('message', `user with ${user_id} wanna JOIN team with id ${team_id}`);
-        return await Request.create({userId: user_id, action: 'JOIN', teamId:  team_id})
+        io.sockets.in(Roles.MANAGER).emit('message', `user with ${user.id} wanna JOIN team with id ${team_id}`);
+        return await Request.create({userId: user.id, action: 'JOIN', teamId:  team_id})
     }
 
-    async quitTeam(authorizationHeader: string): Promise<RequestResponse>{
-        const accessToken = authorizationHeader.split(' ')[1];
-        const user_id: number = jwt.decode(accessToken).id
-        const user: UserI | null  = await User.findOne({where: {id: user_id}});
-        if(!user){
-            throw ApiError.BadRequest("Such user does not exists");
-        }
+    async quitTeam(user: UserI): Promise<RequestResponse>{
         if (!user.teamId){
             throw ApiError.BadRequest("User are not in the team");
         }
-        const request = await Request.findOne({where: {userId: user_id}})
+        const request = await Request.findOne({where: {userId: user.id}})
         if (request){
             throw ApiError.BadRequest("User has already created request")
         }
-        let createdRequest: RequestI = await Request.create({userId: user_id, action: 'QUIT'});
+        let createdRequest: RequestI = await Request.create({userId: user.id, action: 'QUIT'});
         return {message: "Request to quit team is sent", request: createdRequest};
     }
 
-    async accept(id: string, authorizationHeader: string): Promise<void> {
+
+    async accept(id: string, user: UserI): Promise<void> {
         const userRequest: RequestI | null = await Request.findOne({where: {id}})
         if (!userRequest) {
             throw ApiError.BadRequest("Such request does not exists")
@@ -71,7 +63,7 @@ export class RequestService {
             }
             case RequestActions.REGISTRATION_MANAGER:
             {
-                await checkRole(authorizationHeader, Roles.ADMIN);
+                await checkRole(user, Roles.ADMIN);
                 break;
             }
             case RequestActions.SWITCH:
@@ -84,17 +76,17 @@ export class RequestService {
 
     }
 
-    async decline(id: number, authorizationHeader: string): Promise<void> {
+    async decline(id: number, user: UserI): Promise<void> {
         const userRequest: RequestI | null = await Request.findOne({where: {id: id}})
         if (!userRequest) {
             throw ApiError.BadRequest("Such request does not exists")
         }
+
         if (userRequest.action == "REGISTRATION MANAGER"){
-            await checkRole(authorizationHeader, Roles.ADMIN);
+            await checkRole(user, Roles.ADMIN);
 
             const candidate : UserI|null = await User.findOne({where : {id: userRequest.userId}});
             const token: TokenI|null = await Token.findOne({where : {userId: userRequest.userId}})
-            await userRequest.destroy();
             await token?.destroy();
             await candidate?.destroy();
         }
@@ -102,22 +94,16 @@ export class RequestService {
     }
 
 
-    async changeTeam(authorizationHeader: string, new_team: number): Promise<RequestResponse> {
-        const accessToken = authorizationHeader.split(' ')[1];
-        const user_id: number = jwt.decode(accessToken).id
-        const user: UserI | null  = await User.findOne({where: {id: user_id}});
-        if(!user){
-            throw ApiError.BadRequest("Such user does not exists");
-        }
+    async changeTeam(user: UserI, new_team: number): Promise<RequestResponse> {
         if (!user.teamId){
             throw ApiError.BadRequest("User are not in the team");
         }
-        const request = await Request.findOne({where: {userId: user_id}})
+        const request = await Request.findOne({where: {userId: user.id}})
         if (request){
             throw ApiError.BadRequest("User has already created request")
         }
 
-        let createdRequest: RequestI = await Request.create({userId: user_id, action: 'SWITCH', teamId: new_team})
+        let createdRequest: RequestI = await Request.create({userId: user.id, action: 'SWITCH', teamId: new_team})
         return {message: "Request to change team is sent" ,request:  createdRequest}
     }
 

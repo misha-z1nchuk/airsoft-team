@@ -2,7 +2,6 @@ import Request from "../models/request.model";
 
 const User = require("../models/user.model");
 import {ResponseRegLogI} from "../global/responses/reg-log-response";
-import Role from "../models/role.model";
 import {checkBanned} from "../utils/checkBanned";
 import {RequestResponse} from "../global/types";
 const {Roles} = require("../global/enums");
@@ -105,6 +104,7 @@ export class AuthService{
     }
 
     async resetPassword(token: string, new_password: string) {
+
         const user_id: number = jwt.decode(token).id
 
         const candidate = await User.findOne({where: {id: user_id}})

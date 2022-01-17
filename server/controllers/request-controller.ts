@@ -1,65 +1,62 @@
 import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
-import {emitter} from "../index";
+import {UserI} from "../global/types";
 const ApiError = require('../exeptions/api-error')
 const requestService = require('../services/request-service')
 
+interface ExtRequest extends Request {
+    user: UserI;
+}
+
 export class RequestController {
-    async joinTeam(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
+    async joinTeam(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void> {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return next(ApiError.BadRequest("Validation error", errors.array()))
             }
-
-            const authorizationHeader = req.headers.authorization;
             const {teamId} = req.body;
 
-            let request = await requestService.joinTeam(authorizationHeader, teamId)
-            emitter.emit('NewNotification')
+            let request = await requestService.joinTeam(req.user, teamId)
             res.json(request);
         }catch (e){
             next(e)
         }
     }
 
-    async quitFromTeam(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
+    async quitFromTeam(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void> {
         try {
-            const authorizationHeader = req.headers.authorization;
-            let result = await requestService.quitTeam(authorizationHeader)
+            let result = await requestService.quitTeam(req.user)
             return res.json(result)
         }catch (e){
             next(e)
         }
     }
 
-    async changeTeam(req: Request, res: Response, next: NextFunction): Promise<Response|void> {
+    async changeTeam(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void> {
         try {
             const {new_team} = req.body;
-            const authorizationHeader = req.headers.authorization;
-            let result = await requestService.changeTeam(authorizationHeader, new_team)
+            let result = await requestService.changeTeam(req.user, new_team)
             return res.json(result);
         }catch (e){
             next(e)
         }
     }
 
-    async accept(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    async accept(req: ExtRequest, res: Response, next: NextFunction): Promise<Response | void> {
         try {
             const {id} = req.params;
-            const authorizationHeader = req.headers.authorization
-            await requestService.accept(id, authorizationHeader);
+            await requestService.accept(id, req.user);
             return res.status(200).send();
         }catch (e){
             next(e)
         }
     }
 
-    async decline(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    async decline(req: ExtRequest, res: Response, next: NextFunction): Promise<Response | void> {
         try {
             const {id} = req.params;
-            const authorizationHeader = req.headers.authorization;
-            await requestService.decline(id, authorizationHeader);
+            await requestService.decline(id, req.user);
             return res.status(200).send();
 
         }catch (e){
@@ -73,7 +70,7 @@ export class RequestController {
             const response = await requestService.getRequestByAuthor(authorizationHeader);
             return res.json(response);
         }catch (e){
-
+            next(e)
         }
     }
 
