@@ -21,10 +21,11 @@ export class TeamService {
 
     async getTeamUsers(id: number) {
         let userFromCertainTeam = await Team.findAll({include: [{model: User, where :{teamId: id}}]})
-        let users = userFromCertainTeam[0].users
+        let users = userFromCertainTeam[0]?.users
         if (!users?.length){
             throw ApiError.BadRequest("This team doesn`t have players yet")
         }
+
         let result: UserI[] = []
         users.map((user: UserI) => {
             let userToAdd = new UserDto(user);
