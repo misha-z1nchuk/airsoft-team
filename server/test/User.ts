@@ -99,7 +99,6 @@ describe("Admin actions", () => {
             .set({ "Authorization": `Bearer ${ userToken }` })
             .send({"new_email": `somemail${uuid.v4()}@gmail.com`})
             .end((err, res) => {
-                console.log(res.body)
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
                 done();

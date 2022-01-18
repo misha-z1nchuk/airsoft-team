@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from "express";
+import {NextFunction, Response} from "express";
 import {validationResult} from "express-validator";
 import {ExtRequest} from "../global/types";
 const ApiError = require('../exeptions/api-error')
@@ -34,7 +34,6 @@ export class RequestController {
     async changeTeam(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void> {
         try {
             const {new_team} = req.body;
-            console.log(req.user)
             let result = await requestService.changeTeam(req.user, new_team)
             return res.json(result);
         }catch (e){
@@ -63,10 +62,9 @@ export class RequestController {
         }
     }
 
-    async getRequestByAuthor(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
+    async getRequestByAuthor(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void>{
         try {
-            const authorizationHeader = req.headers.authorization;
-            const response = await requestService.getRequestByAuthor(authorizationHeader);
+            const response = await requestService.getRequestByAuthor(req.user);
             return res.json(response);
         }catch (e){
             next(e)

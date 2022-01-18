@@ -96,8 +96,6 @@ describe("Request actions", () => {
             .set({"Authorization": `Bearer ${userToken}`})
             .send({new_team: 2})
             .end((err, res) => {
-                console.log("================")
-                console.log(res.body);
                 requestId = res.body.request.id;
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);

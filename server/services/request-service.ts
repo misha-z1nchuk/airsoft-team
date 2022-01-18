@@ -9,7 +9,6 @@ import {checkRole} from "../utils/checkRole";
 const {Roles} = require("../global/enums");
 const {RequestActions} = require('../global/enums')
 
-const jwt = require('jsonwebtoken')
 const ApiError = require('../exeptions/api-error')
 const teamService = require('../services/team-service')
 
@@ -107,11 +106,8 @@ export class RequestService {
         return {message: "Request to change team is sent" ,request:  createdRequest}
     }
 
-    async getRequestByAuthor(authorizationHeader: string): Promise<Request|null>{
-        const accessToken = authorizationHeader.split(' ')[1];
-        const user_id: number = jwt.decode(accessToken).id
-
-        return await Request.findOne({where: {author_id : user_id}})
+    async getRequestByAuthor(user: UserI): Promise<Request|null>{
+        return await Request.findOne({where: {userId : user.id}})
     }
 
 
