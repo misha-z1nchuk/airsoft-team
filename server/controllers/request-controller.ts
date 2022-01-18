@@ -34,7 +34,6 @@ export class RequestController {
     async changeTeam(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void> {
         try {
             const {new_team} = req.body;
-            console.log(req.user)
             let result = await requestService.changeTeam(req.user, new_team)
             return res.json(result);
         }catch (e){
