@@ -7,6 +7,7 @@ chai.use(chaiHttp);
 const requester = chai.request(server).keepOpen();
 
 describe('Auth', ()=> {
+
     it("[Sign-up]: register user", (done) => {
         requester
             .post("/api/auth/registration")
