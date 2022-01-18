@@ -55,7 +55,7 @@ describe("Admin actions", () => {
     });
     it("[Admin]: block player", (done) => {
         requester
-            .post("/api/admin/block")
+            .post("/api/user/block-unblock")
             .set({ "Authorization": `Bearer ${ adminToken }` })
             .send({
                 "userId": userId,
@@ -64,26 +64,12 @@ describe("Admin actions", () => {
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
-                done();
-            })
-    });
-    it("[Admin]: block player one more time", (done) => {
-        requester
-            .post("/api/admin/block")
-            .set({ "Authorization": `Bearer ${ adminToken }` })
-            .send({
-                "userId": userId,
-                "reason": "Banned"
-            })
-            .end((err, res) => {
-                expect(err).to.be.null;
-                expect(res).to.have.status(400);
                 done();
             })
     });
     it("[Admin]: unblock player", (done) => {
         requester
-            .post("/api/admin/unblock")
+            .post("/api/user/block-unblock")
             .set({ "Authorization": `Bearer ${ adminToken }` })
             .send({
                 "userId": userId,
@@ -95,20 +81,17 @@ describe("Admin actions", () => {
                 done();
             })
     });
-    it("[Admin]: unblock player one more time", (done) => {
+    it("[User]: get player info by id", (done) => {
         requester
-            .post("/api/admin/unblock")
+            .get(`/api/user/${userId}`)
             .set({ "Authorization": `Bearer ${ adminToken }` })
-            .send({
-                "userId": userId,
-                "reason": "Banned"
-            })
             .end((err, res) => {
                 expect(err).to.be.null;
-                expect(res).to.have.status(400);
+                expect(res).to.have.status(200);
                 done();
             })
     });
+
 })
 
 

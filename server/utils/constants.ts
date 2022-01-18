@@ -3,21 +3,21 @@ export const fakeData = [
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "mnncx@gmail.com",
-        "password": "somffdepath",
+        "email" : "mnndfcx@gmail.com",
+        "password": "fdfsomffdepath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "testmail@gmail.com",
+        "email" : "tefddsftmdsfdail@gmail.com",
         "password": "somefdpath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "fzinchuk",
-        "email" : "bff@fgmail.com",
+        "email" : "bffdf@fgmail.com",
         "password": "sodvmfepath",
         "roleId": 1
     },
