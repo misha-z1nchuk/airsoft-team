@@ -1,10 +1,11 @@
-import chai, { expect } from 'chai';
+import chai, {expect} from 'chai';
 import chaiHttp = require('chai-http')
 import {fakeData} from "../utils/constants";
 
 const server = require("../index")
 
 chai.use(chaiHttp);
+const uuid = require('uuid')
 const requester = chai.request(server).keepOpen();
 let adminToken = "";
 let userToken = "";
@@ -25,7 +26,7 @@ describe("Admin actions", () => {
                 }),
             requester
                 .post("/api/auth/registration")
-                .send(fakeData[1])
+                .send(fakeData[5])
                 .then((res) => {
                     userToken = res.body.accessToken;
                     userId = res.body.user.id
@@ -92,6 +93,18 @@ describe("Admin actions", () => {
             })
     });
 
+    it("[User]: change email ", (done) => {
+        requester
+            .post(`/api/user/change-email`)
+            .set({ "Authorization": `Bearer ${ userToken }` })
+            .send({"new_email": `somemail${uuid.v4()}@gmail.com`})
+            .end((err, res) => {
+                console.log(res.body)
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done();
+            })
+    });
 })
 
 

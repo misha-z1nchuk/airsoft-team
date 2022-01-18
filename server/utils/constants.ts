@@ -3,35 +3,42 @@ export const fakeData = [
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "mnndfcx@gmail.com",
+        "email" : "mnefdffdsfdfcx@gmail.com",
         "password": "fdfsomffdepath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "tefddsftmdsfdail@gmail.com",
+        "email" : "tefhdsdsfdail@gmail.com",
         "password": "somefdpath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "fzinchuk",
-        "email" : "bffdf@fgmail.com",
+        "email" : "bfgsdff@fgmail.com",
         "password": "sodvmfepath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "dsfdnnf@dffdgmail.com",
+        "email" : "dsfdsfhdf@dffdgmail.com",
         "password": "somepath",
         "roleId": 2
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "fsвfвfdfddfdf@dffdgmail.com",
+        "email" : "fsвfsdfjhf@dffdgmail.com",
+        "password": "somepath",
+        "roleId": 1
+    },
+    {
+        "first_name": "misha",
+        "last_name": "zinchuk",
+        "email" : "fssdff@dffdgmail.com",
         "password": "somepath",
         "roleId": 1
     }
