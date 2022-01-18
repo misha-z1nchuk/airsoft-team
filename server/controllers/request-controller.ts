@@ -1,12 +1,10 @@
 import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
-import {UserI} from "../global/types";
+import {ExtRequest} from "../global/types";
 const ApiError = require('../exeptions/api-error')
 const requestService = require('../services/request-service')
 
-interface ExtRequest extends Request {
-    user: UserI;
-}
+
 
 export class RequestController {
     async joinTeam(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void> {

@@ -1,4 +1,5 @@
 import { Model } from "sequelize";
+import {Request} from "express";
 
 export interface UserI extends Model{
     id?: number | undefined,
@@ -63,4 +64,8 @@ export interface DoneFunction {
 export interface RequestResponse{
     message: string,
     request: RequestI
+}
+
+export interface ExtRequest extends Request {
+    user: UserI;
 }

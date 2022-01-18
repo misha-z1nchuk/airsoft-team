@@ -1,7 +1,5 @@
 import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator";
-import {UserI} from "../global/types";
-import User from "../models/user.model";
 const teamService = require('../services/team-service')
 const ApiError = require('../exeptions/api-error')
 

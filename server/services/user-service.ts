@@ -1,7 +1,6 @@
 import {UserI} from "../global/types";
 import Comment from "../models/comment";
 
-const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 const ApiError = require('../exeptions/api-error')
 const uuid = require('uuid')
@@ -13,11 +12,8 @@ const {Roles} = require('../global/enums')
 
 export class UserService{
 
-    async changeImg(token : string, fileName : string){
-        const accessToken = token.split(' ')[1];
-        const user_id: number = jwt.decode(accessToken).id
-
-        const candidate =await User.findOne({where : {id: user_id}});
+    async changeImg(user : UserI, fileName : string){
+        const candidate =await User.findOne({where : {id: user.id}});
         if (!candidate){
             throw ApiError.BadRequest("User not found")
         }
@@ -28,16 +24,13 @@ export class UserService{
     }
 
 
-    async changeEmail(email: string, authorizationHeader: string) {
-        const accessToken = authorizationHeader.split(' ')[1];
-        const user_id: number = jwt.decode(accessToken).id
-
+    async changeEmail(email: string, user: UserI) {
         const userDuplicate: UserI| null = await User.findOne({where : {email: email}});
         if (userDuplicate){
             throw ApiError.BadRequest("User with such email already exists")
         }
 
-        const candidate: UserI| null = await User.findOne({where : {id: user_id}});
+        const candidate: UserI| null = await User.findOne({where : {id: user.id}});
         if (!candidate){
             throw ApiError.BadRequest("User not found")
         }
@@ -50,7 +43,7 @@ export class UserService{
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`)
     }
 
-    async getUser(id: number) {
+    async getUser(id: string) {
         const candidate: UserI| null = await User.findOne({where : {id: id}});
         if (!candidate){
             throw ApiError.BadRequest("User not found")
