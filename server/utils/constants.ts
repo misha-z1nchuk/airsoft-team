@@ -3,14 +3,14 @@ export const fakeData = [
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "mnndfcx@gmail.com",
+        "email" : "mnnfdfcx@gmail.com",
         "password": "fdfsomffdepath",
         "roleId": 1
     },
     {
         "first_name": "misha",
         "last_name": "zinchuk",
-        "email" : "tefddsftmdsfdail@gmail.com",
+        "email" : "tefdffdsftmdsfdail@gmail.com",
         "password": "somefdpath",
         "roleId": 1
     },

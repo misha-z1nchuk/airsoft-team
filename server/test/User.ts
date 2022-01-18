@@ -1,4 +1,4 @@
-import chai, { expect } from 'chai';
+import chai, {expect} from 'chai';
 import chaiHttp = require('chai-http')
 import {fakeData} from "../utils/constants";
 
@@ -92,6 +92,17 @@ describe("Admin actions", () => {
             })
     });
 
+    it("[User]: change email ", (done) => {
+        requester
+            .post(`/api/user/change-email`)
+            .set({ "Authorization": `Bearer ${ userToken }` })
+            .send({"new_email": "somemail@gmail.com"})
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200);
+                done();
+            })
+    });
 })
 
 
