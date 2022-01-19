@@ -26,6 +26,13 @@ export default class RequestStore{
             console.log(e)
         }
     }
+    async changeTeam(team_id){
+        try{
+            await UserService.changeTeam({new_team: team_id});
+        }catch (e){
+            console.log(e)
+        }
+    }
 
     async declineReq(id){
         try{

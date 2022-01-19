@@ -2,11 +2,14 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../index";
 import JoinTeam from "../components/modals/JoinTeam";
 import {Button, Card, Container} from "react-bootstrap";
+import ChangeTeam from "../components/modals/ChangeTeam";
 
 const PlayerMenu = () => {
     const {user, request} = useContext(Context)
     const [req, setReq] = useState(null);
     const [joinTeamVisible, setJoinTeamVisible] = useState(false)
+    const [changeTeamVisible, setChangeTeamVisible] = useState(false)
+
 
     useEffect(async () => {
         await request.getRequestByAuthor();
@@ -43,6 +46,21 @@ const PlayerMenu = () => {
                 </Button>
                 <JoinTeam show={joinTeamVisible} onHide={() => setJoinTeamVisible(false)}/>
             </Container>
+            {(user.user.teamId !== null) ?
+                <Container className="d-flex flex-column">
+                    <Button
+                        variant={"outline-dark"}
+                        className="mt-4 p-2"
+                        onClick={() => setChangeTeamVisible(true)}
+                    >
+                        Change team
+                    </Button>
+                    <ChangeTeam show={changeTeamVisible} onHide={() => setChangeTeamVisible(false)}/>
+                </Container>
+                :
+                <div/>
+            } }
+
 
         </div>
     );

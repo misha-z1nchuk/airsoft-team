@@ -1,11 +1,10 @@
 import React, {useContext, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import {Form, Button, DropdownButton, Dropdown} from "react-bootstrap";
+import {Button, DropdownButton, Dropdown} from "react-bootstrap";
 import {Context} from "../../index";
-import $api from "../../http";
 
 const JoinTeam = ({show, onHide}) => {
-    const {user, request} = useContext(Context)
+    const {request} = useContext(Context)
     const [teamId, setTeamId] = useState(null);
 
     function handleSelect(e) {
@@ -14,6 +13,7 @@ const JoinTeam = ({show, onHide}) => {
 
     function joinTeam() {
         request.joinTeam(teamId)
+        onHide()
     }
 
     return (
