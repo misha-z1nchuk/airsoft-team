@@ -14,6 +14,9 @@ export default class UserService{
         return $api.post(API_URL+"/request/join-team", team_id);
     }
 
+    static declineReq(id){
+        return $api.post(API_URL+`/request/decline/${id}`);
+    }
 
 }
 
