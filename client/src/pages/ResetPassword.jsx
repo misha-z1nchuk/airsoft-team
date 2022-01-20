@@ -13,11 +13,11 @@ const ResetPassword = () => {
     const navigate = useNavigate();
 
 
-    function clickFunc() {
-        let status = user.resetPassword(password, token);
+    async function clickFunc() {
+        let status = await user.resetPassword(password, token);
         navigate("/")
-        if(status == 200){
-            alert("Password changed")
+        if(status === 200){
+            alert("Password changed");
         }
     }
 

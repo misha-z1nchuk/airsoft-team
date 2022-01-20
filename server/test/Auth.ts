@@ -7,6 +7,7 @@ chai.use(chaiHttp);
 const requester = chai.request(server).keepOpen();
 
 describe('Registration', ()=> {
+
     it("[Sign-up]: register user", (done) => {
         requester
             .post("/api/auth/registration")
@@ -18,21 +19,21 @@ describe('Registration', ()=> {
                 done();
             });
     });
-    it("[Sign-up]: password mismatch", (done) => {
+    it("[Sign-up]: password mismatch", (done) =>  {
         requester
             .post("/api/auth/registration")
-            .send({...fakeData[1], password: "1"})
-            .end((err, res) => {
+            .send({ ...fakeData[1], password: "1" })
+            .end((err, res)=> {
                 expect(err).to.be.null;
                 expect(res).to.have.status(400);
                 done();
             })
     });
-    it("[Sign-up]: already exists email", (done) => {
+    it("[Sign-up]: already exists email", (done) =>  {
         requester
             .post("/api/auth/registration")
             .send(fakeData[0])
-            .end((err, res) => {
+            .end((err, res)=> {
                 expect(err).to.be.null;
                 expect(res).to.have.status(400)
                 done();
@@ -42,7 +43,7 @@ describe('Registration', ()=> {
         it("Email", (done) => {
             requester
                 .post("/api/auth/registration")
-                .send({...fakeData[2], email: undefined})
+                .send({ ...fakeData[2], email: undefined })
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res).to.have.status(400)
@@ -52,7 +53,7 @@ describe('Registration', ()=> {
         it("Password", (done) => {
             requester
                 .post("/api/auth/registration")
-                .send({...fakeData[2], password: undefined})
+                .send({ ...fakeData[2], password: undefined })
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res).to.have.status(400)
@@ -62,7 +63,7 @@ describe('Registration', ()=> {
         it("roleId", (done) => {
             requester
                 .post("/api/auth/registration")
-                .send({...fakeData[2], roleId: undefined})
+                .send({ ...fakeData[2], roleId: undefined })
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res).to.have.status(400)
@@ -70,9 +71,6 @@ describe('Registration', ()=> {
                 });
         });
     });
-})
-
-describe('Login', ()=> {
     it("[Sign-in]: sign in", (done) => {
         requester
             .post("/api/auth/login")
