@@ -3,8 +3,9 @@ import {Context} from "../index";
 import JoinTeam from "../components/modals/JoinTeam";
 import {Button, Card, Container} from "react-bootstrap";
 import ChangeTeam from "../components/modals/ChangeTeam";
+import {observer} from "mobx-react-lite";
 
-const PlayerMenu = () => {
+const PlayerMenu = observer(() => {
     const {user, request} = useContext(Context)
     const [req, setReq] = useState(null);
     const [joinTeamVisible, setJoinTeamVisible] = useState(false)
@@ -14,7 +15,7 @@ const PlayerMenu = () => {
     useEffect(async () => {
         await request.getRequestByAuthor();
         setReq(request.request)
-    }, [])
+    }, [changeTeamVisible])
 
     async function declineReq() {
         await request.declineReq(request.request.id);
@@ -64,6 +65,6 @@ const PlayerMenu = () => {
 
         </div>
     );
-};
+});
 
 export default PlayerMenu;
