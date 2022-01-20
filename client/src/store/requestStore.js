@@ -41,5 +41,13 @@ export default class RequestStore{
             console.log(e)
         }
     }
+    async quitTeam(){
+        try{
+            await UserService.quitTeam();
+        }catch (e){
+            console.log(e)
+        }
+    }
+
 
 }

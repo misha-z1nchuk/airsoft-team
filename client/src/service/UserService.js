@@ -21,5 +21,9 @@ export default class UserService{
         return $api.post(API_URL+`/request/decline/${id}`);
     }
 
+    static quitTeam(){
+        return $api.post(API_URL+`/request/quit-team`);
+    }
+
 }
 

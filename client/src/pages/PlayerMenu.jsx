@@ -15,11 +15,16 @@ const PlayerMenu = observer(() => {
     useEffect(async () => {
         await request.getRequestByAuthor();
         setReq(request.request)
-    }, [changeTeamVisible])
+    }, [changeTeamVisible, quitTeam])
 
     async function declineReq() {
         await request.declineReq(request.request.id);
         setReq(null);
+    }
+
+    async function quitTeam() {
+        await request.quitTeam();
+
     }
 
     return (
@@ -48,19 +53,31 @@ const PlayerMenu = observer(() => {
                 <JoinTeam show={joinTeamVisible} onHide={() => setJoinTeamVisible(false)}/>
             </Container>
             {(user.user.teamId !== null) ?
-                <Container className="d-flex flex-column">
-                    <Button
-                        variant={"outline-dark"}
-                        className="mt-4 p-2"
-                        onClick={() => setChangeTeamVisible(true)}
-                    >
-                        Change team
-                    </Button>
-                    <ChangeTeam show={changeTeamVisible} onHide={() => setChangeTeamVisible(false)}/>
-                </Container>
+                <div>
+                    <Container className="d-flex flex-column">
+                        <Button
+                            variant={"outline-dark"}
+                            className="mt-4 p-2"
+                            onClick={() => setChangeTeamVisible(true)}
+                        >
+                            Change team
+                        </Button>
+                        <ChangeTeam show={changeTeamVisible} onHide={() => setChangeTeamVisible(false)}/>
+                    </Container>
+                    <Container className="d-flex flex-column">
+                        <Button
+                            variant={"outline-dark"}
+                            className="mt-4 p-2"
+                            onClick={quitTeam}
+                        >
+                            Quit Team
+                        </Button>
+                    </Container>
+                </div>
                 :
                 <div/>
             } }
+
 
 
         </div>
