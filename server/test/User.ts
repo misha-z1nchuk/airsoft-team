@@ -82,22 +82,25 @@ describe("Admin actions", () => {
                 done();
             })
     });
-    it("[User]: get player info by id", (done) => {
+})
+
+
+describe("Users actions", () => {
+    it("[User]: change email ", (done) => {
         requester
-            .get(`/api/user/${userId}`)
-            .set({ "Authorization": `Bearer ${ adminToken }` })
+            .post(`/api/user/change-email`)
+            .set({ "Authorization": `Bearer ${ userToken }` })
+            .send({"new_email": `somemail${uuid.v4()}@gmail.com`})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
                 done();
             })
     });
-
-    it("[User]: change email ", (done) => {
+    it("[User]: get player info by id", (done) => {
         requester
-            .post(`/api/user/change-email`)
-            .set({ "Authorization": `Bearer ${ userToken }` })
-            .send({"new_email": `somemail${uuid.v4()}@gmail.com`})
+            .get(`/api/user/${userId}`)
+            .set({ "Authorization": `Bearer ${ adminToken }` })
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);

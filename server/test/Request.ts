@@ -134,7 +134,7 @@ describe("Request actions", () => {
                 done();
             });
     });
-    it("[User Request]:  Accept change team req req", (done) => {
+    it("[User Request]:  Accept quit team req", (done) => {
         requester
             .post(`/api/request/accept/${requestId}`)
             .set({"Authorization": `Bearer ${managerToken}`})
