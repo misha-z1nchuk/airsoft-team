@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {LOGIN_ROUTE, REGISTRATION_ROUTE, SERVICE_ROUTE} from "../utils/consts";
+import {FORGOT_PASSWORD_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 
@@ -24,7 +24,7 @@ const Login = observer(() => {
 
     const click = async () => {
         try {
-            let data = await user.login(email, password);
+            await user.login(email, password);
             navigate('/')
         } catch (e) {
             alert(e.response.data.message)
@@ -64,6 +64,7 @@ const Login = observer(() => {
                         type="password"
                     />
                     <Row className="d-flex justify-content-between mt-3 pl-3 pr-3">
+                        <div>Forgot password? <NavLink to={FORGOT_PASSWORD_ROUTE}>click</NavLink></div>
                         {isLogin ?
                             <div>
                                 Нет аккаунта? <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>

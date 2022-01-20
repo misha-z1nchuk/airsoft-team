@@ -2,7 +2,7 @@ import Login from "./pages/Login";
 import {
     FORGOT_PASSWORD_ROUTE,
     LOGIN_ROUTE,
-    REGISTRATION_ROUTE,
+    REGISTRATION_ROUTE, RESET_PASSWORD_ROUTE,
     SERVICE_ROUTE,
     SETTINGS_ROUTE
 } from "./utils/consts";
@@ -10,6 +10,7 @@ import Main from "./pages/Main";
 import Registration from "./pages/Registration";
 import Setting from "./pages/Setting";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 export const authRoutes = [
     {
@@ -34,5 +35,10 @@ export const publicRoutes = [
     {
         path: FORGOT_PASSWORD_ROUTE,
         Component: ForgotPassword
+    },
+    {
+        path: RESET_PASSWORD_ROUTE,
+        Component: ResetPassword
     }
+
 ]

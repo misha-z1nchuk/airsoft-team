@@ -97,7 +97,7 @@ export class AuthService{
         const userDto = new UserDto(candidate);
 
         const token = tokenService.generateForgotPasswordToken({...userDto}, secret);
-        const link = `http://localhost:5000/api/auth/reset-password/${token}`;
+        const link = `${process.env.CLIENT_URL}/reset-password/${token}`;
         await mailService.sendForgotPasswordLink(email, link)
 
         return token

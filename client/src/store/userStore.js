@@ -51,7 +51,7 @@ export default class UserStore {
 
     async logout(){
         try {
-            const response = await AuthService.logout();
+            await AuthService.logout();
             localStorage.removeItem('token');
             this.setAuth(false);
             this.setUser({});
@@ -81,12 +81,28 @@ export default class UserStore {
 
     async changePhoto(photo){
         try {
-            const response = await UserService.changePhoto(photo);
+            await UserService.changePhoto(photo);
+        }catch (e){
+            console.log(e.response?.data?.message)
+        }
+    }
+
+    async forgotPassword(new_email){
+        try {
+            await AuthService.forgotPassword(new_email)
         }catch (e){
             console.log(e.response?.data?.message)
         }
     }
 
 
+    async resetPassword(password, token){
+        try {
+            let res = await AuthService.resetPassword(password, token)
+            return res.status
+        }catch (e){
+            console.log(e.response?.data?.message)
+        }
+    }
 
 }
