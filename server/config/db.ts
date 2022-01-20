@@ -1,7 +1,10 @@
 require('dotenv').config({path: "../.env"})
 const { Sequelize } = require('sequelize');
 
-const DB_NAME = process.env.DB_NAME
+let DB_NAME = process.env.DB_NAME
+if (process.env.NODE_ENV == 'test'){
+    DB_NAME = process.env.TEST_DB_NAME
+}
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 const DB_HOST =  process.env.DB_HOST
