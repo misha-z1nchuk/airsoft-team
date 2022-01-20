@@ -76,3 +76,12 @@ Start the client
   go to the client folder and use: npm start
 ```
 
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  npm run test
+```
+
