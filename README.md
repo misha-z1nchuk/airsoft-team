@@ -36,8 +36,11 @@ To run this project, you will need to add the following environment variables to
 `TEST_DB_NAME`
 ## Run Locally
 
-#### After added .env file, create local database in postgresql, named as your DB_NAME variable in .env file 
-
+#### After added .env file, create local database in postgresql, named as your DB_NAME variable in .env file and run 
+```bash
+  npm run migrate
+  npm run seed
+```
 
 Clone the project
 
