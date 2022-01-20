@@ -14,6 +14,7 @@ router.post('/change-email', [
     body('new_email').isEmail()
     ],
     authMiddleware, userController.changeEmail)
+router.get('/confirm-mail-changing/:token', userController.confirmChangeEmail)
 router.post('/block-unblock',
     [
         body('userId').isNumeric(),

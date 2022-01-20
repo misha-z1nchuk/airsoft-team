@@ -25,5 +25,9 @@ export default class UserService{
         return $api.post(API_URL+`/request/quit-team`);
     }
 
+    static changeMail(email){
+        return $api.post(API_URL+`/user/change-email`, {new_email: email});
+    }
+
 }
 

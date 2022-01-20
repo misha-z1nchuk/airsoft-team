@@ -1,6 +1,5 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Context} from "../index";
-import {API_URL} from "../http";
 
 let roles = {
     1: "Player",
@@ -11,7 +10,6 @@ let roles = {
 
 const Main = () => {
     const {user} = useContext(Context)
-    console.log(user.user)
     return (
         <div>
             Main

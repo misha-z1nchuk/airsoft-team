@@ -105,4 +105,12 @@ export default class UserStore {
         }
     }
 
+    async changeMail(email){
+        try {
+            let res = await UserService.changeMail(email)
+            return res.status
+        }catch (e){
+            console.log(e.response?.data?.message)
+        }
+    }
 }

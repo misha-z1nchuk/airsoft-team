@@ -69,6 +69,17 @@ class UserController{
             next(e);
         }
     }
+
+    async confirmChangeEmail(req: Request, res: Response, next: NextFunction): Promise<Response|void>{
+        try {
+            const {token} = req.params;
+            await userService.confirmChangeEmail(token);
+            res.write(`<h1>Email is changed<h1/>`)
+        }catch (e){
+            next(e)
+        }
+
+    }
 }
 
 module.exports = new UserController();

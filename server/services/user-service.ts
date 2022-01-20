@@ -1,14 +1,15 @@
 import {UserI} from "../global/types";
 import Comment from "../models/comment";
+const tokenService = require("./token-service");
 
 const User = require('../models/user.model')
 const ApiError = require('../exeptions/api-error')
-const uuid = require('uuid')
 const mailService = require('../services/mail-service')
 const UserDto = require('../dtos/user-dto')
 
 const {Actions} = require('../global/enums')
 const {Roles} = require('../global/enums')
+const jwt = require('jsonwebtoken')
 
 export class UserService{
 
@@ -25,6 +26,7 @@ export class UserService{
 
 
     async changeEmail(email: string, user: UserI) {
+
         const userDuplicate: UserI| null = await User.findOne({where : {email: email}});
         if (userDuplicate){
             throw ApiError.BadRequest("User with such email already exists")
@@ -35,12 +37,28 @@ export class UserService{
             throw ApiError.BadRequest("User not found")
         }
 
-        candidate.email = email;
-        const activationLink = uuid.v4();
-        candidate.activationLink = activationLink;
-        candidate.isActivated = false;
+        const secret = process.env.JWT_CHANGE_EMAIL_SECRET + candidate.password
+
+        const token = tokenService.generateForgotPasswordToken({id: user.id, email: email}, secret);
+        const link = `${process.env.API_URL}/api/user/confirm-mail-changing/${token}`;
+        await mailService.sendChangeMailLink(email, link)
+    }
+
+    async confirmChangeEmail(token: string) {
+        token = token.trim();
+        const {id, email} = jwt.decode(token);
+        const candidate = await User.findOne({where: {id: id}});
+        if(!candidate){
+            throw ApiError.BadRequest("User error");
+        }
+        const secret = process.env.JWT_CHANGE_EMAIL_SECRET + candidate.password;
+        const isValid = tokenService.validateSomeToken(token, secret)
+        if(!isValid){
+            throw ApiError.BadRequest(`Not valid request`);
+        }
+
+        candidate.email = email
         await candidate.save();
-        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`)
     }
 
     async getUser(id: string) {

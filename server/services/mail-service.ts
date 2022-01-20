@@ -47,6 +47,22 @@ class MailService{
                 `
         })
     }
+
+    async sendChangeMailLink(to: string, link: string): Promise<void>{
+        await this.transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to,
+            subject: "Change Mail" + process.env.API_URL,
+            text: '',
+            html:
+                `
+                    <div>
+                        <h1>For changing email, use link</h1>
+                        <a href="${link}">${link}</a>
+                    </div>
+                `
+        })
+    }
 }
 
 module.exports = new MailService()

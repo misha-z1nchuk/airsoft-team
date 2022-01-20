@@ -17,7 +17,7 @@ class TokenService{
         }
     }
 
-    generateForgotPasswordToken(payload: string, secret: string){
+    generateForgotPasswordToken(payload: string | object, secret: string){
         return jwt.sign(payload, secret, {expiresIn: '15m'})
     }
 
