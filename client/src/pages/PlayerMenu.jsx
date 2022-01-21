@@ -15,7 +15,7 @@ const PlayerMenu = observer(() => {
     useEffect(async () => {
         await request.getRequestByAuthor();
         setReq(request.request)
-    }, [changeTeamVisible, quitTeam])
+    }, [changeTeamVisible])
 
     async function declineReq() {
         await request.declineReq(request.request.id);

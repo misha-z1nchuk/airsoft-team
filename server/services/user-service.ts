@@ -6,6 +6,7 @@ const User = require('../models/user.model')
 const ApiError = require('../exeptions/api-error')
 const mailService = require('../services/mail-service')
 const UserDto = require('../dtos/user-dto')
+const bcrypt = require('bcrypt')
 
 const {Actions} = require('../global/enums')
 const {Roles} = require('../global/enums')
@@ -85,6 +86,22 @@ export class UserService{
         await Comment.create({userId, action: action, reason: reason});
     }
 
+    async changePassword(oldPassword: string, newPassword: string, user: UserI) {
+        const candidate: UserI| null = await User.findOne({where: {id: user.id}});
+        if(!candidate){
+            throw ApiError.BadRequest("Such user does not exists");
+        }
+
+        const issPassEquals = await bcrypt.compare(oldPassword, candidate.password)
+        if (!issPassEquals){
+            throw ApiError.BadRequest(`Password is incorrect`);
+        }
+
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(newPassword, salt)
+        candidate.password = hashedPassword;
+        candidate.save();
+    }
 }
 
 module.exports = new UserService();

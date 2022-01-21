@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from "express";
 
 import path from "path";
 import {validationResult} from "express-validator";
-import {UserI} from "../global/types";
+import {ExtRequest, UserI} from "../global/types";
 const uuid = require('uuid')
 const userService = require('../services/user-service')
 const ApiError = require('../exeptions/api-error')
@@ -79,6 +79,16 @@ class UserController{
             next(e)
         }
 
+    }
+
+    async changePassword(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void>{
+        try {
+            const {oldPassword, newPassword} = req.body;
+            await userService.changePassword(oldPassword, newPassword, req.user);
+            return res.status(200).send("Password changed");
+        }catch (e){
+            next(e)
+        }
     }
 }
 

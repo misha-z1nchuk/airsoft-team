@@ -113,4 +113,14 @@ export default class UserStore {
             console.log(e.response?.data?.message)
         }
     }
+
+    async changePassword(oldPassword, newPassword){
+        try {
+            let res = await UserService.changePassword(oldPassword, newPassword);
+            return res
+        }catch (e){
+            console.log(e.response?.data?.message)
+            return e.response?.data?.message
+        }
+    }
 }

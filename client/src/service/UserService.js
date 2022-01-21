@@ -29,5 +29,8 @@ export default class UserService{
         return $api.post(API_URL+`/user/change-email`, {new_email: email});
     }
 
+    static changePassword(oldPassword, newPassword){
+        return $api.post(API_URL+`/user/change-password`, {oldPassword: oldPassword, newPassword: newPassword});
+    }
 }
 

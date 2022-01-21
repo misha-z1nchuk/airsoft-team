@@ -14,6 +14,9 @@ router.post('/change-email', [
     body('new_email').isEmail()
     ],
     authMiddleware, userController.changeEmail)
+router.post('/change-password', [
+    body('password').isLength({min: 6, max: 24})
+    ],authMiddleware, userController.changePassword)
 router.get('/confirm-mail-changing/:token', userController.confirmChangeEmail)
 router.post('/block-unblock',
     [
