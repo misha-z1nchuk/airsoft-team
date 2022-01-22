@@ -45,7 +45,7 @@ const ChangePassword = ({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Change Email
+                    Change Password
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -76,7 +76,7 @@ const ChangePassword = ({show, onHide}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-danger" onClick={() => {clearForms(); onHide();}}>Close</Button>
-                <Button variant="outline-success" onClick={changePassword}>Change email</Button>
+                <Button variant="outline-success" onClick={changePassword}>Change password</Button>
             </Modal.Footer>
         </Modal>
     );
