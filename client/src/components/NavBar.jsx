@@ -32,6 +32,12 @@ const NavBar = observer(() => {
                                 </Button>
                                 : <div/>
                         }
+                        <Button variant={"outline-light"}
+                                onClick={() => navigate('/teams-menu')}
+                                className="ml-2"
+                        >
+                            TeamsMenu
+                        </Button>
                     </Nav>
 
                     :

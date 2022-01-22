@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import {Routes, Route } from 'react-router-dom';
 
 import {authRoutes, publicRoutes} from "../routes";
-import Auth from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import {Context} from "../index";
 import PlayerMenu from "../pages/PlayerMenu";
+import TeamsMenu from "../pages/TeamsMenu";
 
 const AppRouter = () => {
     const {user} = useContext(Context)
@@ -16,7 +16,13 @@ const AppRouter = () => {
             <main>
                 <Routes>
                     { (user.user.roleId === 1) ?
-                        <Route key={'player-menu'} path={"player-menu"} element={<PlayerMenu />}/>
+                        <>
+                            <Route key={'player-menu'} path={"player-menu"} element={<PlayerMenu />}/>
+                            <Route key={'teams-menu'} path={"teams-menu"} element={<TeamsMenu />}/>
+
+                        </>
+
+
                         :
                         <></>
                     }
