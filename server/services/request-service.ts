@@ -6,6 +6,7 @@ import Team from "../models/team.model";
 const Token = require('../models/token.model')
 import {io} from "../index";
 import {checkRole} from "../utils/checkRole";
+import {checkPlayersAmount} from "../utils/checkAllowJoinTeam";
 const {Roles} = require("../global/enums");
 const {RequestActions} = require('../global/enums')
 
@@ -22,6 +23,10 @@ export class RequestService {
         const teamExist = await Team.findOne({where: {id: team_id}});
         if (!teamExist){
             throw ApiError.BadRequest("Chosen team does not exists")
+        }
+        let isAbleToJoint = await checkPlayersAmount(team_id);
+        if(!isAbleToJoint){
+            throw ApiError.BadRequest("This team is already full")
         }
 
         io.sockets.in(Roles.MANAGER).emit('message', `user with ${user.id} wanna JOIN team with id ${team_id}`);
@@ -100,6 +105,10 @@ export class RequestService {
         const request = await Request.findOne({where: {userId: user.id}})
         if (request){
             throw ApiError.BadRequest("User has already created request")
+        }
+        let isAbleToJoint = await checkPlayersAmount(new_team);
+        if(!isAbleToJoint){
+            throw ApiError.BadRequest("This team is already full")
         }
 
         let createdRequest: RequestI = await Request.create({userId: user.id, action: 'SWITCH', teamId: new_team})

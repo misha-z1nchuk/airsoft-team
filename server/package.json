@@ -9,7 +9,8 @@
     "redo-migrate": "npx sequelize-cli db:migrate:undo",
     "seed": "npx sequelize-cli db:seed:all",
     "redo-seed": "npx sequelize-cli db:seed:undo",
-    "test": "cross-env NODE_ENV=test  sequelize-cli db:drop && cross-env NODE_ENV=test sequelize-cli db:create && cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test npm run seed && cross-env NODE_ENV=test   mocha --timeout 10000 -r ts-node/register test/*.ts"
+    "test": "cross-env NODE_ENV=test  sequelize-cli db:drop && cross-env NODE_ENV=test sequelize-cli db:create && cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test npm run seed && cross-env NODE_ENV=test   mocha --timeout 10000 -r ts-node/register test/*.ts",
+    "drop": "sequelize-cli db"
   },
   "author": "misha-z1nchuk",
   "license": "ISC",

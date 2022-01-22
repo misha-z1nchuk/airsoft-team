@@ -39,8 +39,6 @@ app.use(errorMiddleware)
 
 
 
-
-
 const server = http.Server(app);
 server.listen(PORT, async () => {
     console.log(`App runing at ${PORT} port`)
