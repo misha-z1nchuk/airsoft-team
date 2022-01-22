@@ -14,6 +14,7 @@ export async function loggerMiddleware(req: Request, res: Response, next: NextFu
         }
         next();
     } catch (e) {
+        console.log("===============")
         console.log(e)
         if (e instanceof ApiError)
             next(e);
