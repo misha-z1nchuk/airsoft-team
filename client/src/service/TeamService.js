@@ -6,5 +6,9 @@ export default class TeamService{
         return $api.get('/team')
     }
 
+    static getCertainTeamPlayers(id){
+        return $api.get(`/team/${id}`)
+    }
+
 }
 

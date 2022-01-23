@@ -1,19 +1,23 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../index";
 import JoinTeam from "../components/modals/JoinTeam";
-import {Button, Card, Container} from "react-bootstrap";
+import {Button, Card, Container, ListGroup} from "react-bootstrap";
 import ChangeTeam from "../components/modals/ChangeTeam";
 import {observer} from "mobx-react-lite";
 
 const PlayerMenu = observer(() => {
-    const {user, request} = useContext(Context)
+    const {user, teams, request} = useContext(Context)
     const [req, setReq] = useState(null);
     const [joinTeamVisible, setJoinTeamVisible] = useState(false)
     const [changeTeamVisible, setChangeTeamVisible] = useState(false)
+    const [team, setTeam] = useState([])
 
 
     useEffect(async () => {
         await request.getRequestByAuthor();
+        await teams.getCertainTeamPlayer(user.user.id).then((res) => {
+            setTeam(res.data);
+        })
         setReq(request.request)
     }, [changeTeamVisible])
 
@@ -30,7 +34,7 @@ const PlayerMenu = observer(() => {
     return (
         <div>
             player menu
-            <h2>User team is: {user.user.teamId == null ? "You are not in the team" : user.user.teamId}</h2>
+            <h2>User team is: {user.user.teamId == null ? "You are not in the team" : user.user.teamId === 1 ? " A": "B"}</h2>
             <h2>{req ?
                 <div>
                     <div>Your request is here</div>
@@ -77,6 +81,23 @@ const PlayerMenu = observer(() => {
                 :
                 <div/>
             } }
+
+
+            { user.user.teamId !== null ?
+                <div className="d-flex justify-content-between w-50">
+                    <div>
+                        <h1>Your team players</h1>
+                        <ListGroup>
+                            {team.map((player) => (
+                                <ListGroup.Item key={player.id} className="d-flex">Email: {player.email} User id: {player.id} {user.user.id === player.id ? <div className="ms-2 bg-info">You</div> : ""}</ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </div>
+                </div>
+
+                :
+                <div/>
+            }
 
 
 

@@ -28,4 +28,12 @@ export default class TeamsStore{
         }
     }
 
+    async getCertainTeamPlayer(id){
+        try{
+            return await TeamService.getCertainTeamPlayers(id);
+        }catch (e){
+            console.log(e)
+        }
+    }
+
 }
