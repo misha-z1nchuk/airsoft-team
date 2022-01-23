@@ -43,6 +43,7 @@ export class RequestService {
             throw ApiError.BadRequest("User has already created request")
         }
         let createdRequest: RequestI = await Request.create({userId: user.id, action: 'QUIT'});
+        io.sockets.in(Roles.MANAGER).emit('message', `user with ${user.id} wanna EXIT team with id ${user.teamId}`);
         return {message: "Request to quit team is sent", request: createdRequest};
     }
 
@@ -113,6 +114,7 @@ export class RequestService {
         }
 
         let createdRequest: RequestI = await Request.create({userId: user.id, action: 'SWITCH', teamId: new_team})
+        io.sockets.in(Roles.MANAGER).emit('message', `user with ${user.id} wanna SWITCH to team with id ${new_team}`);
         return {message: "Request to change team is sent" ,request:  createdRequest}
     }
 
