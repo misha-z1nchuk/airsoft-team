@@ -2,11 +2,9 @@ import React, {useContext} from 'react';
 
 import {Routes, Route } from 'react-router-dom';
 
-import {authRoutes, publicRoutes} from "../routes";
+import {authRoutes, managerRoutes, playerRoutes, publicRoutes} from "../routes";
 import NotFound from "../pages/NotFound";
 import {Context} from "../index";
-import PlayerMenu from "../pages/PlayerMenu";
-import TeamsMenu from "../pages/TeamsMenu";
 
 const AppRouter = () => {
     const {user} = useContext(Context)
@@ -15,22 +13,19 @@ const AppRouter = () => {
         <div>
             <main>
                 <Routes>
-                    { (user.user.roleId === 1) ?
-                        <>
-                            <Route key={'player-menu'} path={"player-menu"} element={<PlayerMenu />}/>
-                            <Route key={'teams-menu'} path={"teams-menu"} element={<TeamsMenu />}/>
+                    {user.user.roleId === 1 && playerRoutes.map(({path, Component}) =>
+                        <Route key={path} path={path} element={<Component/>} exact/>
+                    )}
 
-                        </>
+                    {user.user.roleId === 2 && managerRoutes.map(({path, Component}) =>
+                        <Route key={path} path={path} element={<Component/>} exact/>
+                    )}
 
 
-                        :
-                        <></>
-                    }
-
-                    }
                     {publicRoutes.map(({path, Component}) =>
                         <Route key={path} path={path} element={<Component />}/>
                     )}
+
                     {user.isAuth  && authRoutes.map(({path, Component}) =>
                         <Route key={path} path={path} element={<Component/>} exact/>
                     )}

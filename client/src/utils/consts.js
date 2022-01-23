@@ -5,3 +5,6 @@ export const ADMIN_ROUTE = '/admin';
 export const SETTINGS_ROUTE = '/settings';
 export const FORGOT_PASSWORD_ROUTE = '/forgot-password'
 export const RESET_PASSWORD_ROUTE = '/reset-password/:token'
+export const TEAMS_MENU = '/teams-menu'
+export const PLAYER_MENU = "/player-menu"
+export const REQUEST_MENU = "/request-menu"
