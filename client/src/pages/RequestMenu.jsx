@@ -12,26 +12,29 @@ const RequestMenu = () => {
         })
     }, [])
 
-    function accept(id) {
-        request.acceptRequest(id);
-    }
 
     return (
         <div className="">
             <h1 className="text-center">Requests list</h1>
             <ListGroup className="align-items-center">
-                {requests.map((request) => (
-                    <ListGroup.Item  key={request.id}  className="w-50 text-center">
-                        Request id: {request.id}, User id:{request.userId}
-                        wanna {request.action} team with id: {request.teamId}
+                {requests.map((userRequest) => (
+                    <ListGroup.Item  key={userRequest.id}  className="w-50 text-center">
+                        Request id: {userRequest.id}, User id:{userRequest.userId}
+                        wanna {userRequest.action} team with id: {userRequest.teamId}
                         <Button
                             className="ms-3"
                             variant={"outline-success"}
-                            onClick={() => { accept(request.id)}}
+                            onClick={() => { request.acceptRequest(userRequest.id)}}
                         >
                             Accept
                         </Button>
-                        <Button className="ms-2" variant={"outline-danger"}>Decline</Button>
+                        <Button
+                            className="ms-2"
+                            variant={"outline-danger"}
+                            onClick={() => { request.declineRequest(userRequest.id)}}
+                        >
+                            Decline
+                        </Button>
                     </ListGroup.Item>
                 ))}
             </ListGroup>

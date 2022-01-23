@@ -61,6 +61,14 @@ export default class RequestStore{
         }
     }
 
+    async declineRequest(id){
+        try{
+            await RequestService.declineRequest(id);
+        }catch (e){
+            console.log(e)
+        }
+    }
+
 
 
 }

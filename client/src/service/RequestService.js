@@ -17,6 +17,9 @@ export default class RequestService{
 
     static async acceptRequest(id) {
         return $api.post(API_URL+`/request/accept/${id}`)
+    }
 
+    static async declineRequest(id) {
+        return $api.post(API_URL+`/request/decline/${id}`)
     }
 }
