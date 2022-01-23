@@ -5,6 +5,7 @@ import {Routes, Route } from 'react-router-dom';
 import {authRoutes, managerRoutes, playerRoutes, publicRoutes} from "../routes";
 import NotFound from "../pages/NotFound";
 import {Context} from "../index";
+import Roles from "../utils/enums";
 
 const AppRouter = () => {
     const {user} = useContext(Context)
@@ -13,11 +14,11 @@ const AppRouter = () => {
         <div>
             <main>
                 <Routes>
-                    {user.user.roleId === 1 && playerRoutes.map(({path, Component}) =>
+                    {user.user.roleId === Roles.PLAYER && playerRoutes.map(({path, Component}) =>
                         <Route key={path} path={path} element={<Component/>} exact/>
                     )}
 
-                    {user.user.roleId === 2 && managerRoutes.map(({path, Component}) =>
+                    {user.user.roleId === Roles.MANAGER && managerRoutes.map(({path, Component}) =>
                         <Route key={path} path={path} element={<Component/>} exact/>
                     )}
 

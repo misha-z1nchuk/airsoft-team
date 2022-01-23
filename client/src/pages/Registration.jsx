@@ -3,10 +3,11 @@ import {Container, Dropdown, DropdownButton, Form} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {LOGIN_ROUTE, REGISTRATION_ROUTE, SERVICE_ROUTE} from "../utils/consts";
+import {NavLink,useNavigate} from "react-router-dom";
+import {LOGIN_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
+import Roles from "../utils/enums";
 
 const Login = observer(() => {
     const {user} = useContext(Context)
@@ -83,7 +84,7 @@ const Login = observer(() => {
                         <Dropdown.Item eventKey="Player">Player</Dropdown.Item>
                         <Dropdown.Item eventKey="Manager">Manager</Dropdown.Item>
                     </DropdownButton>
-                    <h4>You selected {role === 1 ? "Player" : "Manager"}</h4>
+                    <h4>You selected {role === Roles.PLAYER ? "Player" : "Manager"}</h4>
                     <Row className="d-flex justify-content-between mt-3 pl-3 pr-3">
 
                         <div>
