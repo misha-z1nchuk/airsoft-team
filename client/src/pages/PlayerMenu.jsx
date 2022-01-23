@@ -15,9 +15,11 @@ const PlayerMenu = observer(() => {
 
     useEffect(async () => {
         await request.getRequestByAuthor();
-        await teams.getCertainTeamPlayer(user.user.id).then((res) => {
-            setTeam(res.data);
-        })
+        if(user.user.teamId){
+            await teams.getCertainTeamPlayer(user.user.teamId).then((res) => {
+                setTeam(res.data);
+            })
+        }
         setReq(request.request)
     }, [changeTeamVisible])
 
@@ -39,7 +41,7 @@ const PlayerMenu = observer(() => {
                 <div>
                     <div>Your request is here</div>
                     <div className="d-flex">
-                        <Card body className="d-grid w-50 bg-light">{req.action} team with id: {req.id}</Card>
+                        <Card body className="d-grid w-50 bg-light">{req.action} team with id: {req.teamId}</Card>
                         <Button className="d" onClick={declineReq}>Decline</Button>
                     </div>
                 </div>

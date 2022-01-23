@@ -9,6 +9,8 @@ import {body} from "express-validator";
 
 
 router.get('/', [authMiddleware, ensureRole([Roles.PLAYER])], requestController.getRequestByAuthor)
+router.get('/manager', [authMiddleware, ensureRole([Roles.MANAGER, Roles.ADMIN])], requestController.getManagerRequests)
+
 router.post('/join-team',
     [
         body('teamId').isNumeric()

@@ -4,6 +4,7 @@ import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink, useNavigate} from "react-router-dom";
 import {SERVICE_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
+import Roles from "../utils/enums";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context)
@@ -23,12 +24,22 @@ const NavBar = observer(() => {
                                 Settings
                             </Button>
                         {
-                            user.user.roleId === 1 ?
+                            user.user.roleId === Roles.PLAYER ?
                                 <Button variant={"outline-light"}
                                         onClick={() => navigate('/player-menu')}
                                         className="ml-2"
                                 >
                                     PlayerMenu
+                                </Button>
+                                : <div/>
+                        }
+                        {
+                            user.user.roleId === Roles.MANAGER ?
+                                <Button variant={"outline-light"}
+                                        onClick={() => navigate('/request-menu')}
+                                        className="ml-2"
+                                >
+                                    RequestMenu
                                 </Button>
                                 : <div/>
                         }

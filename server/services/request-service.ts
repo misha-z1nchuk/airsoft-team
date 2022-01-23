@@ -5,6 +5,7 @@ const User = require('../models/user.model')
 import Team from "../models/team.model";
 const Token = require('../models/token.model')
 import {io} from "../index";
+import {Op} from "sequelize";
 import {checkRole} from "../utils/checkRole";
 import {checkPlayersAmount} from "../utils/checkAllowJoinTeam";
 const {Roles} = require("../global/enums");
@@ -120,6 +121,11 @@ export class RequestService {
     }
 
 
+    async getManagerRequests(user: UserI):  Promise<Request|null>{
+        return await Request.findAll({where: {
+            action: { [Op.ne]: "REGISTRATION MANAGER"}
+            }})
+    }
 }
 
 module.exports = new RequestService();

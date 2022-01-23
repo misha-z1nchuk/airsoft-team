@@ -19,6 +19,10 @@ export default class RequestStore{
         this.setRequest(res.data);
     }
 
+    async getAllRequestsManager(){
+        return  await RequestService.getAllManagerRequests()
+    }
+
     async joinTeam(team_id){
         try{
             await UserService.joinTeam({teamId: team_id});
@@ -49,6 +53,13 @@ export default class RequestStore{
         }
     }
 
+    async acceptRequest(id){
+        try{
+            await RequestService.acceptRequest(id);
+        }catch (e){
+            console.log(e)
+        }
+    }
 
 
 

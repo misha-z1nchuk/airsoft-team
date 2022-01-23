@@ -71,6 +71,15 @@ export class RequestController {
         }
     }
 
+    async getManagerRequests(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void>{
+        try {
+            const response = await requestService.getManagerRequests(req.user);
+            return res.json(response);
+        }catch (e){
+            next(e)
+        }
+
+    }
 }
 
 
