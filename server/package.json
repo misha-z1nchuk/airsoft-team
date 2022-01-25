@@ -10,7 +10,9 @@
     "seed": "npx sequelize-cli db:seed:all",
     "redo-seed": "npx sequelize-cli db:seed:undo",
     "test": "cross-env NODE_ENV=test  sequelize-cli db:drop && cross-env NODE_ENV=test sequelize-cli db:create && cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test npm run seed && cross-env NODE_ENV=test   mocha --timeout 10000 -r ts-node/register test/*.ts",
-    "drop": "sequelize-cli db"
+    "drop": "sequelize-cli db:drop",
+    "create": "sequelize-cli db:create",
+    "initDb": "npm run drop && npm run create && npm run migrate && npm run seed"
   },
   "author": "misha-z1nchuk",
   "license": "ISC",
@@ -41,6 +43,7 @@
     "sequelize": "^6.11.0",
     "sequelize-typescript": "^2.1.1",
     "socket.io": "^4.4.0",
+    "ts-node": "^10.4.0",
     "uuid": "^8.3.2",
     "ws": "^8.4.0"
   },

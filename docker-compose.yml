@@ -1,0 +1,38 @@
+# docker-compose.yml
+
+version: "3.7"
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - addressbook-db:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: ./server
+    environment:
+      DB_SCHEMA: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: postgres
+    depends_on:
+      - postgres
+    ports:
+      - '5000:5000'
+
+  client:
+    depends_on:
+      - server
+    build:
+      context: ./client
+
+    ports:
+      - '3000:3000'
+
+volumes:
+  addressbook-db:
