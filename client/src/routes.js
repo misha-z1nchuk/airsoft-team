@@ -1,10 +1,11 @@
 import Login from "./pages/Login";
 import {
+    ADMIN_MENU_ROUTE,
     FORGOT_PASSWORD_ROUTE,
-    LOGIN_ROUTE, PLAYER_MENU,
-    REGISTRATION_ROUTE, REQUEST_MENU, RESET_PASSWORD_ROUTE,
+    LOGIN_ROUTE, PLAYER_MENU_ROUTE,
+    REGISTRATION_ROUTE, REQUEST_MENU_ROUTE, RESET_PASSWORD_ROUTE,
     SERVICE_ROUTE,
-    SETTINGS_ROUTE, TEAMS_MENU
+    SETTINGS_ROUTE, TEAMS_MENU_ROUTE
 } from "./utils/consts";
 import Main from "./pages/Main";
 import Registration from "./pages/Registration";
@@ -14,6 +15,7 @@ import ResetPassword from "./pages/ResetPassword";
 import TeamsMenu from "./pages/TeamsMenu";
 import PlayerMenu from "./pages/PlayerMenu";
 import RequestMenu from "./pages/RequestMenu";
+import AdminPanel from "./pages/AdminPanel";
 
 export const authRoutes = [
     {
@@ -25,7 +27,7 @@ export const authRoutes = [
         Component: Setting
     },
     {
-        path: TEAMS_MENU,
+        path: TEAMS_MENU_ROUTE,
         Component: TeamsMenu
     }
 ]
@@ -51,7 +53,7 @@ export const publicRoutes = [
 
 export const playerRoutes = [
     {
-        path: PLAYER_MENU,
+        path: PLAYER_MENU_ROUTE,
         Component: PlayerMenu
     }
 
@@ -60,8 +62,17 @@ export const playerRoutes = [
 
 export const managerRoutes = [
     {
-        path: REQUEST_MENU,
+        path: REQUEST_MENU_ROUTE,
         Component: RequestMenu
+    }
+
+]
+
+
+export const adminRoutes = [
+    {
+        path: ADMIN_MENU_ROUTE,
+        Component: AdminPanel
     }
 
 ]

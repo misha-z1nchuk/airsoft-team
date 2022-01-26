@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 import {Routes, Route } from 'react-router-dom';
 
-import {authRoutes, managerRoutes, playerRoutes, publicRoutes} from "../routes";
+import {adminRoutes, authRoutes, managerRoutes, playerRoutes, publicRoutes} from "../routes";
 import NotFound from "../pages/NotFound";
 import {Context} from "../index";
 import Roles from "../utils/enums";
@@ -19,6 +19,10 @@ const AppRouter = () => {
                     )}
 
                     {user.user.roleId === Roles.MANAGER && managerRoutes.map(({path, Component}) =>
+                        <Route key={path} path={path} element={<Component/>} exact/>
+                    )}
+
+                    {user.user.roleId === Roles.ADMIN && adminRoutes.map(({path, Component}) =>
                         <Route key={path} path={path} element={<Component/>} exact/>
                     )}
 
