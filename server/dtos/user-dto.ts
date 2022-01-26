@@ -9,6 +9,7 @@ module.exports = class UserDto{
     photo: string;
     roleId: number;
     teamId: number | null
+    isBanned: boolean
     constructor(model: UserI) {
         this.email = model.email;
         this.id = model.id;
@@ -16,5 +17,6 @@ module.exports = class UserDto{
         this.photo = model.photo;
         this.roleId = model.roleId;
         this.teamId = model.teamId;
+        this.isBanned = model.isBanned;
     }
 }

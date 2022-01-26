@@ -32,5 +32,10 @@ export default class UserService{
     static changePassword(oldPassword, newPassword){
         return $api.post(API_URL+`/user/change-password`, {oldPassword: oldPassword, newPassword: newPassword});
     }
+
+    static getUsersForAdmin(){
+        return $api.get(API_URL+`/user`);
+    }
+
 }
 

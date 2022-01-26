@@ -123,4 +123,13 @@ export default class UserStore {
             return e.response?.data?.message
         }
     }
+
+    async getUsersForAdmin(){
+        try {
+            let res = await UserService.getUsersForAdmin();
+            return res;
+        }catch (e){
+            console.log(e.response?.data?.message)
+        }
+    }
 }

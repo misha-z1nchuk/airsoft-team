@@ -43,6 +43,16 @@ const NavBar = observer(() => {
                                 </Button>
                                 : <div/>
                         }
+                        {
+                            user.user.roleId === Roles.ADMIN ?
+                                <Button variant={"outline-light"}
+                                        onClick={() => navigate('/admin-menu')}
+                                        className="ml-2"
+                                >
+                                    Admin Panel
+                                </Button>
+                                : <div/>
+                        }
                         <Button variant={"outline-light"}
                                 onClick={() => navigate('/teams-menu')}
                                 className="ml-2"
