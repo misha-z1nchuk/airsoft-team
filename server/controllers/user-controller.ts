@@ -90,6 +90,16 @@ class UserController{
             next(e)
         }
     }
+
+    async getUsers(req: ExtRequest, res: Response, next: NextFunction): Promise<Response|void> {
+        try {
+            const users = await userService.getUsers();
+
+            res.status(200).json(users)
+        } catch (e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = new UserController();

@@ -1,5 +1,8 @@
 import {UserI} from "../global/types";
 import Comment from "../models/comment";
+import Team from "../models/team.model";
+import {Op} from "sequelize";
+import {destructureUsers} from "../utils/destructureUsers";
 const tokenService = require("./token-service");
 
 const User = require('../models/user.model')
@@ -100,7 +103,22 @@ export class UserService{
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(newPassword, salt)
         candidate.password = hashedPassword;
-        candidate.save();
+        await candidate.save();
+    }
+
+    async getUsers() {
+        const users = await User.findAll({
+            where: {[Op.or]: [{roleId: 1}, {roleId: 2}]}
+        })
+
+        const destructuredUsers = destructureUsers(users);
+
+        const managers: UserI[] = [];
+        const players: UserI[] = [];
+        destructuredUsers.map(user => {
+            user.roleId == 1 ? managers.push(user) : players.push(user)
+        })
+        return {managers, players}
     }
 }
 
