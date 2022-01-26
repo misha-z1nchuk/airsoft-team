@@ -116,8 +116,7 @@ export default class UserStore {
 
     async changePassword(oldPassword, newPassword){
         try {
-            let res = await UserService.changePassword(oldPassword, newPassword);
-            return res
+            return await UserService.changePassword(oldPassword, newPassword)
         }catch (e){
             console.log(e.response?.data?.message)
             return e.response?.data?.message
@@ -126,8 +125,7 @@ export default class UserStore {
 
     async getUsersForAdmin(){
         try {
-            let res = await UserService.getUsersForAdmin();
-            return res;
+            return await UserService.getUsersForAdmin();
         }catch (e){
             console.log(e.response?.data?.message)
         }
